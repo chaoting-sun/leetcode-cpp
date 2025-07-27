@@ -4,23 +4,19 @@ public:
     // time: O(n*lg(n)+m*lg(m)), where n = len of s, m = len of t
     // space: O(1) -> 26 elements at most
 
-    // bool isAnagram(string s, string t) {
-    //     if (s.size() != t.size()) return false;
-        
-    //     string s_copy = s;
-    //     string t_copy = t;
+    bool isAnagram(string s, string t) {
+        if (s.size() != t.size()) return false;
+        sort(s.begin(), s.end());
+        sort(t.begin(), t.end());
 
-    //     sort(s_copy.begin(), s_copy.end());
-    //     sort(t_copy.begin(), t_copy.end());
+        for (int i = 0; i < s.size(); i++) {
+            if (s[i] != t[i]) {
+                return false;
+            }
+        }
 
-    //     for (int i = 0; i < s.size(); i++) {
-    //         if (s_copy[i] != t_copy[i]) {
-    //             return false;
-    //         }
-    //     }
-
-    //     return true;
-    // }
+        return true;
+    }
 
     // Counter: counting the number of characters in s first,
     // and then do a for loop on t, decrement the count of the same
@@ -88,25 +84,25 @@ public:
     //     return true;
     // }
 
-    // Save counts in array
+    // Optimize the space complexity: use array rather than map
     // time: O(n*lg(n)+m*lg(m)), where n = len of s, m = len of t
     // space: O(1) -> 26 elements at most
 
-    bool isAnagram(string s, string t) {
-        if (s.size() != t.size()) return false;
+    // bool isAnagram(string s, string t) {
+    //     if (s.size() != t.size()) return false;
         
-        int counts[26] = {0};
-        int n = s.size();
+    //     int counts[26] = {0};
+    //     int n = s.size();
 
-        for (int i = 0; i < n; i++) {
-            counts[s[i]-'a']++;
-        }
-        for (int i = 0; i < n; i++) {
-            counts[t[i]-'a']--;
-            if (counts[t[i]-'a'] < 0) {
-                return false;
-            }
-        }
-        return true;
-    }
+    //     for (char ch: s) {
+    //         counts[ch - 'a']++;
+    //     }
+    //     for (char ch: t) {
+    //         counts[ch - 'a']--;
+    //         if (counts[ch - 'a'] < 0) {
+    //             return false;
+    //         }
+    //     }
+    //     return true;
+    // }
 };
