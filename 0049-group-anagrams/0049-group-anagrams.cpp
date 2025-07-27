@@ -37,10 +37,6 @@ public:
                 k += to_string(counts[i]);
                 if (i < 25) k += "#";
             }
-            
-            if (records.find(k) == records.end()) {
-                records.insert({ k, vector<string>() });
-            }
             records[k].push_back(s);
         }
 
