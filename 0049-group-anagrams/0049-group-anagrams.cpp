@@ -23,6 +23,13 @@ public:
 
     //     return ans;
     // }
+
+    // Approach 2: Categorize by Count
+    // Intuition: because the strs[i] consists of lowercase english letters,
+    // we can map each str to a character count represented by an array of 26 slots.
+    // If two strings are anagram, then their array will be the same.
+    // Time: O(n*k), where n is the strs length, while k is the maximum length of the elements in strs
+    // Space: O(n*k) -> the total data in records
     
     vector<vector<string>> groupAnagrams(vector<string>& strs) {
         unordered_map<string, vector<string>> records(0);
@@ -32,10 +39,14 @@ public:
             for (char ch: s) {
                 counts[ch - 'a'] += 1;
             }
-            string k{};
+            string k = "";
             for (int i = 0; i < 26; i++) {
                 k += to_string(counts[i]);
                 if (i < 25) k += "#";
+            }
+            
+            if (records.find(k) == records.end()) {
+                records.insert({ k, vector<string>() });
             }
             records[k].push_back(s);
         }
