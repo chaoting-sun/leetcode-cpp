@@ -1,21 +1,18 @@
 class Solution {
 public:
+    // one-pass hash table
+    // time: O(n) -> traverse the vector containing n elements only once. each lookup in the table cost only O(1) time.
+    // space: O(n) -> use a map which stores at most n elements
     vector<int> twoSum(vector<int>& nums, int target) {
-        vector<int> ans(2);
-        unordered_map<int, int> map{};
+        unordered_map<int, int> hash{};
 
         for (int i = 0; i < nums.size(); i++) {
-            int to_check = target - nums[i];
-            auto it = map.find(to_check);
-            if (it != map.end()) {
-                ans[0] = it->second;
-                ans[1] = i;
-                return ans;
+            int complement = target - nums[i];
+            if (hash.find(complement) != hash.end()) {
+                return { hash[complement], i };
             }
-
-            map.insert({ nums[i], i });
+            hash.insert({ nums[i], i });
         }
-
-        return ans;
+        return {};
     }
 };
