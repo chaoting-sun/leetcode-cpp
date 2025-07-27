@@ -17,10 +17,6 @@ public:
         });
         sort(strs_sorted.begin(), strs_sorted.end());
 
-        for (int i = 0; i < n; i++) {
-            cout << strs_sorted[i] << " ";
-        }
-
         vector<vector<string>> ans(0);
         vector<string> backet(0);
         string current = "";
@@ -47,14 +43,3 @@ public:
         return ans;
     }
 };
-
-// ["eat","tea","tan","ate","nat","bat"]
-
-// ["aet","aet","ant","aet","ant","abt"]
-// [0,1,2,3,4,5]
-
-// ["aet","aet","ant","aet","ant","abt"]
-// [0,    1,    2,    3,    4,    5    ]
-
-//  abt   aet   aet   aet   ant   ant 
-// [5,    0,    1,    3,    2,    4    ]
