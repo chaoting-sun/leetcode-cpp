@@ -32,30 +32,57 @@ public:
     // time: O(n*log(n))
     // space: O(n)
 
+    // vector<int> topKFrequent(vector<int>& nums, int k) {
+    //     unordered_map<int, int> count;
+    //     for (int n: nums) {
+    //         if (count.find(n) == count.end()) {
+    //             count.insert({ n, 1 });
+    //         } else {
+    //             count[n]++;
+    //         }
+    //     }
+
+    //     vector<pair<int, int>> count_arr;
+    //     for (auto c: count) {
+    //         count_arr.push_back(make_pair(c.first, c.second));
+    //     }
+
+    //     sort(count_arr.begin(), count_arr.end(), [&](pair<int, int>& c1, pair<int, int>& c2){
+    //         return c1.second > c2.second;
+    //     });
+
+    //     vector<int> ans;
+    //     for (int i = 0; i < k; i++) {
+    //         ans.push_back(count_arr[i].first);
+    //     }
+
+    //     return ans;
+    // }
+
     vector<int> topKFrequent(vector<int>& nums, int k) {
         unordered_map<int, int> count;
+        int max_count = 0;
         for (int n: nums) {
-            if (count.find(n) == count.end()) {
-                count.insert({ n, 1 });
-            } else {
-                count[n]++;
-            }
+            count[n]++;
+            max_count = max(max_count, count[n]);
         }
 
-        vector<pair<int, int>> count_arr;
-        for (auto c: count) {
-            count_arr.push_back(make_pair(c.first, c.second));
+        vector<vector<int>>count_arr(max_count+1);
+        for (auto& c: count) {
+            count_arr[c.second].push_back(c.first);
         }
-
-        sort(count_arr.begin(), count_arr.end(), [&](pair<int, int>& c1, pair<int, int>& c2){
-            return c1.second > c2.second;
-        });
 
         vector<int> ans;
-        for (int i = 0; i < k; i++) {
-            ans.push_back(count_arr[i].first);
+        int n_left = k;
+        for (int i = max_count; i >= 0; i--) {
+            int j = 0;
+            for (int j = 0; j < count_arr[i].size(); j++) {
+                ans.push_back(count_arr[i][j]);
+                n_left--;
+                if (n_left == 0) break;
+            }
+            if (n_left == 0) break;
         }
-
         return ans;
     }
 };
