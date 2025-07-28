@@ -53,31 +53,28 @@ public:
     //     return ans;
     // }
 
+    // Approach2: prefix product and suffix product
+    // time: O(n)
+    // space: O(n)
+
     vector<int> productExceptSelf(vector<int>& nums) {
         int n = nums.size();
         vector<int> prefix_products(n), suffix_products(n);
-        int current_product = 1;
+
+        prefix_products[0] = 1;
+        suffix_products[n - 1] = 1;
 
         for (int i = 1; i < n; i++) {
-            current_product *= nums[i - 1];
-            prefix_products[i] = current_product;
+            prefix_products[i] = prefix_products[i - 1] * nums[i - 1];
         }
 
-        current_product = 1;
         for (int i = n - 2; i >= 0; i--) {
-            current_product *= nums[i + 1];
-            suffix_products[i] = current_product;
+            suffix_products[i] = suffix_products[i + 1] * nums[i + 1];
         }
 
         vector<int> ans(n);
         for (int i = 0; i < n; i++) {
-            if (i == 0) {
-                ans[i] = suffix_products[i];
-            } else if (i == n - 1) {
-                ans[i] = prefix_products[i];
-            } else {
-                ans[i] = prefix_products[i] * suffix_products[i];
-            }
+            ans[i] = prefix_products[i] * suffix_products[i];
         }
         return ans;
     }
