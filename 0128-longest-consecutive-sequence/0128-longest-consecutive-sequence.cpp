@@ -1,39 +1,58 @@
 class Solution {
 public:
     // Approach1: sort and check in sequential
+    // Time: O(n*log(n)) -> sorting takes O(n*log(n))
+    // Space: O(1)
+
+    // int longestConsecutive(vector<int>& nums) {
+    //     int n = nums.size();
+    //     if (n == 0) return 0;
+
+    //     sort(nums.begin(), nums.end());
+        
+    //     int current = nums[0];
+    //     int count = 1, max_count = 1;
+
+    //     for (int i = 1; i < n; i++) {
+    //         if (nums[i] == current) continue;
+
+    //         if (nums[i] == current + 1) {
+    //             count++;
+    //         } else {
+    //             max_count = max(max_count, count);
+    //             count = 1;
+    //         }
+    //         current = nums[i];
+    //     }
+        
+    //     return max(max_count, count);
+    // }
 
     int longestConsecutive(vector<int>& nums) {
-        int n = nums.size();
-        if (n == 0) return 0;
+        if (nums.size() == 0) return 0;
 
-        sort(nums.begin(), nums.end());
-        
-        int current = nums[0];
-        int count = 1, max_count = 1;
+        unordered_map<int, int> seq_map;
+        int max_len = 1;
 
-        for (int i = 1; i < n; i++) {
-            if (nums[i] == current) continue;
+        for (int n: nums) {
+            if (seq_map.find(n) != seq_map.end()) continue;
 
-            if (nums[i] == current + 1) {
-                count++;
-            } else {
-                max_count = max(max_count, count);
-                count = 1;
+            int n_seq = 1;
+            int has_left_seq = seq_map.find(n - 1) != seq_map.end();
+            int has_right_seq = seq_map.find(n + 1) != seq_map.end();
+            
+            if (has_left_seq) n_seq += seq_map[n - 1];
+            if (has_right_seq) n_seq += seq_map[n + 1];
+
+            if (has_left_seq) seq_map[n - seq_map[n - 1]] = n_seq;
+            if (has_right_seq) seq_map[n + seq_map[n + 1]] = n_seq;
+            seq_map[n] = n_seq;
+
+            if (n_seq > max_len) {
+                max_len = n_seq;
             }
-            current = nums[i];
         }
-        
-        return max(max_count, count);
+
+        return max_len;
     }
 };
-
-// 0 0 1
-
-// [9,1,4,7,3,-1,0,5,8,-1,6]
-// [-1,-1,0,1,3,4,5,6,7,8,9]
-
-// current = 0, count = 1, max_count = 1
-// 0 -> continue
-// 1 -> count = 2
-// 1 -> count = 2, current = 1
-// 2 -> count = 
