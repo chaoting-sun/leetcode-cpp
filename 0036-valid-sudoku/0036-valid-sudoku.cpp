@@ -54,7 +54,6 @@ public:
     //     return true;
     // }
 
-
     // Approach2: track occurence by three sets: for rows, cols, and blocks
     // Time: O(n**2), where n is the board length
     // Space: O(n**2). rows, cols, blocks contains 3 * n**2 elements
