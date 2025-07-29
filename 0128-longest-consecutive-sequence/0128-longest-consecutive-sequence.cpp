@@ -28,6 +28,14 @@ public:
     //     return max(max_count, count);
     // }
 
+    // Approach2: This solution uses a hash map to dynamically merge consecutive sequences
+    // without sorting. For each number, it checks if adjacent numbers (n-1 and n+1) exist
+    // to form or extend a sequence. The hash map stores only the lengths of sequences at
+    // their leftmost and rightmost boundaries. When a number connects two sequences, their
+    // lengths are combined, and the boundaries are updated to reflect the new total length.
+    // Time: O(n), where n is the length of nums
+    // Space: O(n)
+
     int longestConsecutive(vector<int>& nums) {
         if (nums.size() == 0) return 0;
 
@@ -40,7 +48,7 @@ public:
             int n_seq = 1;
             int has_left_seq = seq_map.find(n - 1) != seq_map.end();
             int has_right_seq = seq_map.find(n + 1) != seq_map.end();
-            
+
             if (has_left_seq) n_seq += seq_map[n - 1];
             if (has_right_seq) n_seq += seq_map[n + 1];
 
