@@ -27,44 +27,51 @@ public:
     //     return ans;
     // }
 
-    // Approach2: Fix one, and see the problem as a two-sum problem -> TLE
-    // Time: O(n^2*log(n)), where n is the length of nums
-    // Note that find in set takes O(log(m)) where m is the number of elements in the set.
-    // For each pair (i, j) in nums, they at most produce one k s.t. nums[i] + nums[j] + nums[k] = 0.
-    // There are n*(n-1)/2 pairs, so m should be less than n^2. That is, find in set takes O(log(n^2))
-    // = O(2*log(n)) = O(log(n))
-    // Space: O(n^3)
+    // Approach2: Sort + Fix one + Two Pointers
+    // Time: O(n**2)
+    // Space: O(1)
 
     // vector<vector<int>> threeSum(vector<int>& nums) {
     //     int n = nums.size();
-    //     set<vector<int>> set;
     //     vector<vector<int>> ans;
 
     //     sort(nums.begin(), nums.end());
-        
+
     //     for (int i = 0; i < n - 2; i++) {
-    //         unordered_map<int, int> map;
+    //         if (i != 0 && nums[i] == nums[i - 1]) continue;
 
-    //         for (int j = i + 1; j < n; j++) {
-                
-
-    //             // find a value k in map s.t. nums[k] = - nums[i] - nums[j]
-    //             // that is, nums[i] + nums[j] + nums[k] = 0
-    //             bool find_group = map.find(- nums[i] - nums[j]) != map.end();
-    //             if (find_group) {
-    //                 vector<int> group { nums[i], nums[j], - nums[i] - nums[j] };
-    //                 sort(group.begin(), group.end());
-    //                 if (set.find(group) == set.end()) {
-    //                     set.insert(group);
-    //                     ans.push_back(group);
-    //                 }
+    //         int target = 0 - nums[i];
+    //         int left = i + 1, right = n - 1;
+            
+    //         while (left < right) {
+    //             // most important condition: if the current value is the same as its previous,
+    //             // then the combination including it's value, if exists, should have been processed.
+    //             if (left != i + 1 && nums[left - 1] == nums[left]) {
+    //                 left++;
+    //                 continue;
     //             }
-    //             map.insert(make_pair(nums[j], j));
+    //             if (right != nums.size() - 1 && nums[right] == nums[right + 1]) {
+    //                 right--;
+    //                 continue;
+    //             }
+    //             int sum = nums[left] + nums[right];
+    //             if (sum > target) {
+    //                 right--;
+    //             } else if (sum < target) {
+    //                 left++;
+    //             } else {
+    //                 ans.push_back({ nums[i], nums[left], nums[right] });
+    //                 right--;
+    //                 left++;
+    //             }
     //         }
     //     }
-        
     //     return ans;
     // }
+
+    // Approach2: Sort + Fix one + Hash table
+    // Time: O(n**2)
+    // Space: O(1)
 
     vector<vector<int>> threeSum(vector<int>& nums) {
         int n = nums.size();
@@ -75,28 +82,17 @@ public:
         for (int i = 0; i < n - 2; i++) {
             if (i != 0 && nums[i] == nums[i - 1]) continue;
 
-            int target = 0 - nums[i];
-            int left = i + 1, right = n - 1;
-            
-            while (left < right) {
-                if (left != i + 1 && nums[left - 1] == nums[left]) {
-                    left++;
-                    continue;
+            unordered_set<int> seen;
+            int j = i + 1;
+
+            while (j < n) {
+                int expected_k_val = - (nums[i] + nums[j]);
+                if (seen.find(expected_k_val) != seen.end()) {
+                    ans.push_back({ expected_k_val, nums[i], nums[j] });
+                    while (j < nums.size() - 1 && nums[j] == nums[j + 1]) j++;
                 }
-                if (right != nums.size() - 1 && nums[right] == nums[right + 1]) {
-                    right--;
-                    continue;
-                }
-                int sum = nums[left] + nums[right];
-                if (sum > target) {
-                    right--;
-                } else if (sum < target) {
-                    left++;
-                } else {
-                    ans.push_back({ nums[i], nums[left], nums[right] });
-                    right--;
-                    left++;
-                }
+                seen.insert(nums[j]);
+                j++;
             }
         }
         
