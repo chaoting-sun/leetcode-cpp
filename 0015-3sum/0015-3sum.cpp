@@ -39,11 +39,15 @@ public:
     //     int n = nums.size();
     //     set<vector<int>> set;
     //     vector<vector<int>> ans;
+
+    //     sort(nums.begin(), nums.end());
         
     //     for (int i = 0; i < n - 2; i++) {
     //         unordered_map<int, int> map;
 
     //         for (int j = i + 1; j < n; j++) {
+                
+
     //             // find a value k in map s.t. nums[k] = - nums[i] - nums[j]
     //             // that is, nums[i] + nums[j] + nums[k] = 0
     //             bool find_group = map.find(- nums[i] - nums[j]) != map.end();
@@ -71,28 +75,25 @@ public:
         for (int i = 0; i < n - 2; i++) {
             if (i != 0 && nums[i] == nums[i - 1]) continue;
 
-            vector<int> rest;
-            for (int j = i + 1; j < n; j++) rest.push_back(nums[j]);
-            
             int target = 0 - nums[i];
-            int left = 0, right = rest.size() - 1;
+            int left = i + 1, right = n - 1;
             
             while (left < right) {
-                if (left != 0 && rest[left - 1] == rest[left]) {
+                if (left != i + 1 && nums[left - 1] == nums[left]) {
                     left++;
                     continue;
                 }
-                if (right != rest.size() - 1 && rest[right] == rest[right + 1]) {
+                if (right != nums.size() - 1 && nums[right] == nums[right + 1]) {
                     right--;
                     continue;
                 }
-                int sum = rest[left] + rest[right];
+                int sum = nums[left] + nums[right];
                 if (sum > target) {
                     right--;
                 } else if (sum < target) {
                     left++;
                 } else {
-                    ans.push_back({ nums[i], rest[left], rest[right] });
+                    ans.push_back({ nums[i], nums[left], nums[right] });
                     right--;
                     left++;
                 }
