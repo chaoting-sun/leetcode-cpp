@@ -78,11 +78,11 @@ public:
             int left = 0, right = rest.size() - 1;
             
             while (left < right) {
-                if (rest[left] == rest[left + 1] && left + 1 < right) {
+                if (left != 0 && rest[left - 1] == rest[left]) {
                     left++;
                     continue;
                 }
-                if (rest[right] == rest[right - 1] && left + 1 < right) {
+                if (right != rest.size() - 1 && rest[right] == rest[right + 1]) {
                     right--;
                     continue;
                 }
