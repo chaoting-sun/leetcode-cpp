@@ -71,7 +71,7 @@ public:
 
     // Approach2: Sort + Fix one + Hash table
     // Time: O(n**2)
-    // Space: O(1)
+    // Space: O(n) -> seen
 
     vector<vector<int>> threeSum(vector<int>& nums) {
         int n = nums.size();
