@@ -87,8 +87,8 @@ public:
 
             while (j < n) {
                 int expected_k_val = - (nums[i] + nums[j]);
-                if (seen.find(expected_k_val) != seen.end()) {
-                    ans.push_back({ expected_k_val, nums[i], nums[j] });
+                if (seen.count(expected_k_val)) {
+                    ans.push_back({ nums[i], expected_k_val, nums[j] });
                     while (j < nums.size() - 1 && nums[j] == nums[j + 1]) j++;
                 }
                 seen.insert(nums[j]);
