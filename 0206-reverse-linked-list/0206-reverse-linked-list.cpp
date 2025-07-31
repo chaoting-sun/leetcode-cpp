@@ -10,8 +10,10 @@
  */
 class Solution {
 public:
+    // Time: O(n), where n is the number of nodes
+    // Space: O(1)
+
     ListNode* reverseList(ListNode* head) {
-        if (!head) return head;
         ListNode* prev = nullptr;
         ListNode* curr = head;
 
