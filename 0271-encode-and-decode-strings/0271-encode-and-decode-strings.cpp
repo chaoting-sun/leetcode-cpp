@@ -1,6 +1,9 @@
 class Codec {
 public:
-
+    // Approach: encode into {str.size()},{str[0].size()},{str[1].size()},...,{str[0]},{str[1]},...
+    // For example: ["Hello","World"] will be: "2,5,5,Hello,World"
+    // Time: O(n + m), n is the length of all characters in the strs and m is length of strs
+    // Space: O(1)
     // Encodes a list of strings to a single string.
     string encode(vector<string>& strs) {
         string encoded_s = "";
