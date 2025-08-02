@@ -54,25 +54,66 @@ public:
     // }
 
     // Approach3: Monotonic Stack
+    // Intuition:
+    // We use a decreasing stack to identify "valleys" where water can be trapped.
+    // Each time we find a bar taller than the top of the stack, it means we've
+    // discovered a right boundary for one or more valleys.
+    //
+    // When a bar is popped as `top`, we compute the water directly above it. The
+    // left boundary is now `st.top()` (after popping), and the right boundary is
+    // the current bar. The same physical bar can later serve as a left boundary
+    // or even become a bottom of a larger valley if an even taller right boundary
+    // appears. This is why the algorithm sometimes computes water involving the
+    // same bar at different times.
+    //
+    // This step-by-step, "inside-out" processing ensures that each bounded
+    // region is computed exactly once without overcounting.
+
+    // Time: O(n). For every element, they can at most got pushed and popped one time.
+    // Space: O(n)
+
+    // int trap(vector<int>& height) {
+    //     int n = height.size();
+    //     stack<int> st;
+    //     int amount = 0;
+
+    //     for (int i = 0; i < n; i++) {
+    //         while (!st.empty() && height[st.top()] < height[i]) {
+    //             int top = st.top();
+    //             st.pop();
+    //             if (st.empty()) break;
+    //             int h_bounded = min(height[st.top()], height[i]) - height[top];
+    //             int w_bounded = i - st.top() - 1;
+    //             amount += h_bounded * w_bounded;
+    //         }
+    //         st.push(i);
+    //     }
+
+    //     return amount;
+    // }
+
+    // Approach4: Two Pointers
 
     int trap(vector<int>& height) {
         int n = height.size();
-        stack<int> st;
         int amount = 0;
+        int left = 0, right = n - 1;
+        int l_max = height[left], r_max = height[right];
 
-        for (int i = 0; i < n; i++) {
-            while (!st.empty() && height[st.top()] < height[i]) {
-                int top = st.top();
-                st.pop();
-                if (st.empty()) break;
-                int h_bounded = min(height[st.top()], height[i]) - height[top];
-                int w_bounded = i - st.top() - 1;
-                amount += h_bounded * w_bounded;
+        while (left < right) {
+            int h_bound = min(l_max, r_max);
+            if (height[left] < height[right]) {
+                if (h_bound > height[left]) amount += h_bound - height[left];
+                left++;
+            } else {
+                if (h_bound > height[right]) amount += h_bound - height[right];
+                right--;
             }
-            st.push(i);
+            
+            l_max = max(l_max, height[left]);
+            r_max = max(r_max, height[right]);
         }
 
         return amount;
     }
-
 };
