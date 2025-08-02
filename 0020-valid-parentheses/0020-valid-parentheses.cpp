@@ -10,11 +10,10 @@ public:
             if (s[i] == '(' || s[i] == '[' || s[i] == '{') {
                 st.push(s[i]);
             } else {
-                 if (st.top() == '(' && s[i] == ')' || st.top() == '[' && s[i] == ']' || st.top() == '{' && s[i] == '}') {
-                    st.pop();
-                 } else {
+                if (st.size() == 0) return false;
+                if (!(st.top() == '(' && s[i] == ')' || st.top() == '[' && s[i] == ']' || st.top() == '{' && s[i] == '}'))
                     return false;
-                 }
+                st.pop();
             }
         }
 
