@@ -92,7 +92,28 @@ public:
     //     return amount;
     // }
 
-    // Approach4: Two Pointers
+    // Approach 4: Two Pointers
+    // Intuition:
+    // For each bar, the amount of water it can trap is determined by the minimum of the highest bar on its left
+    // and the highest bar on its right. In other words, water at each position = min(max_left, max_right) - height[i].
+    //
+    // To implement this efficiently, we can use two pointers: one starting from the left, and one from the right.
+    // We also maintain the maximum heights we've seen so far from the left (l_max) and right (r_max).
+    //
+    // The key insight is: At any step, whichever side has the smaller current max (l_max or r_max) is the limiting factor 
+    // for water on that side. If l_max < r_max, we know that the water trapped at the left pointer depends only on l_max,
+    // because no matter how tall the bar is to the right, l_max is the bottleneck for the current position.
+    //
+    // So:
+    // - When l_max < r_max: we process the left pointer. The water trapped at this bar is l_max - height[left].
+    //   We then update l_max if needed and move the left pointer inward.
+    // - When r_max <= l_max: we process the right pointer, since r_max is the bottleneck.
+    //   The water trapped at this bar is r_max - height[right]. We update r_max if needed and move the right pointer inward.
+    //
+    // We continue until the pointers meet. This way, we only need a single pass through the array, and no extra space.
+    //
+    // Time Complexity: O(n) -- each bar is visited at most once.
+    // Space Complexity: O(1) -- only a few variables are used for tracking state.
 
     int trap(vector<int>& height) {
         int n = height.size();
