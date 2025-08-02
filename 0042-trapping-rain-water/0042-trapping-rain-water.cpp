@@ -100,18 +100,16 @@ public:
         int left = 0, right = n - 1;
         int l_max = height[left], r_max = height[right];
 
-        while (left < right) {
-            int h_bound = min(l_max, r_max);
-            if (height[left] < height[right]) {
-                if (h_bound > height[left]) amount += h_bound - height[left];
+        while (left <= right) {
+            if (l_max < r_max) {
+                l_max = max(l_max, height[left]);
+                amount += l_max - height[left];
                 left++;
             } else {
-                if (h_bound > height[right]) amount += h_bound - height[right];
+                r_max = max(r_max, height[right]);
+                amount += r_max - height[right];
                 right--;
             }
-            
-            l_max = max(l_max, height[left]);
-            r_max = max(r_max, height[right]);
         }
 
         return amount;
