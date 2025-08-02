@@ -2,6 +2,8 @@ class Solution {
 public:
     // Approach: Stack. use Stack to store the "(", "[", and "{" and pop them
     // if get their pair
+    // Time: O(n)
+    // Space: O(n)
 
     bool isValid(string s) {
         stack<int> st;
