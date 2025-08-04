@@ -45,6 +45,9 @@ public:
     // }
 
     // Approach2:
+    // 1. get the middle node that divides the linked list into two lists with the same length. if the number is odd, then split into n and n - 1.
+    // 2. reverse the second list
+    // 3. merge the two list
     // Time: O(n)
     // Space: O(1)
 
