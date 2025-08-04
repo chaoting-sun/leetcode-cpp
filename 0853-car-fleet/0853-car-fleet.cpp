@@ -32,7 +32,6 @@ public:
         vector<double> sorted_time(n);
         for (int i = 0; i < n; i++) sorted_time[i] = time[time_ids[i]];
 
-
         // 1. find the number of larger values in the array
         // int n_car_fleets = 1;
         // double max_val = sorted_time[0];
