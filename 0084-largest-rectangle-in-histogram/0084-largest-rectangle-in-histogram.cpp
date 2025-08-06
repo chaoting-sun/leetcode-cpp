@@ -108,6 +108,7 @@ public:
     // Approach3.2: Optimize the 3.1 Method
 
     int largestRectangleArea(vector<int>& heights) {
+        // trick
         heights.insert(heights.begin(), 0);
         heights.push_back(0);
         
