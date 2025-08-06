@@ -1,6 +1,7 @@
 class Solution {
 public:
     // Approach: binary search on the first column to get the row and then binary search on the row to find the value
+    // Tutorial: https://www.cnblogs.com/grandyang/p/4323301.html
     // Time: O(log(n*m))
     // Space: O(1)
 
