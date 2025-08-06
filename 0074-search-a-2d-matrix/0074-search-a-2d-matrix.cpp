@@ -8,27 +8,28 @@ public:
         int n = matrix.size();
         int m = matrix[0].size();
 
-        if (target < matrix[0][0] || target > matrix[n - 1][m - 1]) return false;
-
-        int top = 0, bottom = n - 1;
-        while (top + 1 < bottom) {
+        // find the first value that is larger than target
+        int top = 0, bottom = n;
+        while (top < bottom) {
             int mid = (top + bottom) / 2;
-            if (matrix[mid][0] >= target) {
+            if (matrix[mid][0] < target) {
+                top = mid + 1;
+            } else if (matrix[mid][0] > target) {
                 bottom = mid;
-            } else if (matrix[mid][0] < target) {
-                top = mid;
+            } else {
+                return true;
             }
         }
 
-        int row = target >= matrix[bottom][0] ? bottom : top;
+        int row = top == 0 ? 0 : top - 1;
 
-        int left = 0, right = m - 1;
-        while (left <= right) {
+        int left = 0, right = m;
+        while (left < right) {
             int mid = (left + right) / 2;
-            if (matrix[row][mid] > target) {
-                right = mid - 1;
-            } else if (matrix[row][mid] < target) {
+            if (matrix[row][mid] < target) {
                 left = mid + 1;
+            } else if (matrix[row][mid] > target) {
+                right = mid;
             } else {
                 return true;
             }
