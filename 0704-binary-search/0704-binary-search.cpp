@@ -1,5 +1,8 @@
 class Solution {
 public:
+    // Binary Search
+    // Time: O(logn)
+    // Space: O(1)
     int search(vector<int>& nums, int target) {
         int n = nums.size();
         int left = 0, right = n - 1;
