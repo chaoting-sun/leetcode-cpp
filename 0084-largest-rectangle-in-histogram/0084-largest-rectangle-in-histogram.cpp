@@ -119,7 +119,7 @@ public:
             while (!stk.empty() && heights[stk.top()] > heights[i]) {
                 int height = heights[stk.top()];
                 stk.pop();
-                int width = stk.empty() ? i : i - stk.top() - 1;
+                int width = i - stk.top() - 1;
                 max_area = max(max_area, height * width);
             }
             stk.push(i);
