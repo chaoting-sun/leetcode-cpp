@@ -40,7 +40,7 @@ public:
     // 1. The widest possible rectangle with height equal to the height of the shortest bar.
     // 2. The largest rectangle confined to the left of the shortest bar(subproblem).
     // 3. The largest rectangle confined to the right of the shortest bar(subproblem).
-    // Approach: Divide and Conquer
+    // Approach2: Divide and Conquer
     // Time: O(n*log(n)) in average case. but O(n^2) if heights is sorted
     // Space: O(1)
 
@@ -63,42 +63,66 @@ public:
     //     return divide_and_conquer(heights, 0, n - 1);
     // }
 
-    // Intuition: Monotonic Stack
+    // Intuition: For each height, the largest rectangle it can make is bounded by the previous
+    // smaller height and the next smaller height. So we record the nextSmaller and prevSmaller
+    // array and compute the maximum height by comparing all those ones.
+    // Approach3.1: Monotonic stack + prev/next array
+    // Tutorial: https://www.youtube.com/watch?v=mesaogfSjD4
     // Time: O(n)
     // Space: O(n)
 
+    // int largestRectangleArea(vector<int>& heights) {
+    //     int n = heights.size();
+    //     stack<int> stk;
+
+    //     vector<int> nextSmaller(n, n);
+    //     for (int i = 0; i < n; i++) {
+    //         while (!stk.empty() && heights[stk.top()] > heights[i]) {
+    //             nextSmaller[stk.top()] = i;
+    //             stk.pop();
+    //         }
+    //         stk.push(i);
+    //     }
+
+    //     while (!stk.empty()) stk.pop();
+
+    //     vector<int> prevSmaller(n, -1);
+    //     for (int i = n - 1; i >= 0; i--) {
+    //         while (!stk.empty() && heights[stk.top()] > heights[i]) {
+    //             prevSmaller[stk.top()] = i;
+    //             stk.pop();
+    //         }
+    //         stk.push(i);
+    //     }
+
+    //     int max_area = -1;
+
+    //     for (int i = 0; i < n; i++) {
+    //         int area = heights[i] * (nextSmaller[i] - prevSmaller[i] - 1);
+    //         max_area = max(max_area, area);
+    //     }
+
+    //     return max_area;
+    // }
+
+    // Approach3.2: Optimize the 3.1 Method
+
     int largestRectangleArea(vector<int>& heights) {
+        heights.insert(heights.begin(), 0);
+        heights.push_back(0);
+        
         int n = heights.size();
         stack<int> stk;
-
-        vector<int> nextSmaller(n, n);
-        for (int i = 0; i < n; i++) {
-            while (!stk.empty() && heights[stk.top()] > heights[i]) {
-                nextSmaller[stk.top()] = i;
-                stk.pop();
-            }
-            stk.push(i);
-        }
-
-        while (!stk.empty()) stk.pop();
-
-        vector<int> prevSmaller(n, -1);
-        for (int i = n - 1; i >= 0; i--) {
-            while (!stk.empty() && heights[stk.top()] > heights[i]) {
-                prevSmaller[stk.top()] = i;
-                stk.pop();
-            }
-            stk.push(i);
-        }
-
-        for (int i = 0; i < n; i++) cout << nextSmaller[i] << " ";
-        for (int i = 0; i < n; i++) cout << prevSmaller[i] << " ";
-
-        int max_area = -1;
+        int max_area = 0;
 
         for (int i = 0; i < n; i++) {
-            int area = heights[i] * (nextSmaller[i] - prevSmaller[i] - 1);
-            max_area = max(max_area, area);
+            while (!stk.empty() && heights[stk.top()] > heights[i]) {
+                int height = heights[stk.top()];
+                stk.pop();
+                int width = stk.empty() ? i : i - stk.top() - 1;
+                max_area = max(max_area, height * width);
+            }
+            stk.push(i);
         }
 
         return max_area;
