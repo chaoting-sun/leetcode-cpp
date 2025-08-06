@@ -108,8 +108,10 @@ public:
     // Approach3.2: Optimize the 3.1 Method
 
     int largestRectangleArea(vector<int>& heights) {
-        // trick
+        // to avoid case like 3, 2, ...
+        // when loop to index = 1, and pop index = 0, then there is no left index to compute
         heights.insert(heights.begin(), 0);
+        // to clear the stack in one pass
         heights.push_back(0);
         
         int n = heights.size();
