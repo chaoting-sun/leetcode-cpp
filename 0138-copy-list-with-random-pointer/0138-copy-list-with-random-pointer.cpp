@@ -99,41 +99,84 @@ public:
 
 // };
 
-// Approach2: Iteration
+// Approach3: Iteration with a map
 
 // Time: O(n)
 // Space: O(n)
+
+// class Solution {
+// public:
+//     Node* copyRandomList(Node* head) {
+//         if (!head) return nullptr;
+        
+//         unordered_map<Node*, Node*> node_map;        
+//         Node* dummy = new Node(0);
+        
+//         Node* curr = head;
+//         Node* curr_copy = dummy;
+
+//         while (curr) {
+//             Node *new_copy = new Node(curr->val);
+//             curr_copy->next = new_copy;
+//             node_map[curr] = new_copy;
+
+//             curr_copy = curr_copy->next;
+//             curr = curr->next;
+//         }
+        
+//         curr = head;
+//         curr_copy = dummy->next;
+
+//         while (curr) {
+//             curr_copy->random = node_map[curr->random];
+//             curr = curr->next;
+//             curr_copy = curr_copy->next;
+//         }
+
+//         return dummy->next;
+//     }
+// };
+
+// Approach4: Iteration with interweaving
+
+// Time: O(n)
+// Space: O(1)
 
 class Solution {
 public:
     Node* copyRandomList(Node* head) {
         if (!head) return nullptr;
-        
-        unordered_map<Node*, Node*> node_map;        
-        Node* dummy = new Node(0);
-        
+
         Node* curr = head;
-        Node* curr_copy = dummy;
 
+        // A->B->C ==> A->A'->B->B'->C->C'
         while (curr) {
-            Node *new_copy = new Node(curr->val);
-            curr_copy->next = new_copy;
-            node_map[curr] = new_copy;
-
-            curr_copy = curr_copy->next;
-            curr = curr->next;
+            Node* tmp = new Node(curr->val);
+            tmp->next = curr->next;
+            curr->next = tmp;
+            curr = tmp->next;
         }
-        
+
         curr = head;
-        curr_copy = dummy->next;
 
         while (curr) {
-            curr_copy->random = node_map[curr->random];
-            curr = curr->next;
-            curr_copy = curr_copy->next;
+            if (curr->random) curr->next->random = curr->random->next;
+            curr = curr->next->next;
         }
 
-        return dummy->next;
-    }
+        // A->A'->B->B'->C->C' => A->B->C and A'->B'->C'
+        curr = head;
+        Node* head_copy = head->next;
+        Node* curr_copy = head_copy;
 
+        while (curr) {
+            curr->next = curr_copy->next;
+            if (curr_copy->next) {
+                curr_copy->next = curr_copy->next->next;
+                curr_copy = curr_copy->next;
+            }
+            curr = curr->next;
+        }
+        return head_copy;
+    }
 };
