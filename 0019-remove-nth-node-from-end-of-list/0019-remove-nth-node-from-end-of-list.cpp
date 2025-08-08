@@ -10,8 +10,8 @@
  */
 class Solution {
 public:
-    // Approach: Two Pass
-    // Time: O(n)
+    // Approach1: Two Pass
+    // Time: O(sz + n) = O(sz) (sz = the list size)
     // Space: O(1)
 
     // ListNode* removeNthFromEnd(ListNode* head, int n) {
@@ -36,8 +36,8 @@ public:
     // }
 
 
-    // Approach: Two Pass. Two Pointers + Fast and Slow
-    // Time: O(n)
+    // Approach2: Two Pass. Two Pointers + Fast and Slow
+    // Time: O(sz + n) = O(sz) (sz = the list size)
     // Space: O(1)
 
     ListNode* removeNthFromEnd(ListNode* head, int n) {
