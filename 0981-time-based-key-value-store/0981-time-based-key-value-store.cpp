@@ -60,7 +60,7 @@ public:
     //     return prev(it)->second;
     // }
 
-    // Approach: Array + Binary Search. We can use array as "all the timestamps of set are strictly increasing"
+    // Approach3: Array + Binary Search. We can use array as "all the timestamps of set are strictly increasing"
     // Time: suppose that set() is called M times, get() is called N times, and the average length of key and value strings is L
     // - set(): O(1) -> total: O(M)
     // - get(): we use binary search (logM), and each comparison needs O(L), so in total it's O(N*(L*logM))
@@ -83,6 +83,7 @@ public:
         int left = 0, right = n;
 
         // find the first value that is larger than (>) timestamp
+        // we can also use upper_bound(timestamp), which find the first value in the vector that is larger than the timestamp
         while (left < right) {
             int mid = left + (right - left) / 2;
             if (timeMap[key][mid].first <= timestamp) {
