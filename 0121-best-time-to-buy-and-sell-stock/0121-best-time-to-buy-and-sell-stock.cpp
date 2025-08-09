@@ -1,6 +1,6 @@
 class Solution {
 public:
-    // Approach1: loop the prices and keep updating the min. prices and max. profits.
+    // Approach1: loop the prices and keep updating the min. price and max. profit.
     // Time: O(n)
     // Space: O(1)
 
