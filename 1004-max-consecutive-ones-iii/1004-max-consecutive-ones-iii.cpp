@@ -1,5 +1,9 @@
 class Solution {
 public:
+    // Approach1: Sliding Window
+    // Time: O(n)
+    // Space: O(1)
+
     int longestOnes(vector<int>& nums, int k) {
         int left = 0, right = 0;
         int max_cnt = 0;
