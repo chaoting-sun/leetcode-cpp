@@ -11,18 +11,44 @@
  */
 class Solution {
 public:
-    // Approach: Recursion
+    // Approach1: Recursion
     // Time: O(n)
-    // Space: O(min(n,m)) in worst case. O(log(min(n,m)))
+    // Space: O(n) in worst case (for complete unbalanced tree)
+
+    // bool isSameTree(TreeNode* p, TreeNode* q) {
+    //     if (!p && !q) return true;
+
+    //     if ((p && !q) || (!p && q)) return false;
+    //     else if (p->val != q->val) return false;
+
+    //     bool isLeftSame = isSameTree(p->left, q->left);
+    //     bool isRightSame = isSameTree(p->right, q->right);
+    //     return isLeftSame && isRightSame;
+    // }
+
+    // Approach2: Iteration
+    // Time: O(n)
+    // Space: O(n)
 
     bool isSameTree(TreeNode* p, TreeNode* q) {
-        if (!p && !q) return true;
+        queue<pair<TreeNode*, TreeNode*>> nodes;
 
-        if ((p && !q) || (!p && q)) return false;
-        else if (p->val != q->val) return false;
+        nodes.push({ p, q });
 
-        bool isLeftSame = isSameTree(p->left, q->left);
-        bool isRightSame = isSameTree(p->right, q->right);
-        return isLeftSame && isRightSame;
+        while (!nodes.empty()) {
+            auto curr = nodes.front();
+            nodes.pop();
+            TreeNode* p_node = curr.first;
+            TreeNode* q_node = curr.second;
+
+            if (!p_node && !q_node) continue;
+            if ((!p_node && q_node) || (p_node && !q_node)) return false;
+            if (p_node->val != q_node->val) return false;
+
+            nodes.push({ p_node->left, q_node->left });
+            nodes.push({ p_node->right, q_node->right });
+        }
+
+        return true;
     }
 };
