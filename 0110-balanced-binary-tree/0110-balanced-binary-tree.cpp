@@ -48,12 +48,19 @@ public:
     // Space: O(n). O(n) for skewwed tree, while O(logn) for balanced tree
 
     int height(TreeNode* root) {
-        if (!root) return -1;
+        if (!root) return 0;
         
         int left_height = height(root->left);
-        int right_height = height(root->right);
+        // left subtree is not balanced
+        if (left_height == -1) return -1;
 
+        int right_height = height(root->right);
+        // right subtree is not balanced
+        if (right_height == -1) return -1;
+        
+        // the current tree is not balanced
         if (abs(left_height - right_height) > 1) return -1;
+        
         int curr_height = max(left_height, right_height) + 1;
         return curr_height;
     }
