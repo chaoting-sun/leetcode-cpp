@@ -5,6 +5,8 @@ public:
     // we also maintain two variables: have and need:
     //  - "have" is the number of distinct characters we have found, in which the number of each character is more than that in the t_counts in [left, right]
     //  - "need" is the total number of distinct characters we need to found. ex: if t = "abccc" -> need = 3
+    // Time: O(len(s) + len(t))
+    // Space: O(1)
 
     string minWindow(string s, string t) {
         unordered_map<char, int> s_counts, t_counts;
