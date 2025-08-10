@@ -40,6 +40,7 @@ public:
     //     return max(left_h, right_h);
     // }
 
+
     // Approach2: Iteration by BFS
     // Time: O(n). we need to traverse all nodes
     // Space: O(n). in worst case, the tree is a complete binary tree. There will be n/2 nodes at the last level.
@@ -61,5 +62,5 @@ public:
             }
         }
         return h;
-    }  
+    }
 };
