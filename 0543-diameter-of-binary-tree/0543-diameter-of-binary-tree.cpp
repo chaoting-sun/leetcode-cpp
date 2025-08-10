@@ -11,6 +11,10 @@
  */
 class Solution {
 public:
+    // Approach: Recursion
+    // Time: O(n)
+    // Space: O(n) in worst case.
+    
     int recursion(TreeNode* root, int &max_nodes) {
         if (!root) return 0;
 
