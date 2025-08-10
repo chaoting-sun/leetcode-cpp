@@ -16,26 +16,26 @@ public:
     // Time: O(n). we need to traverse all nodes in the tree
     // Space: O(n). the tree in worst case has height = n
 
-    int recursion(TreeNode* root, int h) {
-        if (!root) return h;
+    // int recursion(TreeNode* root, int h) {
+    //     if (!root) return h;
 
-        int left_h = 1 + recursion(root->left, h);
-        int right_h = 1 + recursion(root->right, h);
+    //     int left_h = 1 + recursion(root->left, h);
+    //     int right_h = 1 + recursion(root->right, h);
         
-        return max(left_h, right_h);
-    }
-
-    int maxDepth(TreeNode* root) {
-        return recursion(root, 0);
-    }
-
-    // simplify
-
-    // int maxDepth(TreeNode* root) {
-    //     if (!root) return 0;
-
-    //     int left_h = 1 + maxDepth(root);
-    //     int right_h = 1 + maxDepth(root);
     //     return max(left_h, right_h);
     // }
+
+    // int maxDepth(TreeNode* root) {
+    //     return recursion(root, 0);
+    // }
+
+    // simplify the code
+
+    int maxDepth(TreeNode* root) {
+        if (!root) return 0;
+
+        int left_h = 1 + maxDepth(root->left);
+        int right_h = 1 + maxDepth(root->right);
+        return max(left_h, right_h);
+    }
 };
