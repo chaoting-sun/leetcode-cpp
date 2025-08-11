@@ -1,5 +1,10 @@
 class Solution {
 public:
+    // Approach: Brute-force Method (Two Pointers)
+    // initiate two pointers p1, p2 at the start of nums1, nums2, comparing them one by one and moving to the medium
+    // Time: O(m + n)
+    // Space: O(1)
+
     double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
         int m = nums1.size(), n = nums2.size();
 
