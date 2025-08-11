@@ -11,25 +11,23 @@
  */
 class Solution {
 public:
-    void recursion(TreeNode* root, int level, int &max_level, unordered_map<int, vector<int>> &level2nodes) {
-        if (!root) return;
-        
-        level2nodes[level].push_back(root->val);
-        max_level = max(max_level, level + 1);
+    // Approach: Preorder traversal
+    // Time: O(n)
+    // Space: O(tree height + # nodes) <= O(2n) = O(n)
 
-        recursion(root->left, level + 1, max_level, level2nodes);
-        recursion(root->right, level + 1, max_level, level2nodes);
+    void recursion(TreeNode* root, int level, vector<vector<int>> &ans) {
+        if (!root) return;
+        if (ans.size() < level + 1) {
+            ans.push_back({});
+        }
+        ans[level].push_back(root->val);
+        recursion(root->left, level + 1, ans);
+        recursion(root->right, level + 1, ans);
     }
 
     vector<vector<int>> levelOrder(TreeNode* root) {
-        unordered_map<int, vector<int>> level2nodes;
-        int level = 0, max_level = 0;
-        recursion(root, level, max_level, level2nodes);
-
-        vector<vector<int>> ans(max_level);
-        for (int i = 0; i < max_level; i++) {
-            ans[i] = level2nodes[i];
-        }
+        vector<vector<int>> ans;
+        recursion(root, 0, ans);
         return ans;
     }
 };
