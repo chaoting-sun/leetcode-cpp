@@ -19,6 +19,9 @@ public:
     // - lrc: left + itself + right
     // the recursion function will return the maximum sum with path ends with the current node
     // to avoid split
+    
+    // Time: O(n)
+    // Space: O(n)
 
     // int max_sum;
 
