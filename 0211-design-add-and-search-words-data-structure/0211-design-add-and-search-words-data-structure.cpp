@@ -2,11 +2,12 @@
 // Time: O(L). L is the length of word. at each step, we either examine or create a node in the trie
 // Space: O(L). In worst case, we create L nodes in the trie
 
-// search
 // Time: O(L*26^m). in worst case, in every level <= L, all characters (26) exists and so do the
 // characters in the next level. Also, suppose that there are m ".", each expand 26 possibilities,
 // so there are 26^m paths. each path has length L, so the time is L*26^m.
-// Space: O(L)
+// Space:
+// - 1st Version: O(L). there will be L recursive stacks where L is the word length
+// - 2nd Version: if there is no ".", then O(1); if there are m ".", then O(m) as there will be recursive stacks
 
 class CharNode {
 public:
@@ -42,6 +43,8 @@ public:
         return searchInNode(word, 0, root);
     }
 
+    // Version 1
+
     // bool searchInNode(string &word, int idx, CharNode* root) {
     //     if (idx >= word.size()) return root->is_word;
 
@@ -59,24 +62,27 @@ public:
     //     return false;
     // }
 
-    bool searchInNode(string &word, int start_idx, CharNode* root) {
+    // Version 2
+
+    bool searchInNode(string &word, int start_idx, CharNode* node) {
         for (int i = start_idx; i < word.size(); i++) {
             char ch = word[i];
 
-            if (ch == '.') {
-                for (auto node: root->children) {
-                    if (searchInNode(word, i + 1, node.second)) {
-                        return true;
+            if (node->children.count(ch)) {
+                node = node->children[ch];
+            } else {
+                if (ch == '.') {
+                    for (auto child: node->children) {
+                        if (searchInNode(word, i + 1, child.second)) {
+                            return true;
+                        }
                     }
                 }
                 return false;
-            } else {
-                if (!root->children.count(ch)) return false;
-                return searchInNode(word, i + 1, root->children[ch]);
             }
         }
 
-        return root->is_word;
+        return node->is_word;
     }
 };
 
