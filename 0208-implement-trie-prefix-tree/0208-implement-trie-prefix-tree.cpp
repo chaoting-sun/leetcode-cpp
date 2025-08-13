@@ -1,19 +1,28 @@
+class TrieNode {
+public:
+    TrieNode* children[26];
+    bool is_leaf; // as the last character of a word
+
+    TrieNode() {
+        for (int i = 0; i < 26; i++) children[i] = nullptr;
+        is_leaf = false;
+    }
+};
+
 class Trie {
 public:
-    Trie* children[26];
-    bool is_leaf;
+    TrieNode* root;
 
     Trie() {
-        for (int i = 0; i < 26; i++) children[i] = nullptr;
-        is_leaf = false; 
+        root = new TrieNode();
     }
     
     void insert(string word) {
-        Trie* curr = this;
+        TrieNode* curr = root;
 
         for (char ch: word) {
             if (!curr->children[ch - 'a']) {
-                curr->children[ch - 'a'] = new Trie();
+                curr->children[ch - 'a'] = new TrieNode();
             }
             curr = curr->children[ch - 'a'];
         }
@@ -21,7 +30,7 @@ public:
     }
     
     bool search(string word) {
-        Trie* curr = this;
+        TrieNode* curr = root;
         
         for (char ch: word) {
             if (!curr->children[ch - 'a']) return false;
@@ -31,7 +40,7 @@ public:
     }
     
     bool startsWith(string prefix) {
-        Trie* curr = this;
+        TrieNode* curr = root;
 
         for (char ch: prefix) {
             if (!curr->children[ch - 'a']) return false;
