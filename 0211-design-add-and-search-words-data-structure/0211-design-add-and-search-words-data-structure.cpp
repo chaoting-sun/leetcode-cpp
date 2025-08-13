@@ -59,7 +59,6 @@ public:
     //     return false;
     // }
 
-
     bool searchInNode(string &word, int start_idx, CharNode* root) {
         for (int i = start_idx; i < word.size(); i++) {
             char ch = word[i];
@@ -72,10 +71,8 @@ public:
                 }
                 return false;
             } else {
-                if (!root->children.count(ch) || !searchInNode(word, i + 1, root->children[ch])) {
-                    return false;
-                }
-                root = root->children[ch];
+                if (!root->children.count(ch)) return false;
+                return searchInNode(word, i + 1, root->children[ch]);
             }
         }
 
