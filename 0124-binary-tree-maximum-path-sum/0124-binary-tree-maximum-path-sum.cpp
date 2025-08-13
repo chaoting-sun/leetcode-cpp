@@ -11,28 +11,60 @@
  */
 class Solution {
 public:
+    // Approach: Recursion. DFS and constantly compute the max path. we only compute the path
+    // under the current node, which includes:
+    // - c: itself
+    // - lc: left + itself
+    // - rc: right + itself
+    // - lrc: left + itself + right
+    // the recursion function will return the maximum sum with path ends with the current node
+    // to avoid split
+
+    // int max_sum;
+
+    // int gainFromSubtree(TreeNode* root) {
+    //     if (!root) return 0;
+
+    //     int _l_sum = recursion(root->left);
+    //     int _r_sum = recursion(root->right);
+
+    //     int l_sum = _l_sum + root->val;
+    //     int c_sum = root->val;
+    //     int r_sum = _r_sum + root->val;
+    //     int lcr_sum = _l_sum + root->val + _r_sum;
+
+    //     int root_max_sum = max(lcr_sum, max(c_sum, max(l_sum, r_sum)));
+
+    //     max_sum = max(max_sum, root_max_sum);
+    //     return max(c_sum, max(l_sum, r_sum));
+    // }
+
+    // int maxPathSum(TreeNode* root) {
+    //     max_sum = INT_MIN;
+    //     gainFromSubtree(root);
+    //     return max_sum;
+    // }
+
+    // simplify
+
     int max_sum;
 
-    int recursion(TreeNode* root) {
+    int gainFromSubtree(TreeNode* root) {
         if (!root) return 0;
 
-        int left_len = recursion(root->left);
-        int right_len = recursion(root->right);
+        int l_sum = gainFromSubtree(root->left);
+        int r_sum = gainFromSubtree(root->right);
 
-        int l_sum = left_len + root->val;
-        int c_sum = root->val;
-        int r_sum = right_len + root->val;
-        int lcr_sum = left_len + root->val + right_len;
+        l_sum = max(l_sum, 0);
+        r_sum = max(r_sum, 0);
+        max_sum = max(max_sum, l_sum + root->val + r_sum);
 
-        int root_max_sum = max(lcr_sum, max(c_sum, max(l_sum, r_sum)));
-
-        max_sum = max(max_sum, root_max_sum);
-        return max(c_sum, max(l_sum, r_sum));
+        return max(l_sum, r_sum) + root->val;
     }
 
     int maxPathSum(TreeNode* root) {
         max_sum = INT_MIN;
-        recursion(root);
+        gainFromSubtree(root);
         return max_sum;
     }
 };
