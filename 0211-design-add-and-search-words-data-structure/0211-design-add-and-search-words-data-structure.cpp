@@ -1,30 +1,29 @@
-class Character {
+class CharNode {
 public:
-    Character* children[26];
+    unordered_map<char, CharNode*> children;
     bool is_word;
 
-    Character() {
-        for (int i = 0; i < 26; i++) children[i] = nullptr;
+    CharNode() {
         is_word = false;
     }
 };
 
 class WordDictionary {
 public:
-    Character* root;
+    CharNode* root;
 
     WordDictionary() {
-        root = new Character();
+        root = new CharNode();
     }
     
     void addWord(string word) {
-        Character* curr = root;
+        CharNode* curr = root;
 
         for (char ch: word) {
-            if (!curr->children[ch - 'a']) {
-                curr->children[ch - 'a'] = new Character();
+            if (!curr->children.count(ch)) {
+                curr->children[ch] = new CharNode();
             }
-            curr = curr->children[ch - 'a'];
+            curr = curr->children[ch];
         }
         curr->is_word = true;
     }
@@ -33,18 +32,17 @@ public:
         return searchInNode(word, 0, root);
     }
 
-    bool searchInNode(string &word, int idx, Character* root) {
+    bool searchInNode(string &word, int idx, CharNode* root) {
         if (idx >= word.size()) return root->is_word;
 
-        char ch = word[idx];
-        if (ch == '.') {
-            for (int i = 0; i < 26; i++) {
-                if (root->children[i] && searchInNode(word, idx + 1, root->children[i])) {
+        if (word[idx] == '.') {
+            for (auto node: root->children) {
+                if (searchInNode(word, idx + 1, node.second)) {
                     return true;
                 }
             }
         } else {
-            if (root->children[ch - 'a'] && searchInNode(word, idx + 1, root->children[ch - 'a'])) {
+            if (root->children.count(word[idx]) && searchInNode(word, idx + 1, root->children[word[idx]])) {
                 return true;
             }
         }
