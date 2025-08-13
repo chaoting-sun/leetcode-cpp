@@ -7,7 +7,7 @@
 // so there are 26^m paths. each path has length L, so the time is L*26^m.
 // Space:
 // - 1st Version: O(L). there will be L recursive stacks where L is the word length
-// - 2nd Version: if there is no ".", then O(1); if there are m ".", then O(m) as there will be recursive stacks
+// - 2nd Version: if there is no ".", then O(1); if there are m ".", then O(m) as the depth of recursive stack is m
 
 class CharNode {
 public:
