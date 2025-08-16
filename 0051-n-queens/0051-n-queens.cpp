@@ -80,42 +80,48 @@ public:
     // Space: O(n)
 
     vector<vector<string>> ans;
-    set<int> colSet, posSet, negSet;
+    set<int> colUsed, posUsed, negUsed;
 
-    void backtrack(int n, int row, vector<string>& placement) {
+    vector<string> buildPositionString(vector<int>& positions) {
+        vector<string> posString;
+        int n = positions.size();
+        
+        for (int i = 0; i < n; i++) {
+            posString.push_back(string(n, '.').replace(positions[i], 1, "Q"));
+        }
+        return posString;
+    }
+
+    void backtrack(int n, int row, vector<string>& placement, vector<int>& positions) {
         if (row == n) {
-            ans.push_back(placement);
+            ans.push_back(buildPositionString(positions));
             return;
         }
         
         for (int col = 0; col < n; col++) {
-            if (colSet.find(col) != colSet.end()) {
-                continue;
-            }
-            if (posSet.find(col - row) != posSet.end()) {
-                continue;
-            }
-            if (negSet.find(col + row) != negSet.end()) {
-                continue;
-            }
+            if (colUsed.find(col) != colUsed.end()) continue;
+            if (posUsed.find(col - row) != posUsed.end()) continue;
+            if (negUsed.find(col + row) != negUsed.end()) continue;
 
-            colSet.insert(col);
-            posSet.insert(col - row);
-            negSet.insert(col + row);
-            placement.push_back(string(n, '.').replace(col, 1, "Q"));
+            colUsed.insert(col);
+            posUsed.insert(col - row);
+            negUsed.insert(col + row);
+            positions[row] = col;
 
-            backtrack(n, row + 1, placement);
+            backtrack(n, row + 1, placement, positions);
 
-            colSet.erase(col);
-            posSet.erase(col - row);
-            negSet.erase(col + row);
-            placement.pop_back();
+            colUsed.erase(col);
+            posUsed.erase(col - row);
+            negUsed.erase(col + row);
+            positions[row] = -1;
         }
     }
 
     vector<vector<string>> solveNQueens(int n) {
         vector<string> placement;
-        backtrack(n, 0, placement);
+        vector<int> positions(n, -1);
+
+        backtrack(n, 0, placement, positions);
         return ans;
     }    
 };
