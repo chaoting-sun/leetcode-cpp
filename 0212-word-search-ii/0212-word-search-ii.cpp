@@ -32,23 +32,26 @@ public:
     }
 
     void findWord(vector<vector<char>>& board, int i, int j, TrieNode* curr, vector<vector<bool>>& visited) {
+        // handle edge case
         if (i < 0 || i >= m || j < 0 || j >= n) return;
         if (!curr->children[board[i][j] - 'a']) return;
         if (visited[i][j]) return;
 
+        // enter the cell
         visited[i][j] = true;
-
         curr = curr->children[board[i][j] - 'a'];
         if (!curr->word.empty()) {
             ans.push_back(curr->word);
             curr->word.clear();
         }
 
+        // enter the adjacent cells
         findWord(board, i + 1, j, curr, visited);
         findWord(board, i - 1, j, curr, visited);
         findWord(board, i, j + 1, curr, visited);
         findWord(board, i, j - 1, curr, visited);
 
+        // unvisit
         visited[i][j] = false;
     }
 
