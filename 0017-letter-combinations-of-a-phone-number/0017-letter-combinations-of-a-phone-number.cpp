@@ -1,6 +1,10 @@
 class Solution {
 public:
     // Approach: backtracking
+    // Time: O(4^n * n). 4 is maximum number of additional paths for every digits (for 7 or 9).
+    // if there are n digits, there are at most 4^n possible solutions. to build a subtring we
+    // need O(n) time
+    // Space: O(n). we recursively explore n digits so there are n recursive stacks.
 
     vector<string> ans;
 
