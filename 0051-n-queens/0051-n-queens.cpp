@@ -1,8 +1,14 @@
 class Solution {
 public:
+    // Approach: put the queen row by row and check if each position is valid
+    // Time: O(n*n!). in 1st row, we can choose from n position. in 2nd row, we at most can
+    // choose from n - 2 position, this pattern continues, resulting in an approximate time
+    // complexity of n!. for each position, we need O(n) to check the validity.
+    // Space: O(n^2)
+
     vector<vector<string>> ans;
 
-    void backtrack(int n, int row, vector<vector<bool>>& is_placed, vector<string> placement) {
+    void backtrack(int n, int row, vector<vector<bool>>& is_placed, vector<string>& placement) {
         if (row == n) {
             ans.push_back(placement);
             return;
@@ -47,9 +53,7 @@ public:
             if (!valid) continue;
 
             is_placed[row][col] = true;
-            string place_row = "";
-            for (int i = 0; i < n; i++) place_row += i == col ? "Q" : ".";
-            placement.push_back(place_row);
+            placement.push_back(string(n, '.').replace(col, 1, "Q"));
 
             backtrack(n, row + 1, is_placed, placement);
 
