@@ -70,7 +70,14 @@ public:
     //     return ans;
     // }
 
-    // Approach2: 
+    // Approach2: based on the first approach, we aim to minimize the time to check if a position is valid for each col
+    // to check the col: we use colSet to store those cols placed with a queue
+    // to check the left-top diagonal, we use posSet to store those col - row
+    // to check the right-top diagonal, we use negSet to store those col + row
+    // So the validation changes from O(n) to O(1)
+    
+    // Time: O(n!)
+    // Space: O(n)
 
     vector<vector<string>> ans;
     set<int> colSet, posSet, negSet;
