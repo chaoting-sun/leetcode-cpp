@@ -80,7 +80,7 @@ public:
     // Space: O(n)
 
     vector<vector<string>> ans;
-    set<int> colUsed, posUsed, negUsed;
+    unordered_set<int> colUsed, posUsed, negUsed;
 
     vector<string> buildPositionString(vector<int>& positions) {
         vector<string> posString;
