@@ -15,7 +15,7 @@ public:
             max_heap.push(val);
         }
 
-        while (!min_heap.empty() && !max_heap.empty() && min_heap.top() < max_heap.top()) {
+        if (!min_heap.empty() && !max_heap.empty() && min_heap.top() < max_heap.top()) {
             int min_tmp = min_heap.top();
             int max_tmp = max_heap.top();
             min_heap.pop();
