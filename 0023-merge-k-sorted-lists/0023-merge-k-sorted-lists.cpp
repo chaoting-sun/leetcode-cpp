@@ -9,16 +9,26 @@
  * };
  */
 
-struct NodeMin {
-    bool operator()(ListNode* a, ListNode* b) const {
-        return a->val > b->val;
-    }
-};
+// Time: O(n*logk). n is the total number of nodes. k is the number of lists
+
+// method1
+// struct NodeMin {
+//     bool operator()(ListNode* a, ListNode* b) const {
+//         return a->val > b->val;
+//     }
+// };
 
 class Solution {
 public:
     ListNode* mergeKLists(vector<ListNode*>& lists) {
-        priority_queue<ListNode*, vector<ListNode*>, NodeMin> pq;
+        // method1
+        // priority_queue<ListNode*, vector<ListNode*>, NodeMin> pq;
+
+        // method2 
+        auto compare = [](ListNode* a, ListNode* b) {
+            return a->val > b->val;
+        };
+        priority_queue<ListNode*, vector<ListNode*>, decltype(compare)> pq;
 
         for (int i = 0; i < lists.size(); i++) {
             if (lists[i]) {
