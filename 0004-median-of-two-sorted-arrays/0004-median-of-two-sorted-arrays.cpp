@@ -74,17 +74,16 @@ public:
             } else if (c2_left_val > c1_right_val) {
                 l1 = mid1 + 1;
             } else {
-                break;
+                // even
+                if ((n1 + n2) % 2 == 0) {
+                    return (max(c1_left_val, c2_left_val) + min(c1_right_val, c2_right_val)) / 2.0;
+                }
+                // odd
+                else {
+                    return max(c1_left_val, c2_left_val);
+                }                
             }
         }
-
-        // even
-        if ((n1 + n2) % 2 == 0) {
-            return (max(c1_left_val, c2_left_val) + min(c1_right_val, c2_right_val)) / 2.0;
-        }
-        // odd
-        else {
-            return max(c1_left_val, c2_left_val);
-        }
+        return 0;
     }
 };
