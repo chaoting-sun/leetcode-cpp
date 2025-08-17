@@ -7,24 +7,22 @@ public:
         
     }
     
+    // Time: O(logn)
     void addNum(int num) {
         min_heap.push(num);
-        if (min_heap.size() - max_heap.size() > 1) {
-            int val = min_heap.top();
-            min_heap.pop();
-            max_heap.push(val);
-        }
+        
+        // two cases: size = (n + 1, n) or (n, n)
 
-        if (!min_heap.empty() && !max_heap.empty() && min_heap.top() < max_heap.top()) {
-            int min_tmp = min_heap.top();
-            int max_tmp = max_heap.top();
-            min_heap.pop();
+        max_heap.push(min_heap.top());
+        min_heap.pop();
+
+        if (min_heap.size() < max_heap.size()) {
+            min_heap.push(max_heap.top());
             max_heap.pop();
-            min_heap.push(max_tmp);
-            max_heap.push(min_tmp);
         }
     }
     
+    // Time: O(1)
     double findMedian() {
         int total_n = min_heap.size() + max_heap.size();
         if (total_n == 0) return -1;
