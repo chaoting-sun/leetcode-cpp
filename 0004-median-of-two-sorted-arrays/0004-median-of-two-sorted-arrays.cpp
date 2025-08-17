@@ -69,12 +69,12 @@ public:
             c2_right_val = mid2 == n2 ? INT_MAX : nums2[mid2];
 
             // termination condition
-            if (c1_left_val <= c2_right_val && c2_left_val <= c1_right_val) {
-                break;
-            } else if (c1_left_val > c2_right_val) {
+            if (c1_left_val > c2_right_val) {
                 r1 = mid1;
-            } else {
+            } else if (c2_left_val > c1_right_val) {
                 l1 = mid1 + 1;
+            } else {
+                break;
             }
         }
 
