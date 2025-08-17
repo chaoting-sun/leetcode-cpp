@@ -13,12 +13,12 @@ public:
     }
     
     void postTweet(int userId, int tweetId) {
-        posts[userId].push_back({ time, tweetId });
+        posts[userId].emplace_back(time, tweetId);
         time++;   
     }
     
     vector<int> getNewsFeed(int userId) {
-        priority_queue<tuple<int, int, int>> maxHeap; // (time, user id, tweet index)
+        priority_queue<tuple<int, int, int>> pq; // (time, user id, tweet index)
         unordered_map<int, int> tweetIndexes;
 
         if (posts.count(userId)) {
@@ -33,22 +33,22 @@ public:
         for (auto tweet: tweetIndexes) {
             int uid = tweet.first;
             int idx = tweet.second;
-            maxHeap.push({ posts[uid][idx].first, uid, idx });
+            pq.emplace(posts[uid][idx].first, uid, idx);
         }
 
         vector<int> ans;
-        int remainings = tweetIndexes.size();
 
-        while (ans.size() < 10 && !maxHeap.empty()) {
-            auto tweet = maxHeap.top();
-            maxHeap.pop();
+        // Time: O(10*logk)
+        while (ans.size() < 10 && !pq.empty()) {
+            auto tweet = pq.top();
+            pq.pop();
             int uid = get<1>(tweet);
             int idx = get<2>(tweet);
             int postId = posts[uid][idx].second;
             ans.push_back(postId);
             
             if (idx > 0) {
-                maxHeap.push({ posts[uid][idx - 1].first, uid, idx - 1 });
+                pq.emplace(posts[uid][idx - 1].first, uid, idx - 1);
             }
         }
 
