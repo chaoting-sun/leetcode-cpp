@@ -1,6 +1,6 @@
 class Solution {
 public:
-    // Approach: Brute-force Method (Two Pointers)
+    // Approach1: Brute-force Method (Two Pointers)
     // initiate two pointers p1, p2 at the start of nums1, nums2, comparing them one by one and moving to the medium
     // Time: O(m + n)
     // Space: O(1)
@@ -45,6 +45,8 @@ public:
     //     return is_odd ? medium_j : (medium_i + medium_j) / 2.0;
 
     // }
+
+    // Approach2: Binary Search
 
     double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
         // binary search on the smaller array to minimize the search space
