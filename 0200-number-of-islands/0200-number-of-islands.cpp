@@ -1,6 +1,8 @@
 class Solution {
 public:
     // Approach: DFS
+    // Time: (m*n)
+    // Space: O(m*n)
 
     // int m;
     // int n;
@@ -39,34 +41,85 @@ public:
     //     return count;
     // }
 
-    // Approach: DFS (inplace chang)
+    // Approach: DFS (inplace change)
+    // Time: (m*n)
+    // Space: O(m*n)
 
-    void findIsland(vector<vector<char>>& grid, int i, int j) {
-        int m = grid.size();
-        int n = grid[0].size();
+    // void findIsland(vector<vector<char>>& grid, int i, int j) {
+    //     int m = grid.size();
+    //     int n = grid[0].size();
 
-        if (i < 0 || i >= m || j < 0 || j >= n) return;
-        if (grid[i][j] != '1') return;
+    //     if (i < 0 || i >= m || j < 0 || j >= n) return;
+    //     if (grid[i][j] != '1') return;
 
-        grid[i][j] = '0';
+    //     grid[i][j] = '0';
 
-        findIsland(grid, i + 1, j);
-        findIsland(grid, i - 1, j);
-        findIsland(grid, i, j + 1);
-        findIsland(grid, i, j - 1);
-    }
+    //     findIsland(grid, i + 1, j);
+    //     findIsland(grid, i - 1, j);
+    //     findIsland(grid, i, j + 1);
+    //     findIsland(grid, i, j - 1);
+    // }
+
+    // int numIslands(vector<vector<char>>& grid) {
+    //     int m = grid.size();
+    //     int n = grid[0].size();
+        
+    //     int count = 0;
+
+    //     for (int i = 0; i < m; i++) {
+    //         for (int j = 0; j < n; j++) {
+    //             if (grid[i][j] == '1') {
+    //                 findIsland(grid, i, j);
+    //                 count++;
+    //             }
+    //         }
+    //     }
+
+    //     return count;
+    // }
+
+    // BFS
+    // Time: O(n*m)
+    // Space: O(min(n,m))
 
     int numIslands(vector<vector<char>>& grid) {
         int m = grid.size();
         int n = grid[0].size();
-        
         int count = 0;
 
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                if (grid[i][j] == '1') {
-                    findIsland(grid, i, j);
-                    count++;
+                if (grid[i][j] != '1') continue;
+
+                count++;
+
+                queue<pair<int,int>> q_cell;
+                q_cell.push({ i, j });
+
+                while (!q_cell.empty()) {
+                    int size = q_cell.size();
+                    for (int k = 0; k < size; k++) {
+                        int curr_i = q_cell.front().first;
+                        int curr_j = q_cell.front().second;
+                        q_cell.pop();
+
+                        if (curr_i > 0 && grid[curr_i - 1][curr_j] == '1') {
+                            q_cell.push({ curr_i - 1, curr_j });
+                            grid[curr_i - 1][curr_j] = '#';
+                        }
+                        if (curr_i < m - 1 && grid[curr_i + 1][curr_j] == '1') {
+                            q_cell.push({ curr_i + 1, curr_j });
+                            grid[curr_i + 1][curr_j] = '#';
+                        }
+                        if (curr_j > 0 && grid[curr_i][curr_j - 1] == '1') {
+                            q_cell.push({ curr_i, curr_j - 1 });
+                            grid[curr_i][curr_j - 1] = '#';
+                        }
+                        if (curr_j < n - 1 && grid[curr_i][curr_j + 1] == '1') {
+                            q_cell.push({ curr_i, curr_j + 1 });
+                            grid[curr_i][curr_j + 1] = '#';
+                        }
+                    }
                 }
             }
         }
