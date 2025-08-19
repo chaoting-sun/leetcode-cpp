@@ -1,6 +1,8 @@
 class Solution {
 public:
     // Approach: BFS
+    // Time: O(m*n)
+    // Space: O(m*n). in worst case there are all rotten oranges
 
     int orangesRotting(vector<vector<int>>& grid) {
         int m = grid.size();
