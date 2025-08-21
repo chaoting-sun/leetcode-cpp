@@ -45,6 +45,8 @@ public:
     // }
 
     // Approach2: Topological Sort by DFS
+    // Time: O(E + V)
+    // Space: O(E + V)
 
     bool findCycle(vector<vector<int>>& adj, stack<int>& stk, vector<int>& visited, int curr_course) {
         if (visited[curr_course] == 1) return true; // visited a course being visited
