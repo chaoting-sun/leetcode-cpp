@@ -8,7 +8,7 @@ public:
     //     vector<int> in_degree(numCourses);
     //     vector<vector<int>> adj(numCourses);
 
-    //     // Time: O(E)
+    //     // Time: O(E + V)
     //     // Space: O(E + V)
     //     for (auto pre: prerequisites) {
     //         in_degree[pre[0]]++;
