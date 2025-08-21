@@ -79,6 +79,8 @@ public:
 
     // Optimization
     // to check if it is a tree -> fully connected & there are n - 1 edges
+    // Time: O(V). if E + 1 != V we simply return false.
+    // Space: O(V)
 
     bool validTree(int n, vector<vector<int>>& edges) {
         if (edges.size() + 1 != n) return false;
