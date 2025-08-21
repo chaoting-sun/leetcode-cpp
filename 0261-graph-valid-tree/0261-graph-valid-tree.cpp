@@ -22,7 +22,7 @@ public:
 
     // bool validTree(int n, vector<vector<int>>& edges) {
     //     vector<vector<int>> adj(n);
-    //     // Time: O(E)
+    //     // Time: O(E + V)
     //     // Space: O(E + V)
     //     for (vector<int> edge: edges) {
     //         adj[edge[0]].push_back(edge[1]);
