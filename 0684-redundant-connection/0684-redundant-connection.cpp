@@ -38,6 +38,8 @@ public:
     //     return {};
     // }
 
+    // Disjoint Set Union (DSU)
+
     vector<int> parent;
     vector<int> size;
 
@@ -52,20 +54,18 @@ public:
         return parent[v] = find_set(parent[v]);
     }
 
-    int union_sets(int u, int v) {
+    bool union_sets(int u, int v) {
         u = find_set(u);
         v = find_set(v);
 
-        if (u != v) {
-            if (size[u] < size[v]) {
-                swap(u, v);
-            }
-            parent[v] = u;
-            size[u] += size[v];
-            return 0;
-        } else {
-            return 1;
+        if (u == v) return true;
+
+        if (size[u] < size[v]) {
+            swap(u, v);
         }
+        parent[v] = u;
+        size[u] += size[v];
+        return false;
     }
 
     vector<int> findRedundantConnection(vector<vector<int>>& edges) {
@@ -73,15 +73,15 @@ public:
         parent.resize(n + 1, -1);
         size.resize(n + 1, -1);
 
+        for (int i = 1; i <= n; i++) {
+            make_set(i);
+        }
+
         for (auto edge: edges) {
             int u = edge[0];
             int v = edge[1];
-            if (parent[u] == -1) make_set(u);
-            if (parent[v] == -1) make_set(v);
-            int res = union_sets(u, v);
-            if (res == 1) {
-                return edge;
-            }
+            bool yes = union_sets(u, v);
+            if (yes) return edge;
         }
         return {};
     }
