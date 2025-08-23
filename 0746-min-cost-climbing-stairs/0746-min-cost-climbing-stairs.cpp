@@ -7,7 +7,6 @@ public:
     int minCostClimbingStairs(vector<int>& cost) {
         int n = cost.size();
         if (n == 1) return cost[0];
-        if (n == 2) return min(cost[0], cost[1]);
 
         vector<int> dp(n);
         dp[0] = cost[0];
