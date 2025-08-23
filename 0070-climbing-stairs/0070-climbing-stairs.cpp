@@ -1,6 +1,8 @@
 class Solution {
 public:
     // Approach: DP
+    // Time: O(n)
+    // Space: O(n)
 
     int climbStairs(int n) {
         if (n == 1) return 1;
