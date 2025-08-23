@@ -39,6 +39,8 @@ public:
     // }
 
     // Disjoint Set Union (DSU)
+    // Time: O(n * alpha(n)). n = # nodes
+    // Space: O(n)
 
     vector<int> parent;
     vector<int> size;
