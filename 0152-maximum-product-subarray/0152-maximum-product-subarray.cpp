@@ -1,6 +1,8 @@
 class Solution {
 public:
     // Approach: DP (Kadane's Algorithm)
+    // Since multiplying by a negative number can flip a maximum into a minimum (and vice versa),
+    // we keep track of both the maximum and minimum product at each step
 
     int maxProduct(vector<int>& nums) {
         int n = nums.size();
