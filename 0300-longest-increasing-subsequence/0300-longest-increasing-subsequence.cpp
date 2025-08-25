@@ -27,6 +27,8 @@ public:
     // }
 
     // Approach: Greedy + Binary Search
+    // Time: O(n*logn)
+    // Space: O(n)
 
     int lengthOfLIS(vector<int>& nums) {
         int n = nums.size();
