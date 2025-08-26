@@ -57,7 +57,10 @@ public:
     //     return dp[amount][n] <= INT_MAX ? dp[amount][n] : -1;
     // }
 
-    // optimize ()
+    // optimize: decrease space compexity to O(amount)
+    // observation:
+    // dp[i][j] only depends on dp[i][j - 1] (前一列) and dp[i - coins[j - 1]][j] (同一列的前幾行)
+    // this means when we update from smalle i to large i, dp[i - coin][j] should have been computed
 
     int change(int amount, vector<int>& coins) {
         int n = coins.size();
