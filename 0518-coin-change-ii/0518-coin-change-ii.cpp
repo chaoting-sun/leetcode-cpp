@@ -39,21 +39,37 @@ public:
     // Time: O(amount * #coins)
     // Space: O(amount * #coins)
 
+    // int change(int amount, vector<int>& coins) {
+    //     int n = coins.size();
+    //     vector<vector<unsigned long long>> dp(amount + 1, vector<unsigned long long>(n + 1, 0));
+
+    //     for (int j = 0; j <= n; j++) dp[0][j] = 1;
+
+    //     for (int i = 1; i <= amount; i++) {
+    //         for (int j = 1; j <= n; j++) {
+    //             dp[i][j] = dp[i][j - 1];
+    //             if (i >= coins[j - 1]) {
+    //                 dp[i][j] += dp[i - coins[j - 1]][j];
+    //             }
+    //         }
+    //     }
+
+    //     return dp[amount][n] <= INT_MAX ? dp[amount][n] : -1;
+    // }
+
+    // optimize ()
+
     int change(int amount, vector<int>& coins) {
         int n = coins.size();
-        vector<vector<unsigned long long>> dp(amount + 1, vector<unsigned long long>(n + 1, 0));
+        vector<unsigned long long> dp(amount + 1);
+        dp[0] = 1;
 
-        for (int j = 0; j <= n; j++) dp[0][j] = 1;
-
-        for (int i = 1; i <= amount; i++) {
-            for (int j = 1; j <= n; j++) {
-                dp[i][j] = dp[i][j - 1];
-                if (i >= coins[j - 1]) {
-                    dp[i][j] += dp[i - coins[j - 1]][j];
-                }
+        for (int coin: coins) {
+            for (int i = coin; i <= amount; i++) {
+                dp[i] += dp[i - coin];
             }
         }
 
-        return dp[amount][n] <= INT_MAX ? dp[amount][n] : -1;
+        return dp[amount] <= INT_MAX ? dp[amount] : -1;
     }
 };
