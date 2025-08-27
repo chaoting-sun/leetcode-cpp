@@ -1,5 +1,9 @@
 class Solution {
 public:
+    // Approach: DP
+    // Time: O(n1*n2)
+    // Space: O(n1*n2)
+
     bool isInterleave(string s1, string s2, string s3) {
         int n1 = s1.size();
         int n2 = s2.size();
