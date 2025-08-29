@@ -43,6 +43,9 @@ public:
     //      if j == |t|: return 1
     //      else if i == |s|: return 0
 
+    // Time: O(n1*n2)
+    // Space: O(n1*n2)
+
     int numDistinct(string s, string t) {
         int n1 = s.size();
         int n2 = t.size();
