@@ -12,28 +12,63 @@ public:
     // if we find a meeting that has end time <= the start time of the current meeting,
     // then the current meeting can use the room of it.
 
+    // Time: O(nlogn) -> sorting and push/pop of min heap
+    // Space: O(n)
+
+    // int minMeetingRooms(vector<vector<int>>& intervals) {
+    //     int n = intervals.size();
+    //     if (n <= 1) return n;
+
+    //     sort(intervals.begin(), intervals.end(), [&](vector<int> &a, vector<int> &b) {
+    //         return a[0] < b[0];
+    //     });
+    //     priority_queue<vector<int>, vector<vector<int>>, Compare> pq;
+
+    //     int rooms = 0;
+    //     for (int i = 0; i < intervals.size(); i++) {
+    //         if (pq.empty() || pq.top()[1] > intervals[i][0]) {
+    //             pq.push(intervals[i]);
+    //             rooms = max(rooms, static_cast<int>(pq.size()));
+    //         } else {
+    //             pq.pop();
+    //             pq.push(intervals[i]);
+    //         }
+    //     }
+
+    //     return rooms;
+    // }
+
+    // Approach: Chronological ordering
+
     int minMeetingRooms(vector<vector<int>>& intervals) {
         int n = intervals.size();
         if (n <= 1) return n;
 
-        sort(intervals.begin(), intervals.end(), [&](vector<int> &a, vector<int> &b) {
-            return a[0] < b[0];
-        });
-        priority_queue<vector<int>, vector<vector<int>>, Compare> pq;
+        vector<int> start_times(n), end_times(n);
+        for (int i = 0; i < n; i++) {
+            start_times[i] = intervals[i][0];
+            end_times[i] = intervals[i][1];
+        }
+
+        sort(start_times.begin(), start_times.end());
+        sort(end_times.begin(), end_times.end());
 
         int rooms = 0;
-        for (int i = 0; i < intervals.size(); i++) {
-            if (pq.empty() || pq.top()[1] > intervals[i][0]) {
-                pq.push(intervals[i]);
-                rooms = max(rooms, static_cast<int>(pq.size()));
-            } else {
-                pq.pop();
-                pq.push(intervals[i]);
+        int i = 0, j = 0;
+
+        while (i < n) {
+            // the meeting of earliest end time has not finished, so we need to increase a room
+            if (start_times[i] < end_times[j]) {
+                rooms++;
+                i++;
+            } 
+            // there is a meeting ended. a previously used room is empty now, so we can use it for the current meeting
+            else {
+                i++;
+                j++;
             }
         }
 
         return rooms;
     }
 };
-
-// [[0,30],[5,10],[15,20]]
