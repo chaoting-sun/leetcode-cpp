@@ -1,13 +1,53 @@
 class Solution {
 public:
-    // Approach: sort the intervals array, comparing the start position.
-    // then we loop through the array. for each interval we compare it with the next one. if they
-    // overlap, then we remove the one with larger end position as it has the higher chance to overlap
-    // with the next ones. if they do not overlap, then we move to the next one.
+    // Approach:
+    // Greedy: sort by end time; always keep the interval that ends earliest.
+    // That choice leaves maximum room for future intervals, minimizing removals.
     
     // Time: O(nlogn)
     // Space: O(1)
     
+    // int eraseOverlapIntervals(vector<vector<int>>& intervals) {
+    //     int n = intervals.size();
+    //     if (n == 1) return 0;
+
+    //     sort(intervals.begin(), intervals.end(), [&](vector<int> &a, vector<int> &b) {
+    //         return a[0] < b[0];
+    //     });
+
+    //     int n_remove = 0;
+    //     int i = 0; // the one to compare
+    //     int j = 1; // the one to be compared with
+
+    //     while (i < n - 1 && j < n) {
+    //         // do not overlap
+    //         if (intervals[i][1] <= intervals[j][0]) {
+    //             i = j;
+    //             j = i + 1;
+    //             continue;
+    //         }
+
+    //         // the ith end position is larger then the jth end position
+    //         if (intervals[i][1] > intervals[j][1]) {
+    //             // remove ith interval
+    //             n_remove++;
+    //             i = j;
+    //             j = i + 1;
+    //         } else {
+    //             // remove jth interval
+    //             n_remove++;
+    //             j++;
+    //         }
+    //     }
+
+    //     return n_remove;
+    // }
+
+    // Optimized Approach: The original approach keep track of which two to compare,
+    // but we can just keep maintaining the current end position and use it to compare
+    // with that of the new intervals coming in. As they have already sorted by start
+    // position, we can just check the end position to check for overlapping.
+
     int eraseOverlapIntervals(vector<vector<int>>& intervals) {
         int n = intervals.size();
         if (n == 1) return 0;
@@ -16,32 +56,20 @@ public:
             return a[0] < b[0];
         });
 
+        int curr_end = intervals[0][1];
         int n_remove = 0;
-        int i = 0; // the one to compare
-        int j = 1; // the one to be compared with
-
-        while (i < n - 1 && j < n) {
-            // do not overlap
-            if (intervals[i][1] <= intervals[j][0]) {
-                i = j;
-                j = i + 1;
-                continue;
-            }
-
-            // the ith end position is larger then the jth end position
-            if (intervals[i][1] > intervals[j][1]) {
-                // remove ith interval
+        for (int i = 1; i < n; i++) {
+            // overlap
+            if (curr_end > intervals[i][0]) {
                 n_remove++;
-                i = j;
-                j = i + 1;
+                curr_end = min(curr_end, intervals[i][1]);
             } else {
-                // remove jth interval
-                n_remove++;
-                j++;
+                curr_end = intervals[i][1];
             }
         }
 
         return n_remove;
+
     }
 };
 
