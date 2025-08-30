@@ -1,5 +1,11 @@
 class Solution {
 public:
+    // Approach: sort the intervals based on their first value. Then, we take the first interval
+    // and compare its end with the next intervals start to check if they overlap. if they overlap
+    // we extend the max end of the merged interval and looking the next one.
+    // Time: O(nlogn)
+    // Space: O(1)
+
     vector<vector<int>> merge(vector<vector<int>>& intervals) {
         int n = intervals.size();
 
