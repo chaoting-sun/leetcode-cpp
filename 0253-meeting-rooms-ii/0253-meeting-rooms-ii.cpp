@@ -39,6 +39,8 @@ public:
     // }
 
     // Approach: Chronological ordering
+    // Time: O(nlogn)
+    // Space: O(n)
 
     int minMeetingRooms(vector<vector<int>>& intervals) {
         int n = intervals.size();
