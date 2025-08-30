@@ -1,3 +1,7 @@
+// Easier way
+// -> go from brute-force method (top down) to dp (bottom up)
+// -> think in a reverse way
+
 class Solution {
 public:
     // Intuitive: rather than brusting in order, we try to think in reverse order.
@@ -36,7 +40,7 @@ public:
     // }
 
     // Approach: DP (bottom-up)
-    // dp[l][r] = the max coins we get in the subarray
+    // dp[l][r] = the max coins we get in the subarray if 
     // state transition function: dp[l][r] = max of
     //  - dp[l][l-1] + nums2[l-1] * nums2[l] * nums2[l+1] + dp[l+1][r]
     //  - dp[l][l] + nums2[l] * nums2[l+1] * nums2[l+2] + dp[l+2][r]
@@ -44,6 +48,9 @@ public:
     //  - dp[l][r-1] + nums2[l] * nums2[r] * nums2[l+2] + dp[r+1][r]
     // base case:
     //  - dp[i][i] = nums[i-1] * nums[i] * nums[i+1] where i = 1 ~ n
+
+    // Time: O(n^3)
+    // Space: O(n^2)
 
     int maxCoins(vector<int>& nums) {
         int n = nums.size();
