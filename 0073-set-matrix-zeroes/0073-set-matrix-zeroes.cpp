@@ -1,5 +1,9 @@
 class Solution {
 public:
+    // Approach: hashtable
+    // record the rows and cols that are to be changed to 0
+    // Time: O(mn)
+
     void setZeroes(vector<vector<int>>& matrix) {
         int m = matrix.size();
         int n = matrix[0].size();
