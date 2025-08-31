@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int min_diff = INT_MAX;
+    int best_diff = INT_MAX;
     vector<int> best_buckets;
 
     void updateBest(vector<int> &buckets) {
@@ -9,33 +9,33 @@ public:
             min_val = min(min_val, v);
             max_val = max(max_val, v);
         }
-        if (max_val - min_val < min_diff) {
-            min_diff = max_val - min_val;
+        if (max_val - min_val < best_diff) {
+            best_diff = max_val - min_val;
             best_buckets = buckets;
         }
     }
 
     void backtrack(int remaining, int k, int start, vector<int>& buckets) {
-        if (k < 0) {
-            // invalid
+        // overpicked
+        if (k < 0) return;
+        
+        // if product done, pad with 1s and evaluate
+        if (remaining == 1) {
+            if (k > 0) buckets.insert(buckets.end(), k, 1);
+            updateBest(buckets);
+            if (k > 0) buckets.erase(buckets.end() - k, buckets.end());
             return;
-        } else {
-            // termination condition
-            if (remaining == 1) {
-                if (k > 0) for (int i = 0; i < k; i++) buckets.push_back(1);
-                updateBest(buckets);
-                for (int i = 0; i < k; i++) buckets.pop_back();
-                return;
-            }
         }
 
+        // no slots left but product unfinished
+        if (k == 0) return;
+
         // select one
-        for (int div = start; div <= remaining; div++) {
-            if (remaining % div == 0) {
-                buckets.push_back(div);
-                backtrack(remaining / div, k - 1, div, buckets);
-                buckets.pop_back();
-            }
+        for (int d = start; d <= remaining; d++) {
+            if (remaining % d != 0) continue;
+            buckets.push_back(d);
+            backtrack(remaining / d, k - 1, d, buckets);
+            buckets.pop_back();
         }
     }
 
