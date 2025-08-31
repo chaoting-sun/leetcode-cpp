@@ -31,6 +31,9 @@ public:
     // }
 
     // Approach: Greedy
+    // think it as a simplified BFS. we start from 0, and use l and r to record the next window
+    // that can be reached from 0 in one step. then iterate the range to find the next range
+    // that can be reached in current range in one step.
     // Time: O(n)
     // Space: O(1)
 
