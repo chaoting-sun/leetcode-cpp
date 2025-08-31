@@ -30,21 +30,39 @@ public:
     // Time: O(n^n)
     // Space: O(n)
 
+    // bool canJump(vector<int>& nums) {
+    //     int n = nums.size();
+    //     vector<bool> dp(n, false);
+    //     dp[n - 1] = true;
+
+    //     for (int i = n - 2; i >= 0; i--) {
+    //         int furthest_jump = min(i + nums[i], n - 1);
+    //         for (int j = i + 1; j <= furthest_jump; j++) {
+    //             if (dp[j]) {
+    //                 dp[i] = true;
+    //                 break;
+    //             }
+    //         }
+    //     }
+
+    //     return dp[0];
+    // }
+
+    // Approach: Greedy Approach
+    // from current destination (dest), we search from dest - 1 back to check if any position
+    // can jump to dest. if we find it, then set it to be dest and recurse the implementation
+    // Time: O(n)
+    // Space: O(n)
+
     bool canJump(vector<int>& nums) {
         int n = nums.size();
-        vector<bool> dp(n, false);
-        dp[n - 1] = true;
+        int dest = n - 1;
 
         for (int i = n - 2; i >= 0; i--) {
-            int furthest_jump = min(i + nums[i], n - 1);
-            for (int j = i + 1; j <= furthest_jump; j++) {
-                if (dp[j]) {
-                    dp[i] = true;
-                    break;
-                }
+            if (i + nums[i] >= dest) {
+                dest = i;
             }
         }
-
-        return dp[0];
+        return dest == 0;
     }
 };
