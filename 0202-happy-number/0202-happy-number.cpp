@@ -16,12 +16,10 @@ public:
 
         while (n != 1) {
             n = convert(n);
-            if (n < 10) {
-                if (visited.count(n)) {
-                    return false;
-                }
-                visited.insert(n);
+            if (visited.count(n)) {
+                return false;
             }
+            visited.insert(n);
         }
 
         return n == 1;
