@@ -1,5 +1,7 @@
 class Solution {
 public:
+    // Approach: hash table to detect cycle
+
     int convert(int n) {
         int converted = 0;
         while (n > 0) {
@@ -11,7 +13,7 @@ public:
     }
 
     bool isHappy(int n) {
-        // store the visited digits that is less than 10
+        // store the visited digits
         unordered_set<int> visited;
 
         while (n != 1) {
