@@ -1,3 +1,5 @@
+// Approach: Backtracking
+
 class Solution {
 public:
     int best_diff = INT_MAX;
