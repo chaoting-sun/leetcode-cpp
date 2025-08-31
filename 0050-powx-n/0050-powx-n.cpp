@@ -1,5 +1,11 @@
 class Solution {
 public:
+    // Approach: recursion, binary exponentiation
+    // if n = even -> x^n = (x^(n/2))^2
+    // if n = odd -> x^n = x * (x^((n-1)/2))
+    // Time: O(logn)
+    // Space: O(logn)
+
     double binaryExp(double x, long long n) {
         if (n == 0) return 1;
         if (n < 0) return 1 / binaryExp(x, -n);
@@ -20,8 +26,3 @@ public:
         return binaryExp(x, (long long)n);
     }
 };
-
-// x = 2.1, n = 3
-// odd -> halfPow = myPow(2.1, 1) -> 2.1 * myPow(2.1, 1) * myPow(2.1, 1)
-
-// myPow(2.1, 1) -> odd -> halfPow = myPow(2.1, 0) = x
