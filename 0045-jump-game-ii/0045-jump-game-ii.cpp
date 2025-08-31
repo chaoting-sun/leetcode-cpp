@@ -30,6 +30,10 @@ public:
     //     return min_length == INT_MAX ? 0 : min_length;
     // }
 
+    // Approach: Greedy
+    // Time: O(n)
+    // Space: O(1)
+
     int jump(vector<int>& nums) {
         int n = nums.size();
         int l = 0, r = 0;
