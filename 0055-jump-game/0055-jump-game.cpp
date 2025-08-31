@@ -1,12 +1,16 @@
 class Solution {
 public:
     bool backtrack(vector<int>& nums, int pos, vector<int>& memo) {
-        if (pos == nums.size() - 1) return true;
+        int n = nums.size();
+        if (pos == n - 1) return true;
 
         if (memo[pos] != -1) return memo[pos] == 1 ? true : false;
 
         for (int i = 1; i <= nums[pos]; i++) {
-            if (backtrack(nums, pos + i, memo)) {
+            int new_pos = pos + i;
+            // invalid destination
+            if (new_pos >= n) continue;
+            if (backtrack(nums, new_pos, memo)) {
                 memo[pos] = 1;
                 return true;
             }
