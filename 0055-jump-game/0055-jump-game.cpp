@@ -1,27 +1,50 @@
 class Solution {
 public:
-    bool backtrack(vector<int>& nums, int pos, vector<int>& memo) {
-        int n = nums.size();
-        if (pos == n - 1) return true;
+    // Approach: Backtracking + memoization
+    // Time: O(n^2) in the worst case (when all nums[i] are large, like n, and recursion explores almost all jumps)
+    // Space: O(n)
 
-        if (memo[pos] != -1) return memo[pos] == 1 ? true : false;
+    // bool backtrack(vector<int>& nums, int pos, vector<int>& memo) {
+    //     int n = nums.size();
+    //     if (pos == n - 1) return true;
 
-        for (int i = 1; i <= nums[pos]; i++) {
-            int new_pos = pos + i;
-            // invalid destination
-            if (new_pos >= n) continue;
-            if (backtrack(nums, new_pos, memo)) {
-                memo[pos] = 1;
-                return true;
-            }
-        }
-        memo[pos] = 0;
-        return false;
-    }
+    //     if (memo[pos] != -1) return memo[pos] == 1 ? true : false;
+
+    //     int furthest_jump = min(pos + nums[pos], n - 1);
+    //     for (int next_pos = pos + 1; next_pos <= furthest_jump; next_pos++) {
+    //         if (backtrack(nums, next_pos, memo)) {
+    //             memo[pos] = 1;
+    //             return true;
+    //         }
+    //     }
+    //     memo[pos] = 0;
+    //     return false;
+    // }
+
+    // bool canJump(vector<int>& nums) {
+    //     vector<int> memo(nums.size(), -1);
+    //     return backtrack(nums, 0, memo);
+    // }
+
+    // Approach: DP
+    // Time: O(n^n)
+    // Space: O(n)
 
     bool canJump(vector<int>& nums) {
-        vector<int> memo(nums.size(), -1);
+        int n = nums.size();
+        vector<bool> dp(n, false);
+        dp[n - 1] = true;
 
-        return backtrack(nums, 0, memo);
+        for (int i = n - 2; i >= 0; i--) {
+            int furthest_jump = min(i + nums[i], n - 1);
+            for (int j = i + 1; j <= furthest_jump; j++) {
+                if (dp[j]) {
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+
+        return dp[0];
     }
 };
