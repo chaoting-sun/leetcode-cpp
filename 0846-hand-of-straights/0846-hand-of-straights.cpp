@@ -1,5 +1,10 @@
 class Solution {
 public:
+    // Approach:
+    // Time: O(nlogm)
+    // inserting each element into a map takes O(logm) time, where m is the number of unique elements. for n elements it costs O(nlogm)
+    // the inner loop runs groupSize times and each operation is O(logm). the while loop runs n/groupSize times. so the time is O(nlogm)
+
     bool isNStraightHand(vector<int>& hand, int groupSize) {
         int n = hand.size();
         if (n % groupSize != 0) return false;
@@ -9,21 +14,16 @@ public:
             cnts[hand[i]]++;
         }
 
-        while (n) {
+        while (n > 0) {
             auto min_val = begin(cnts)->first;
-            if (!cnts.count(min_val + 1) || !cnts.count(min_val + 2)) {
-                return false;
+
+            for (int i = 0; i < groupSize; i++) {
+                int curr_val = min_val + i;
+                if (!cnts.count(curr_val)) return false;
+                cnts[curr_val]--;
+                if (cnts[curr_val] == 0) cnts.erase(curr_val);
             }
-
-            cnts[min_val]--;
-            cnts[min_val + 1]--;
-            cnts[min_val + 2]--;
-
-            if (cnts[min_val] == 0) cnts.erase(min_val);
-            if (cnts[min_val + 1] == 0) cnts.erase(min_val + 1);
-            if (cnts[min_val + 2] == 0) cnts.erase(min_val + 2);
-            
-            n -= 3;
+            n -= groupSize;
         }
         
         return true;
