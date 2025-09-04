@@ -1,4 +1,10 @@
-// Euler's path: current location + path2 + path1
+// Approach: hierholzer's algorithm (find the paths of Euler's path)
+// Tutorial: https://github.com/wisdompeak/LeetCode/tree/master/DFS/332.Reconstruct-Itinerary
+
+// Time: O(ElogE + V)
+// - sort: O(ElogE)
+// - initialize map: O(V + E)
+// - in dfs every node is visited once, and every edge is popped once: O(E + V)
 
 class Solution {
     unordered_map<string,queue<string>> Map;
