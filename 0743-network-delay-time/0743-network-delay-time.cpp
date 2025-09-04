@@ -33,6 +33,10 @@ public:
     //     return min_time;
     // }
 
+    // Dijkstra
+    // Time: O((V + E) logE)
+    // Space: O(E + V)
+
     int networkDelayTime(vector<vector<int>>& times, int n, int k) {
         vector<vector<pair<int,int>>> adj(n + 1);
         for (vector<int> &time: times) {
