@@ -42,7 +42,7 @@ public:
             adj[u].push_back({ v, w });
         }
 
-        priority_queue<pair<int,int>> pq;
+        priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> pq;
         vector<int> distance(n + 1, INT_MAX);
 
         distance[k] = 0;
