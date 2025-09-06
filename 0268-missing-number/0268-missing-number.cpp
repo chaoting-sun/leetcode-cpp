@@ -1,5 +1,9 @@
 class Solution {
 public:
+    // Bit Manipulation
+    // Time: O(n)
+    // Space: O(1)
+
     int missingNumber(vector<int>& nums) {
         int n = nums.size();
         int res = 0;
