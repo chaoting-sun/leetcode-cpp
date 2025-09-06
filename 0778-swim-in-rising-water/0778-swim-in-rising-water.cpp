@@ -23,46 +23,43 @@ public:
     //   Time:  O(m*n * log(m*n)) due to heap operations. if m = n then O(n^2*logn)
     //   Space: O(m*n) for visited states and heap storage
 
-    // int swimInWater(vector<vector<int>>& grid) {
-    //     int m = grid.size();
-    //     int n = grid[0].size();
+    int swimInWater(vector<vector<int>>& grid) {
+        int m = grid.size();
+        int n = grid[0].size();
 
-    //     using unit = pair<int,int>;
-    //     priority_queue<unit, vector<unit>, greater<unit>> pq;
-    //     vector<vector<bool>> visited(m, vector<bool>(n, false));
+        using unit = pair<int,int>;
+        priority_queue<unit, vector<unit>, greater<unit>> pq;
+        vector<vector<bool>> visited(m, vector<bool>(n, false));
         
-    //     vector<int> i_diff { -1, 1, 0, 0 }, j_diff { 0, 0, -1, 1 };
+        vector<int> i_diff { -1, 1, 0, 0 }, j_diff { 0, 0, -1, 1 };
 
-    //     int time = 0;
-    //     pq.push({ grid[0][0], 0 });
+        int time = 0;
+        pq.push({ grid[0][0], 0 });
 
-    //     while (!pq.empty()) {
-    //         auto [h, pos] = pq.top();
-    //         pq.pop();
-    //         int ci = pos / m, cj = pos % n;
-    //         visited[ci][cj] = true;
+        while (!pq.empty()) {
+            auto [h, pos] = pq.top();
+            pq.pop();
+            int ci = pos / m, cj = pos % n;
+            visited[ci][cj] = true;
             
-    //         if (h > time) {
-    //             time = h;           
-    //         }
+            if (h > time) time = h;
 
-    //         // termination condition
-    //         if (ci == m - 1 && cj == n - 1) return time;
+            // termination condition
+            if (ci == m - 1 && cj == n - 1) return time;
 
-    //         for (int p = 0; p < 4; p++) {
-    //             int ni = ci + i_diff[p];
-    //             int nj = cj + j_diff[p];
-    //             if (ni >= 0 && ni < m && nj >= 0 && nj < n && !visited[ni][nj]) {
-    //                 pq.push({ grid[ni][nj], { ni * m + nj } });
-    //                 visited[ni][nj] = true;
-    //             }
-    //         }
-    //     }
+            for (int p = 0; p < 4; p++) {
+                int ni = ci + i_diff[p];
+                int nj = cj + j_diff[p];
+                if (ni >= 0 && ni < m && nj >= 0 && nj < n && !visited[ni][nj]) {
+                    pq.push({ grid[ni][nj], { ni * m + nj } });
+                }
+            }
+        }
 
-    //     return -1;
-    // }
+        return -1;
+    }
 
-    // Approach: Binary Search
+    // Approach: Binary Search + DFS
     // Intuition: 這題的 grid[i][j] 有給明確的範圍，0 <= grid[i][j] < n^2，所以可以利用 binary search 嘗試
     // 最小但可以從起點走到終點的時間，這與常見的 binary search 題目中常見的問題 "尋找第一個不小於給定的數" 基本上一樣。
     // 要辨別能不能在給定的時間內走到，可以用 DFS
@@ -117,63 +114,71 @@ public:
     //     return false;
     // }
 
-    // Kruskal's Algorithm
+    // Approach: Kruskal's Algorithm
+    // Intuition: 前面兩種方法都是從 (0,0) 為起點開始探索直到終點，但其實可以想像每個 cell 有兩個狀態，closed 和 opened。
+    // 當 cell 是 closed，無法透過該 cell 通過；當 cell 是 opened 則可以。所以可以想像當達到一個最小的 time，部分的 cell
+    // 從 closed 轉為 open 使得能從 (0,0) 到達 (m-1,n-1)，這不需要按照順序，只需要這個 path 的 cell 剛好都 open 就好。
+    // 為了得到最小的 time，我們應該按照 h 大小，由小到大打開 cell 直到起點和終點連通，此時最後打開的 cell h 就會是 min time。
+    // 這種做法十分像 Kruskal's algorithm，這個演算法先將 edges weight 小到大排序，從小的 weight 的 edge 開始取直到所有 vertices
+    // 都相連。
+    // Time: O(mn*log(mn)) = O(n^2*logn)
+    // Space: O(mn)
 
-    vector<int> parent;
-    vector<int> size;
-    vector<int> i_diff { -1, 1, 0, 0 }, j_diff { 0, 0, -1, 1 };
+    // vector<int> parent;
+    // vector<int> size;
+    // vector<int> i_diff { -1, 1, 0, 0 }, j_diff { 0, 0, -1, 1 };
 
-    int find_set(int v) {
-        if (parent[v] == v) return v;
-        return parent[v] = find_set(parent[v]);
-    }
+    // int find_set(int v) {
+    //     if (parent[v] == v) return v;
+    //     return parent[v] = find_set(parent[v]);
+    // }
 
-    void union_sets(int u, int v) {
-        u = find_set(u);
-        v = find_set(v);
-        if (u != v) {
-            if (size[u] > size[v]) swap(u, v);
-            parent[u] = v;
-            size[v] += size[u];
-        }
-    }
+    // void union_sets(int u, int v) {
+    //     u = find_set(u);
+    //     v = find_set(v);
+    //     if (u != v) {
+    //         if (size[u] > size[v]) swap(u, v);
+    //         parent[u] = v;
+    //         size[v] += size[u];
+    //     }
+    // }
 
-    int swimInWater(vector<vector<int>>& grid) {
-        int m = grid.size();
-        int n = grid[0].size();
-        int n_cells = m * n;
+    // int swimInWater(vector<vector<int>>& grid) {
+    //     int m = grid.size();
+    //     int n = grid[0].size();
+    //     int n_cells = m * n;
 
-        parent.resize(n_cells, 0);
-        size.resize(n_cells, 1);
-        for (int i = 0; i < n_cells; i++) parent[i] = i;
+    //     parent.resize(n_cells, 0);
+    //     size.resize(n_cells, 1);
+    //     for (int i = 0; i < n_cells; i++) parent[i] = i;
 
-        vector<pair<int, int>> nodes(n_cells);
+    //     vector<pair<int, int>> nodes(n_cells);
 
-        for (int i = 0; i < n_cells; i++) nodes[i] = { grid[i / n][i % n], i };
-        sort(nodes.begin(), nodes.end(), [&](pair<int,int> &a, pair<int,int> &b) {
-            return a.first < b.first;
-        });
+    //     for (int i = 0; i < n_cells; i++) nodes[i] = { grid[i / n][i % n], i };
+    //     sort(nodes.begin(), nodes.end(), [&](pair<int,int> &a, pair<int,int> &b) {
+    //         return a.first < b.first;
+    //     });
 
-        vector<vector<bool>> opened(m, vector<bool>(n, false));
+    //     vector<vector<bool>> opened(m, vector<bool>(n, false));
 
-        for (int i = 0; i < n_cells; i++) {
-            auto [h, pos] = nodes[i];
-            int ci = pos / n;
-            int cj = pos % n;
+    //     for (int i = 0; i < n_cells; i++) {
+    //         auto [h, pos] = nodes[i];
+    //         int ci = pos / n;
+    //         int cj = pos % n;
             
-            opened[ci][cj] = true;
+    //         opened[ci][cj] = true;
             
-            for (int p = 0; p < 4; p++) {
-                int ni = ci + i_diff[p];
-                int nj = cj + j_diff[p];
-                if (ni >= 0 && ni < m && nj >= 0 && nj < n && opened[ni][nj]) {
-                    union_sets(ci * n + cj, ni * n + nj);
-                }
-            }
+    //         for (int p = 0; p < 4; p++) {
+    //             int ni = ci + i_diff[p];
+    //             int nj = cj + j_diff[p];
+    //             if (ni >= 0 && ni < m && nj >= 0 && nj < n && opened[ni][nj]) {
+    //                 union_sets(ci * n + cj, ni * n + nj);
+    //             }
+    //         }
 
-            if (find_set(0) == find_set(n_cells - 1)) return h;
-        }
+    //         if (find_set(0) == find_set(n_cells - 1)) return h;
+    //     }
 
-        return -1;
-    }
+    //     return -1;
+    // }
 };
