@@ -70,40 +70,81 @@
 //     }
 // };
 
+// Prim's Algorithm
+
+
 class Solution {
 public:
+
+    // basic
+    // Time: O(V^2*logV)
+    // Space: O(V^2)
+
+    // int minCostConnectPoints(vector<vector<int>>& points) {
+    //     int n = points.size();
+
+    //     int cost = 0;
+
+    //     priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> pq; // weight, vertex
+    //     vector<bool> visited(n, false);
+    //     pq.push({ 0, 0 });
+
+    //     // Time: O(E*logE) = O(V^2*logV)
+    //     // in worst case we push/pop every edge in the heap. for every op it takes logE time
+    //     while (!pq.empty()) {
+    //         auto [w, u] = pq.top();
+    //         pq.pop();
+
+    //         if (visited[u]) continue;
+    //         cost += w;
+    //         visited[u] = true;
+
+    //         for (int v = 0; v < n; v++) {
+    //             if (!visited[v]) {
+    //                 int w_uv = abs(points[u][0] - points[v][0]) + abs(points[u][1] - points[v][1]);
+    //                 pq.push({ w_uv, v });
+    //             }
+    //         }
+    //     }
+
+    //     return cost;
+    // }
+
+    // optimized
+    // Time: O(V^2)
+    // Space: O(v)
+
     int minCostConnectPoints(vector<vector<int>>& points) {
         int n = points.size();
-        vector<vector<int>> edges(n, vector<int>(n, 0));
 
+        vector<int> dist_from_mst(n, INT_MAX);
+        vector<bool> visited(n, false);
+
+        // start from 0
         for (int i = 0; i < n; i++) {
-            for (int j = i + 1; j < n; j++) {
-                int w = abs(points[i][0] - points[j][0]) + abs(points[i][1] - points[j][1]);
-                edges[i][j] = w;
-                edges[j][i] = w;
-            }
+            int dist = abs(points[i][0] - points[0][0]) + abs(points[i][1] - points[0][1]);
+            dist_from_mst[i] = dist;
         }
 
         int cost = 0;
+        int n_visited = 0;
 
-        priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> pq; // weight, vertex
-        unordered_set<int> visited;
-        pq.push({ 0, 0 });
-
-        while (!pq.empty()) {
-            auto [w, u] = pq.top();
-            pq.pop();
-
-            if (visited.count(u)) continue;
-
-            cost += w;
-
-            visited.insert(u);
-
-            for (int v = 0; v < n; v++) {
-                if (!visited.count(v)) {
-                    pq.push({ edges[u][v], v });
+        while (n_visited < n) {
+            int min_dist = INT_MAX, min_dist_v = -1;
+            for (int i = 0; i < n; i++) {
+                if (!visited[i] && dist_from_mst[i] < min_dist) {
+                    min_dist = dist_from_mst[i];
+                    min_dist_v = i;
                 }
+            }
+            
+            cost += min_dist;
+            visited[min_dist_v] = true;
+            n_visited += 1;
+            
+            for (int i = 0; i < n; i++) {
+                int dist = abs(points[i][0] - points[min_dist_v][0]) + abs(points[i][1] - points[min_dist_v][1]);
+                dist_from_mst[i] = min(dist_from_mst[i], dist);
             }
         }
 
