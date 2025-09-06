@@ -39,7 +39,7 @@ public:
         while (!pq.empty()) {
             auto [h, pos] = pq.top();
             pq.pop();
-            int ci = pos / m, cj = pos % n;
+            int ci = pos / n, cj = pos % n;
             visited[ci][cj] = true;
             
             if (h > time) time = h;
@@ -51,7 +51,7 @@ public:
                 int ni = ci + i_diff[p];
                 int nj = cj + j_diff[p];
                 if (ni >= 0 && ni < m && nj >= 0 && nj < n && !visited[ni][nj]) {
-                    pq.push({ grid[ni][nj], { ni * m + nj } });
+                    pq.push({ grid[ni][nj], { ni * n + nj } });
                 }
             }
         }
@@ -60,9 +60,12 @@ public:
     }
 
     // Approach: Binary Search + DFS
-    // Intuition: 這題的 grid[i][j] 有給明確的範圍，0 <= grid[i][j] < n^2，所以可以利用 binary search 嘗試
-    // 最小但可以從起點走到終點的時間，這與常見的 binary search 題目中常見的問題 "尋找第一個不小於給定的數" 基本上一樣。
-    // 要辨別能不能在給定的時間內走到，可以用 DFS
+    // grid[i][j] is within a known range 0 .. n^2 - 1 for an n x n grid. We can binary search
+    // the minimum time T for which (0, 0) can reach (n-1, n-1) if we are only allowed to step
+    // on cells with height ≤ T.
+    // For each candidate T, run a DFS (or BFS) that only traverses cells ≤ T. If reachable,
+    // shrink the right bound; otherwise, increase the left bound.
+
     // Time: O(mn*log(mn)) = O(n^2*logn).
     // Space: O(mn) = O(n^2)
 
@@ -115,14 +118,16 @@ public:
     // }
 
     // Approach: Kruskal's Algorithm
-    // Intuition: 前面兩種方法都是從 (0,0) 為起點開始探索直到終點，但其實可以想像每個 cell 有兩個狀態，closed 和 opened。
-    // 當 cell 是 closed，無法透過該 cell 通過；當 cell 是 opened 則可以。所以可以想像當達到一個最小的 time，部分的 cell
-    // 從 closed 轉為 open 使得能從 (0,0) 到達 (m-1,n-1)，這不需要按照順序，只需要這個 path 的 cell 剛好都 open 就好。
-    // 為了得到最小的 time，我們應該按照 h 大小，由小到大打開 cell 直到起點和終點連通，此時最後打開的 cell h 就會是 min time。
-    // 這種做法十分像 Kruskal's algorithm，這個演算法先將 edges weight 小到大排序，從小的 weight 的 edge 開始取直到所有 vertices
-    // 都相連。
-    // Time: O(mn*log(mn)) = O(n^2*logn)
-    // Space: O(mn)
+    // Intuition:
+    // Think of each cell as closed until the water reaches its height; after that it becomes open.
+    // The earliest time we can connect (0,0) to (n-1,n-1) is when all cells along some path are open.
+    // So we sort all cells by height ascending, open them in that order, and union with any already-open
+    // neighbors. The first moment the start and end belong to the same set, the current height is the answer.
+    // This mirrors Kruskal’s idea: process (here, “openable”) items in ascending order and union
+    // components until connectivity emerges.
+
+    // Time: O(m*n * log(m*n)) for sorting; near-O(1) amortized per union/find.
+    // Space: O(m*n)
 
     // vector<int> parent;
     // vector<int> size;
