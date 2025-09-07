@@ -50,15 +50,15 @@ public:
         vector<int> distance(n + 1, INT_MAX);
 
         distance[k] = 0;
-        pq.push({ k, 0 });
+        pq.push({ 0, k });
 
         while (!pq.empty()) {
-            auto [u, d] = pq.top();
+            auto [d, u] = pq.top();
             pq.pop();
             for (auto& [v, w]: adj[u]) {
                 if (d + w < distance[v]) {
                     distance[v] = d + w;
-                    pq.push({ v, d + w });
+                    pq.push({ d + w, v });
                 }
             }
         }
