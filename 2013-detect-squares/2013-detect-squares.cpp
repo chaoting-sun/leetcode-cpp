@@ -6,10 +6,12 @@ public:
         
     }
     
+    // Time: O(logm) for m operations
     void add(vector<int> point) {
         points[{ point[0], point[1] }]++;
     }
     
+    // Time: O(# distinct points)
     int count(vector<int> point) {
         int x1 = point[0], y1 = point[1];
         int ans = 0;
