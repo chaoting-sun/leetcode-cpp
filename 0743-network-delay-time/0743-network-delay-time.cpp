@@ -55,6 +55,9 @@ public:
         while (!pq.empty()) {
             auto [d, u] = pq.top();
             pq.pop();
+            // clear stale
+            if (d > distance[u]) continue;
+
             for (auto& [v, w]: adj[u]) {
                 if (d + w < distance[v]) {
                     distance[v] = d + w;
