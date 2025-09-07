@@ -1,26 +1,36 @@
 class Solution {
 public:
+    // Topological Sort (Kahn's Algorithm)
+    // Time: O(|word_{0}|+...+|word_{n-1}|)
+    // Space: O(V + E). V is the number of different characters.
+
     string alienOrder(vector<string>& words) {
         unordered_map<char, unordered_set<char>> order;
+        // indegree for every seen char
+        unordered_map<char, int> indegree;
 
+        // Time: O(|word_{0}|+...+|word_{n-1}|)
         int n = words.size();
         for (int i = 0; i < n - 1; i++) {
-            int min_len = min(words[i].size(), words[i + 1].size());
-            if (words[i].substr(0, min_len) == words[i + 1].substr(0, min_len) && words[i].size() > words[i + 1].size()) {
-                return "";
-            }
-            for (int j = 0; j < min_len; j++) {
-                if (words[i][j] != words[i + 1][j]) {
-                    order[words[i][j]].insert(words[i + 1][j]);
-                    break;
-                }
+            string& a = words[i];
+            string& b = words[i + 1];
+            int min_size = min(a.size(), b.size());
+
+            // find first different char
+            int j = 0;
+            while (j < min_size && a[j] == b[j]) j++;
+
+            // all equal up to min length. if a is longer, it's invalid
+            if (j == min_size) {
+                if (a.size() > b.size()) return "";
+            } else {
+                order[a[j]].insert(b[j]);
             }
         }
 
-        unordered_map<char, int> indegree;
-        for (int i = 0; i < n; i++) {
-            for (char ch: words[i]) {
-                if (!indegree.count(ch)) indegree[ch] = 0;
+        for (const string& word: words) {
+            for (char c: word) {
+                if (!indegree.count(c)) indegree[c] = 0;
             }
         }
 
@@ -31,49 +41,28 @@ public:
         }
 
         queue<char> q;
-        for (auto& [c, cnt]: indegree) {
-            if (cnt == 0) q.push(c);
+        for (auto& [c, deg]: indegree) {
+            if (deg == 0) q.push(c);
         }
 
+        // Time: O(V + E). for every character it may be recorded to be in front of all the other characters
+        // V = 26 at most, and E = 26 * 25 at most, which is small
         string ans = "";
         while (!q.empty()) {
-            char c1 = q.front();
+            char u = q.front();
             q.pop();
-            ans += c1;
-            for (char c2: order[c1]) {
-                indegree[c2]--;
-                if (indegree[c2] == 0) {
-                    q.push(c2);
+            ans += u;
+            for (char v: order[u]) {
+                indegree[v]--;
+                if (indegree[v] == 0) {
+                    q.push(v);
                 }
             }
         }
 
+        // if there is any cycle, it's invalid
         if (ans.size() < indegree.size()) return "";
         return ans;
     }
 };
 
-
-// i=0
-// ["wrt","wrf","er","ett","rftt"]
-
-// w -> e
-// e -> r
-
-// i=1
-// ["wrt","wrf"]
-
-// i=2
-// ["wrt","wrf"]
-// t -> f
-
-// i=1
-// ["er","ett"]
-// r -> t
-
-// i=2
-// x
-
-// i=1
-// ["rftt"]
-// x
