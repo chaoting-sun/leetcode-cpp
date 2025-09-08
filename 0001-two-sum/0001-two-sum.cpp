@@ -1,5 +1,18 @@
 class Solution {
 public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        if (nums.size() <= 1) return {};
+
+        unordered_map<int,int> value_index; // value: index
+        for (int i = 0; i < (int)nums.size(); i++) {
+            if (value_index.count(target - nums[i])) {
+                return { value_index[target - nums[i]], i };
+            }
+            value_index[nums[i]] = i;
+        }
+        return {};
+    }
+
     // brute-force
     // time: O(n**2): nested loop of the vector of n elements
     // space: O(1)
@@ -36,19 +49,19 @@ public:
     // time: O(n) -> loop nums with n length to store the hash, and loop the hash with the same size of the nums to find the pair
     // space: O(n) -> use a map which stores n elements
 
-    vector<int> twoSum(vector<int>& nums, int target) {
-        unordered_map<int, int> hash{};
+    // vector<int> twoSum(vector<int>& nums, int target) {
+    //     unordered_map<int, int> hash{};
 
-        for (int i = 0; i < nums.size(); i++) {
-            hash[nums[i]] = i;
-        }
+    //     for (int i = 0; i < nums.size(); i++) {
+    //         hash[nums[i]] = i;
+    //     }
 
-        for (int i = 0; i < nums.size(); i++) {
-            int complement = target - nums[i];
-            if (hash.find(complement) != hash.end() && hash[complement] != i) {
-                return { i, hash[complement] };
-            }
-        }
-        return {};
-    }
+    //     for (int i = 0; i < nums.size(); i++) {
+    //         int complement = target - nums[i];
+    //         if (hash.find(complement) != hash.end() && hash[complement] != i) {
+    //             return { i, hash[complement] };
+    //         }
+    //     }
+    //     return {};
+    // }
 };
