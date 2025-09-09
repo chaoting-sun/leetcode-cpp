@@ -1,8 +1,8 @@
 class Solution {
 public:
-//     // Approach1: loop the prices and keep updating the min. price and max. profit.
-//     // Time: O(n)
-//     // Space: O(1)
+    // Approach1: loop the prices and keep updating the min. price and max. profit.
+    // Time: O(n)
+    // Space: O(1)
 
     int maxProfit(vector<int>& prices) {
         int max_profit = 0;
