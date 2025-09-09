@@ -1,5 +1,9 @@
 class Solution {
 public:
+    // Approach: Hash Map
+    // Time: O(n)
+    // Space: O(n)
+
     long long interchangeableRectangles(vector<vector<int>>& rectangles) {
         unordered_map<string, int> value_counts;// width/gcd,height/gcd: counts
         for (auto& rec: rectangles) {
