@@ -1,5 +1,28 @@
 class Solution {
 public:
+    // Find nearest greater to the right -> monotonic stack -> decreasing
+    // current temperatures[i] > temperatures[stack.top()];
+    // ans[stack.top()] = i - stack.top();
+    // current temperatures[i] <= temperatures[stack.top()];
+    // push to stack
+
+    vector<int> dailyTemperatures(vector<int>& temperatures) {
+        int n = temperatures.size();
+        stack<int> stk;
+        vector<int> days(n);
+        for (int i = 0; i < n; i++) {
+            while (!stk.empty() && temperatures[stk.top()] < temperatures[i]) {
+                days[stk.top()] = i - stk.top();
+                stk.pop();   
+            }
+            stk.push(i);
+        }
+        return days;
+    }
+};
+
+// class Solution {
+// public:
     // Intuition: For each element, we need to find the difference in indices between it and the next element that is greater.
     // A straightforward way is to traverse the array and look for the next warmer day for each element, which takes O(n^2) time.
     // However, if we look deeper, we realize we need information about future elements to resolve the answer for earlier ones. 
@@ -66,32 +89,32 @@ public:
     // Time Complexity: O(n), since each index is visited at most once via jumps.
     // Space Complexity: O(1) (excluding the output array).
 
-    vector<int> dailyTemperatures(vector<int>& temperatures) {
-        int n = temperatures.size();
-        vector<int> ans(n);
-        int hottest = temperatures[n - 1];
+//     vector<int> dailyTemperatures(vector<int>& temperatures) {
+//         int n = temperatures.size();
+//         vector<int> ans(n);
+//         int hottest = temperatures[n - 1];
 
-        for (int i = n - 2; i >= 0; i--) {
-            if (temperatures[i] >= hottest) {
-                hottest = temperatures[i];
-                continue;
-            }
+//         for (int i = n - 2; i >= 0; i--) {
+//             if (temperatures[i] >= hottest) {
+//                 hottest = temperatures[i];
+//                 continue;
+//             }
 
-            if (temperatures[i] < temperatures[i + 1]) {
-                ans[i] = 1;
-            } else {
-                int days = 1;
-                int current_day = i + 1;
-                while (temperatures[i] >= temperatures[current_day] && ans[current_day] != 0) {
-                    days += ans[current_day];
-                    current_day += ans[current_day];
-                }
-                ans[i] = days;
-            }
+//             if (temperatures[i] < temperatures[i + 1]) {
+//                 ans[i] = 1;
+//             } else {
+//                 int days = 1;
+//                 int current_day = i + 1;
+//                 while (temperatures[i] >= temperatures[current_day] && ans[current_day] != 0) {
+//                     days += ans[current_day];
+//                     current_day += ans[current_day];
+//                 }
+//                 ans[i] = days;
+//             }
 
-            hottest = max(hottest, temperatures[i]);
-        }
+//             hottest = max(hottest, temperatures[i]);
+//         }
 
-        return ans;
-    }
-};
+//         return ans;
+//     }
+// };
