@@ -22,7 +22,7 @@ class Solution {
 public:
     int maxProfit(vector<int>& prices) {
         int min_price = prices[0];
-        int max_profit = INT_MIN;
+        int max_profit = 0;
 
         for (int i = 1; i < (int)prices.size(); i++) {
             max_profit = max(max_profit, prices[i] - min_price);
