@@ -1,6 +1,8 @@
 class Solution {
 public:
     // Approach: Monotonic Stack with doubled array
+    // Time: O(n)
+    // Space: O(n)
 
     vector<int> nextGreaterElements(vector<int>& nums) {
         int n = nums.size();
