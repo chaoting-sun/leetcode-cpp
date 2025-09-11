@@ -1,3 +1,7 @@
+// Approach: Monotonic Stack
+// Time: O(n)
+// Space: O(n)
+
 /**
  * Definition for singly-linked list.
  * struct ListNode {
