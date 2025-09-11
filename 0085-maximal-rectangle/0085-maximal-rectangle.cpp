@@ -1,6 +1,12 @@
 class Solution {
 public:
-    int maximalRectangle(vector<int> heights) {
+    // Approach: treat each row as floor, and use leetcode 84 method to get the answer
+    // Time: O(mn)
+    // Space: O(n)
+
+    // Time: O(n)
+    // Space: O(n)
+    int maximalRectangleInHistograms(vector<int> heights) {
         heights.insert(heights.begin(), 0);
         heights.push_back(0);    
         stack<int> index_stack;
@@ -18,18 +24,18 @@ public:
         return max_area;
     }
 
-
     int maximalRectangle(vector<vector<char>>& matrix) {
         int m = matrix.size(), n = matrix[0].size();
         vector<int> dp(n);
         int max_area = 0;
-
+        // O(m)
         for (int i = 0; i < m; i++) {
+            // O(n)
             for (int j = 0; j < n; j++) {
                 if (matrix[i][j] == '0') dp[j] = 0;
                 else dp[j] += 1;
             }
-            max_area = max(max_area, maximalRectangle(dp));
+            max_area = max(max_area, maximalRectangleInHistograms(dp));
         }
         return max_area;
     }
