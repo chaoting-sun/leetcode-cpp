@@ -1,5 +1,41 @@
+
+
 class Solution {
 public:
+
+    int largestRectangleArea(vector<int>& heights) {
+        int n = heights.size();
+        int max_area = 0;
+        vector<int> nearest_greater_right(n, n), nearest_greater_left(n, -1);
+        stack<int> index_stack;
+
+        // 找到右邊第一個比較他小的
+        for (int i = 0; i < n; i++) {
+            while (!index_stack.empty() && heights[index_stack.top()] > heights[i]) {
+                nearest_greater_right[index_stack.top()] = i;
+                index_stack.pop();
+            }
+            index_stack.push(i);
+        }
+
+        while (!index_stack.empty()) index_stack.pop();
+
+        // 找到左邊第一個比他小的
+        for (int i = n - 1; i >= 0; i--) {
+            while (!index_stack.empty() && heights[index_stack.top()] > heights[i]) {
+                nearest_greater_left[index_stack.top()] = i;
+                index_stack.pop();
+            }
+            index_stack.push(i);            
+        }
+
+        for (int i = 0; i < n; i++) {
+            max_area = max(max_area, heights[i] * (nearest_greater_right[i] - nearest_greater_left[i] - 1));
+        }
+        return max_area;
+    }
+
+
     // Approach1: brute-force
     // Time: O(n^3), n is the length of heights
     // Space: O(1)
@@ -107,27 +143,27 @@ public:
 
     // Approach3.2: Optimize the 3.1 Method
 
-    int largestRectangleArea(vector<int>& heights) {
-        // to avoid case like 3, 2, ...
-        // when loop to index = 1, and pop index = 0, then there is no left index to compute
-        heights.insert(heights.begin(), 0);
-        // to clear the stack in one pass
-        heights.push_back(0);
+    // int largestRectangleArea(vector<int>& heights) {
+    //     // to avoid case like 3, 2, ...
+    //     // when loop to index = 1, and pop index = 0, then there is no left index to compute
+    //     heights.insert(heights.begin(), 0);
+    //     // to clear the stack in one pass
+    //     heights.push_back(0);
         
-        int n = heights.size();
-        stack<int> stk;
-        int max_area = 0;
+    //     int n = heights.size();
+    //     stack<int> stk;
+    //     int max_area = 0;
 
-        for (int i = 0; i < n; i++) {
-            while (!stk.empty() && heights[stk.top()] > heights[i]) {
-                int height = heights[stk.top()];
-                stk.pop();
-                int width = i - stk.top() - 1;
-                max_area = max(max_area, height * width);
-            }
-            stk.push(i);
-        }
+    //     for (int i = 0; i < n; i++) {
+    //         while (!stk.empty() && heights[stk.top()] > heights[i]) {
+    //             int height = heights[stk.top()];
+    //             stk.pop();
+    //             int width = i - stk.top() - 1;
+    //             max_area = max(max_area, height * width);
+    //         }
+    //         stk.push(i);
+    //     }
 
-        return max_area;
-    }
+    //     return max_area;
+    // }
 };
