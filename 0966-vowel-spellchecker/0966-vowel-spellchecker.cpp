@@ -1,3 +1,10 @@
+// Time: O(C)
+// Space: O(C)
+
+// 1. check if query exactly matches
+// 2. check if query matches a word up to capitalization
+// 3. check if query matches a word up to vowel errors
+
 class Solution {
 private:
     string toLower(string s) {
