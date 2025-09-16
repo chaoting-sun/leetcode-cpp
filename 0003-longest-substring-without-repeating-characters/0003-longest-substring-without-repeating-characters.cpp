@@ -43,7 +43,7 @@ public:
         int n = s.size();
         if (n == 0) return 0;
 
-        unordered_map<char, int> charCount;
+        vector<int> charCount(128, 0);
         int start = 0, end = 0;
         int maxLen = 1;
 
