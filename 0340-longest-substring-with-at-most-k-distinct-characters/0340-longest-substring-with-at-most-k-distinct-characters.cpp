@@ -1,3 +1,7 @@
+// Approach: 
+// Time: O(n)
+// Space: O(128) = O(1)
+
 class Solution {
 public:
     int lengthOfLongestSubstringKDistinct(string s, int k) {
