@@ -11,17 +11,17 @@ public:
         while (end < n) {
             char ch = s[end];
             charCount[ch]++;
-            if (charCount[ch] > 1) {
-                maxLen = max(maxLen, end - start);
-                while (charCount[ch] > 1) {
-                    charCount[s[start]]--;
-                    start++;
-                }
+
+            while (charCount[ch] > 1) {
+                charCount[s[start]]--;
+                start++;
             }
+
+            maxLen = max(maxLen, end - start + 1);
             end++;
         }
 
-        return max(maxLen, end - start);
+        return maxLen;
     }
 };
 
