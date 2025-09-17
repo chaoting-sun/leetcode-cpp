@@ -1,5 +1,9 @@
 class Solution {
 public:
+    // Approach: Sliding Window
+    // Time: O(n)
+    // Space: O(1)
+
     int minSubArrayLen(int target, vector<int>& nums) {
         int start = 0, end = 0;
         int minLength = INT_MAX;
