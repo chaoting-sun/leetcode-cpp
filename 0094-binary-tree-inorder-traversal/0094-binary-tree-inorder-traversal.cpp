@@ -11,16 +11,44 @@
  */
 class Solution {
 public:
-    void inorder(TreeNode* root, vector<int>& ans) {
-        if (!root) return;
-        inorder(root->left, ans);
-        ans.push_back(root->val);
-        inorder(root->right, ans);
-    }
+    // recursion
+    // time: O(n). n = # nodes
+    // space: O(n) in worst case; O(logn) in average case
+
+    // void inorder(TreeNode* root, vector<int>& ans) {
+    //     if (!root) return;
+    //     inorder(root->left, ans);
+    //     ans.push_back(root->val);
+    //     inorder(root->right, ans);
+    // }
+
+    // vector<int> inorderTraversal(TreeNode* root) {
+    //     vector<int> ans;
+    //     inorder(root, ans);
+    //     return ans;
+    // }
+
+    // stack
+    // time: O(n)
+    // space: O(n)
 
     vector<int> inorderTraversal(TreeNode* root) {
+        stack<TreeNode*> stk;
         vector<int> ans;
-        inorder(root, ans);
+        
+        if (!root) return {};
+        TreeNode *curr = root;
+
+        while (curr || !stk.empty()) {
+            while (curr) {
+                stk.push(curr);
+                curr = curr->left;
+            }
+            curr = stk.top();
+            stk.pop();
+            ans.push_back(curr->val);
+            curr = curr->right;
+        }
         return ans;
-    }
+    }  
 };
