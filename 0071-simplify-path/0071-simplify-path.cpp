@@ -1,34 +1,34 @@
 class Solution {
 public:
+    // Approach: Stack
+    // Time: O(n)
+    // Space: O(n)
+
     string simplifyPath(string path) {
         int n = path.size();
-        string ans;
-        vector<string> pathArray;
-        stack<string> stk;
+        vector<string> parts;
 
-        int current = 0;
-        while (current < n) {
-            while (current < n && path[current] == '/') current++;
-            if (current == n) break;
-            int right = current;
+        int left = 0;
+        while (left < n) {
+            while (left < n && path[left] == '/') left++;
+            if (left == n) break;
+            int right = left;
             while (right < n && path[right] != '/') right++;
-            pathArray.push_back(path.substr(current, right - current));
-            current = right;
-        }
-        
-        for (string symbol: pathArray) {
-            if (symbol == "..") {
-                if (!stk.empty()) stk.pop();
-            } else if (symbol != ".") {
-                stk.push(symbol);
+            
+            string segment = path.substr(left, right - left);
+            if (segment == "..") {
+                if (parts.size() > 0) parts.pop_back();
+            } else if (segment != ".") {
+                parts.push_back(segment);
             }
+            left = right;
         }
 
-        if (stk.empty()) return "/";
+        if (parts.size() == 0) return "/";
 
-        while (!stk.empty()) {
-            ans = "/" + stk.top() + ans;
-            stk.pop();
+        string ans;
+        for (int i = 0; i < parts.size(); i++) {
+            ans += "/" + parts[i];
         }
         return ans;
     }
