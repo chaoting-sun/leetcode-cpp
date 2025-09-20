@@ -59,35 +59,24 @@ public:
     //     return st.size();
     // }
 
-
-
-
     int carFleet(int target, vector<int>& position, vector<int>& speed) {
         int n = position.size();
         if (n == 0) return 0;
 
-        vector<int> idx(n);
-        for (int i = 0; i < n; i++) idx[i] = i;
-        sort(idx.begin(), idx.end(), [&](int i, int j) {
-            return position[i] < position[j];
-        });
-        sort(position.begin(), position.end());
-        vector<int> sortedSpeed(n);
-        for (int i = 0; i < n; i++) sortedSpeed[i] = speed[idx[i]];
-
-        vector<double> timeToArrive(n);
+        vector<pair<int, double>> positionTime(n);
         for (int i = 0; i < n; i++) {
-            timeToArrive[i] = (target - position[i]) * 1.0 / sortedSpeed[i];
+            positionTime[i] = { position[i], (target - position[i]) * 1.0 / speed[i] };
         }
+        sort(positionTime.begin(), positionTime.end(), [](pair<int,double> &a, pair<int,double> &b) {
+            return a.first > b.first;
+        });
 
-        int numFleets = 0;
-        for (int i = n - 1; i >= 1; i--) {
-            if (timeToArrive[i - 1] > timeToArrive[i]) {
-                numFleets++;
+        stack<double> stk;
+        for (int i = 0; i < n; i++) {
+            if (stk.empty() || stk.top() < positionTime[i].second) {
+                stk.push(positionTime[i].second);
             }
         }
-
-        numFleets += 1;
-        return numFleets;
+        return stk.size();
     }
 };
