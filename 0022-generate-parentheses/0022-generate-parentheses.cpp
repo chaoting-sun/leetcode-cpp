@@ -60,29 +60,61 @@ public:
     // Time: O(Cn * n)
     // Space: O(n^2)
 
-    void putParenthesis(int n_open, int n_close, string s, vector<string>& ans) {
-        // termination
-        if (n_open == 0 && n_close == 0) {
-            ans.push_back(s);
+    // void putParenthesis(int n_open, int n_close, string s, vector<string>& ans) {
+    //     // termination
+    //     if (n_open == 0 && n_close == 0) {
+    //         ans.push_back(s);
+    //         return;
+    //     }
+
+    //     // put open parenthesis
+    //     if (n_open) {
+    //         putParenthesis(n_open - 1, n_close, s + '(', ans);
+    //     }
+        
+    //     // put close parenthesis
+    //     if (n_close > n_open) {
+    //         putParenthesis(n_open, n_close - 1, s + ')', ans);
+    //     }
+    // }
+
+    // vector<string> generateParenthesis(int n) {
+    //     string s = "";
+    //     vector<string> ans;
+
+    //     putParenthesis(n, n, s, ans);
+    //     return ans;
+    // }
+
+
+
+    
+    vector<string> ans;
+    
+    void backtrack(int nLeft, int nRight, int n, string& currentForm) {
+        // invalid condition
+        if (nLeft > n || nRight > n) return;
+        // base case
+        if (nLeft == n && nRight == n) {
+            ans.push_back(currentForm);
             return;
         }
 
-        // put open parenthesis
-        if (n_open) {
-            putParenthesis(n_open - 1, n_close, s + '(', ans);
+        if (nLeft < n) {
+            currentForm.push_back('(');
+            backtrack(nLeft + 1, nRight, n, currentForm);
+            currentForm.pop_back();
         }
-        
-        // put close parenthesis
-        if (n_close > n_open) {
-            putParenthesis(n_open, n_close - 1, s + ')', ans);
+        if (nLeft > nRight) {
+            currentForm.push_back(')');
+            backtrack(nLeft, nRight + 1, n, currentForm);
+            currentForm.pop_back();
         }
     }
 
     vector<string> generateParenthesis(int n) {
-        string s = "";
-        vector<string> ans;
-
-        putParenthesis(n, n, s, ans);
+        string currentForm;
+        backtrack(0, 0, n, currentForm);
         return ans;
     }
 };
