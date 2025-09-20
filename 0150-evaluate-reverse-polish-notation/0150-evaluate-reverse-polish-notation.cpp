@@ -26,22 +26,22 @@ public:
     // }
 
     int evalRPN(vector<string>& tokens) {
-        stack<string> stk;
+        stack<int> stk;
         for (string token: tokens) {
             if (isdigit(token.back())) {
-                stk.push(token);
+                stk.push(stoi(token));
             } else {
-                int latter = stoi(stk.top());
+                int latter = stk.top();
                 stk.pop();
-                int former = stoi(stk.top());
+                int former = stk.top();
                 stk.pop();
 
-                if (token == "+") stk.push(to_string(former + latter));
-                if (token == "-") stk.push(to_string(former - latter));
-                if (token == "*") stk.push(to_string(former * latter));
-                if (token == "/") stk.push(to_string(former / latter));
+                if (token == "+") stk.push(former + latter);
+                if (token == "-") stk.push(former - latter);
+                if (token == "*") stk.push(former * latter);
+                if (token == "/") stk.push(former / latter);
             }
         }
-        return stoi(stk.top());
+        return stk.top();
     }
 };
