@@ -74,18 +74,44 @@ public:
     // Time: O(n)
     // Space: O(n)
 
+    // void flatten(TreeNode* root) {
+    //     if (!root) return;
+
+    //     stack<TreeNode*> stk;
+    //     stk.push(root);
+    //     while (!stk.empty()) {
+    //         TreeNode* node = stk.top();
+    //         stk.pop();
+    //         if (node->right) stk.push(node->right);
+    //         if (node->left) stk.push(node->left);
+    //         if (!stk.empty()) node->right = stk.top();
+    //         node->left = nullptr;
+    //     }
+    // }
+
+    // Intuition: imagine that we are building a linked list, in which each node has no left child node.
+    // we can maintain a prev node as the last node of the linked list. when processing to a node, we
+    // connect the node to the prev's right, and push push the current node's right and left node in order.
+    // then the left node will always be processed before the right node.
+    // Approach: Stack + prev
+
     void flatten(TreeNode* root) {
         if (!root) return;
 
         stack<TreeNode*> stk;
         stk.push(root);
+        TreeNode* prev = nullptr;
+
         while (!stk.empty()) {
-            TreeNode* node = stk.top();
+            TreeNode* curr = stk.top();
             stk.pop();
-            if (node->right) stk.push(node->right);
-            if (node->left) stk.push(node->left);
-            if (!stk.empty()) node->right = stk.top();
-            node->left = nullptr;
+            if (prev) {
+                prev->left = nullptr;
+                prev->right = curr;
+            }
+            if (curr->right) stk.push(curr->right);
+            if (curr->left) stk.push(curr->left);
+            prev = curr;
         }
     }
 };
