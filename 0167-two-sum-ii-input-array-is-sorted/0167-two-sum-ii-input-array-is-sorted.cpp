@@ -68,15 +68,26 @@ public:
     //     return { -1, -1 };
     // }
 
+    // vector<int> twoSum(vector<int>& numbers, int target) {
+    //     int n = numbers.size();
+    //     int left = 0, right = n - 1;
+    //     while (left < right) {
+    //         int added = numbers[left] + numbers[right];
+    //         if (added < target) left++;
+    //         else if (added > target) right--;
+    //         else return { left + 1, right + 1};
+    //     }
+    //     return { -1, -1 };
+    // }
 
     vector<int> twoSum(vector<int>& numbers, int target) {
-        int n = numbers.size();
-        int left = 0, right = n - 1;
-        while (left < right) {
-            int added = numbers[left] + numbers[right];
-            if (added < target) left++;
-            else if (added > target) right--;
-            else return { left + 1, right + 1};
+        unordered_map<int,int> visited;
+        for (int i = 0; i < (int)numbers.size(); i++) {
+            int left = target - numbers[i];
+            if (visited.count(left)) {
+                return { visited[left] + 1, i + 1 };
+            }
+            visited[numbers[i]] = i;
         }
         return { -1, -1 };
     }
