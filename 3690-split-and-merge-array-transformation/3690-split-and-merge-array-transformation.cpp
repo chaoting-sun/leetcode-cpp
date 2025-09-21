@@ -1,5 +1,9 @@
 class Solution {
 public:
+    // Intuition: the size of nums1 and nums2 are bounded between 2 and 6, which is quite small.
+    // to return the minimum number of split and merge from num1 to num2, owing to the small size,
+    // we can try a brute-force BFS.
+
     string getKey(vector<int>& nums) {
         string key = "";
         for (int i = 0; i < (int)nums.size(); i++) {
