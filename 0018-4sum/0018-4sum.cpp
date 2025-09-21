@@ -1,3 +1,7 @@
+// Approach: Recursion + Two-Sum Solution
+// Time: O(n^3). if k == 2, we take O(n) to find the solution. for k == 4, we needs O(n^3)
+// Space: O(1)
+
 using ll = long long;
 
 class Solution {
@@ -33,6 +37,7 @@ public:
             return;
         }
 
+        // Two Sum Method: Two Pointers
         int left = start, right = n - 1;
         while (left < right) {
             ll addedSum = nums[left] + nums[right];
