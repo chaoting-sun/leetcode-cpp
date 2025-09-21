@@ -47,8 +47,6 @@ public:
 
     int fourSumCount(vector<int>& nums1, vector<int>& nums2, vector<int>& nums3, vector<int>& nums4) {
         vector<vector<int>> lists = { nums1, nums2, nums3, nums4 };
-        
-
 
         int k = lists.size();
         unordered_map<int,int> count1 = countSum(0, k/2, lists);
