@@ -73,66 +73,64 @@ public:
     // Time: O(n**2)
     // Space: O(n) -> seen
 
-    // vector<vector<int>> threeSum(vector<int>& nums) {
-    //     int n = nums.size();
-    //     vector<vector<int>> ans;
-
-    //     sort(nums.begin(), nums.end());
-
-    //     for (int i = 0; i < n - 2; i++) {
-    //         if (i != 0 && nums[i] == nums[i - 1]) continue;
-
-    //         unordered_set<int> seen;
-    //         int j = i + 1;
-
-    //         while (j < n) {
-    //             int expected_k_val = - (nums[i] + nums[j]);
-    //             if (seen.count(expected_k_val)) {
-    //                 ans.push_back({ nums[i], expected_k_val, nums[j] });
-    //                 while (j < nums.size() - 1 && nums[j] == nums[j + 1]) j++;
-    //             }
-    //             seen.insert(nums[j]);
-    //             j++;
-    //         }
-    //     }
-        
-    //     return ans;
-    // }
-
-    // Used for next practice
-
     vector<vector<int>> threeSum(vector<int>& nums) {
-        // nums[i] + nums[j] + nums[k] == 0
-        // nums[i] + nums[j] == -nums[k]
-
         int n = nums.size();
         vector<vector<int>> ans;
-        unordered_map<int,int> valueIndex;
 
         sort(nums.begin(), nums.end());
 
-        for (int i = 0; i < (int)nums.size(); i++) {
-            if (i > 0 && nums[i - 1] == nums[i]) continue;
+        for (int i = 0; i < n; i++) {
+            if (i != 0 && nums[i] == nums[i - 1]) continue;
 
-            int target = -nums[i];
-            int left = i + 1, right = n - 1;
-            while (left < right) {
-                int added = nums[left] + nums[right];
-                if (added > target) {
-                    right--;
-                } else if (added < target) {
-                    left++;
-                } else {
-                    ans.push_back({ nums[i], nums[left], nums[right] });
-                    left++;
-                    right--;
-                    while (nums[left-1] == nums[left] && left < right) left++;
-                    while (nums[right] == nums[right + 1] && left < right) right--;
+            unordered_set<int> seen;
+            int j = i + 1;
+
+            while (j < n) {
+                int target = - (nums[i] + nums[j]);
+                if (seen.count(target)) {
+                    ans.push_back({ nums[i], target, nums[j] });
+                    // move to the last one of the repeated numbers
+                    while (j < nums.size() - 1 && nums[j] == nums[j + 1]) j++;
                 }
+                seen.insert(nums[j]);
+                j++;
             }
         }
+        
         return ans;
     }
+
+    // Used for next practice
+
+    // vector<vector<int>> threeSum(vector<int>& nums) {
+    //     int n = nums.size();
+    //     vector<vector<int>> ans;
+    //     unordered_map<int,int> valueIndex;
+
+    //     sort(nums.begin(), nums.end());
+
+    //     for (int i = 0; i < (int)nums.size(); i++) {
+    //         if (i > 0 && nums[i - 1] == nums[i]) continue;
+
+    //         int target = -nums[i];
+    //         int left = i + 1, right = n - 1;
+    //         while (left < right) {
+    //             int added = nums[left] + nums[right];
+    //             if (added > target) {
+    //                 right--;
+    //             } else if (added < target) {
+    //                 left++;
+    //             } else {
+    //                 ans.push_back({ nums[i], nums[left], nums[right] });
+    //                 left++;
+    //                 right--;
+    //                 while (nums[left-1] == nums[left] && left < right) left++;
+    //                 while (nums[right] == nums[right + 1] && left < right) right--;
+    //             }
+    //         }
+    //     }
+    //     return ans;
+    // }
 };
 
 // [-3 2 0 1 2 -3] -> [-3, 1, 2]
