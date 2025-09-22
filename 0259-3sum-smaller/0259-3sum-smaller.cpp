@@ -1,5 +1,3 @@
-
-
 class Solution {
 public:
     // Problem: Count triples (i, j, k) with i < j < k such that
