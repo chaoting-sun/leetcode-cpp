@@ -48,25 +48,29 @@ public:
     // }
 
     int threeSumMulti(vector<int>& arr, int target) {
-        vector<int> valueCount(101);
-        for (int val: arr) valueCount[val]++;
-        long long count = 0;
+        vector<int> freq(101);
+        for (int val: arr) freq[val]++;
+        ll ans = 0;
+
         for (int v1 = 0; v1 <= 100; v1++) {
             for (int v2 = 0; v2 <= 100; v2++) {
                 int v3 = target - v1 - v2;
                 if (v3 < 0 || v3 > 100) continue;
+
+                ll c1 = freq[v1], c2 = freq[v2], c3 = freq[v3];
+
                 if (v1 == v2 && v2 == v3) {
-                    ll temp1 = (ll)valueCount[v1] * (valueCount[v1] - 1) % MOD;
-                    ll temp2 = (ll)temp1 * (valueCount[v1] - 2) / 6 % MOD;
-                    count += temp2;
+                    ll add = c1 * (c1 - 1) * (c1 - 2) / 6;
+                    ans = (ans + add) % MOD;
                 } else if (v1 == v2 && v2 != v3) {
-                    count += (ll)(valueCount[v1] * (valueCount[v1] - 1) / 2 * valueCount[v3]);
+                    ll add = c1 * (c1 - 1) / 2 * c3;
+                    ans = (ans + add) % MOD;
                 } else if (v1 < v2 && v2 < v3) {
-                    count += (ll)(valueCount[v1] * valueCount[v2] * valueCount[v3]);
+                    ll add = c1 * c2 * c3;
+                    ans = (ans + add) % MOD;
                 }
-                count %= MOD;
             }
         }
-        return (int)count;
+        return (int)ans;
     }
 };
