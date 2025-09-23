@@ -127,32 +127,36 @@ public:
     //     return count;
     // }
 
-
-    void dfs(vector<vector<char>>& grid, vector<vector<bool>>& visited, int i, int j) {
-        int m = grid.size(), n = grid[0].size();
-        if (i < 0 || i >= m || j < 0 || j >= n) return;
-        if (grid[i][j] != '1' || visited[i][j]) return;
-
-        visited[i][j] = true;
-        
-        dfs(grid, visited, i + 1, j);
-        dfs(grid, visited, i - 1, j);
-        dfs(grid, visited, i, j + 1);
-        dfs(grid, visited, i, j - 1);
-    }
-
     int numIslands(vector<vector<char>>& grid) {
         int m = grid.size(), n = grid[0].size();
-        vector<vector<bool>> visited(m, vector<bool>(n, false));
+        vector<int> rows = { -1, 1, 0, 0 }, cols = { 0, 0, -1, 1 };
         int ans = 0;
+
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                if (grid[i][j] == '1' && !visited[i][j]) {
-                    dfs(grid, visited, i, j);
-                    ans += 1;
+                if (grid[i][j] != '1') continue;
+
+                ans += 1;
+
+                queue<pair<int,int>> q;
+                q.push({ i, j });
+                grid[i][j] = '#';
+
+                while (!q.empty()) {
+                    auto [ci, cj] = q.front();
+                    q.pop();
+                    for (int k = 0; k < 4; k++) {
+                        int ni = ci + rows[k];
+                        int nj = cj + cols[k];
+                        if (ni >= 0 && ni < m && nj >= 0 && nj < n && grid[ni][nj] == '1') {
+                            q.push({ ni, nj });
+                            grid[ni][nj] = '#';
+                        }
+                    }                    
                 }
             }
         }
+
         return ans;
     }
 };
