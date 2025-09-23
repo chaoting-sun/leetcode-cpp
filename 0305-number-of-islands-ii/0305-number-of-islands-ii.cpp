@@ -1,3 +1,7 @@
+// Approach: Disjoint Set Union (DSU)
+// Time: O(L)
+// Space: O(m*n)
+
 class Solution {
 public:
     unordered_map<int,int> parent;
