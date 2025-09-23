@@ -47,6 +47,33 @@ public:
     //     return (int)count;
     // }
 
+    // Approach:
+    // 1. Since values in arr are guaranteed to be in [0, 100], we can precompute
+    //    frequency counts freq[v] = how many times value v appears.
+    // 2. We then iterate over possible value triples (v1, v2, v3) with v1 <= v2 <= v3
+    //    and check if v1 + v2 + v3 == target. This avoids double-counting permutations.
+    // 3. For each valid triple, add the number of index triples contributed by
+    //    the frequencies using combinatorics:
+    //      - Case A: v1 == v2 == v3
+    //          -> Choose 3 from freq[v1] = C(freq[v1], 3) = n*(n-1)*(n-2)/6
+    //      - Case B: v1 == v2 != v3
+    //          -> Choose 2 from freq[v1], and 1 from freq[v3]:
+    //             C(freq[v1], 2) * freq[v3]
+    //      - Case C: v1 < v2 < v3
+    //          -> One from each: freq[v1] * freq[v2] * freq[v3]
+    // 4. We accumulate the result in a 64-bit variable (to prevent overflow),
+    //    then take modulo 1e9+7 at each step.
+    //
+    // Complexity:
+    // - Building freq: O(n), where n = arr.size().
+    // - Iterating v1, v2, computing v3: O(101^2) = ~10^4, independent of n.
+    // - Total: O(n + 100^2), very efficient.
+    //
+    // Notes:
+    // - Always promote to long long before multiplication to avoid overflow.
+    // - Apply % MOD only on the sum, not inside the combinatorial formulas.
+    // - Enforcing v1 <= v2 <= v3 ensures each triple is counted exactly once.
+
     int threeSumMulti(vector<int>& arr, int target) {
         vector<int> freq(101);
         for (int val: arr) freq[val]++;
@@ -73,4 +100,10 @@ public:
         }
         return (int)ans;
     }
+
+    // For future practice
+
+    // int threeSumMulti(vector<int>& arr, int target) {
+
+    // }
 };
