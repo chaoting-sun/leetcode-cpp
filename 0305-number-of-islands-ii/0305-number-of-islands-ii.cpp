@@ -2,14 +2,23 @@
 // Time: O(L)
 // Space: O(m*n)
 
-class Solution {
+class DSU {
 public:
-    unordered_map<int,int> parent;
-    unordered_map<int,int> size;
+    vector<int> parent, size;
 
-    void unionSet(int u, int v) {
-        u = findSet(u);
-        v = findSet(v);
+    DSU(int n) {
+        parent.resize(n, -1);
+        size.resize(n, 0);
+    }
+
+    void makeSet(int u) {
+        parent[u] = u;
+        size[u] = 1;
+    }
+
+    void unite(int u, int v) {
+        u = find(u);
+        v = find(v);
         if (u != v) {
             if (size[u] < size[v]) swap(u, v);
             parent[v] = u;
@@ -17,14 +26,18 @@ public:
         }
     }
 
-    int findSet(int u) {
+    int find(int u) {
         if (u == parent[u]) return u;
-        return parent[u] = findSet(parent[u]);
+        return parent[u] = find(parent[u]);
     }
+};
 
+class Solution {
+public:
     vector<int> numIslands2(int m, int n, vector<vector<int>>& positions) {
         int count = 0;
         vector<int> ans;
+        DSU dsu(m * n);
 
         vector<int> rowDelta = { 0, 0, -1, 1 };
         vector<int> colDelta = { -1, 1, 0, 0 };
@@ -34,13 +47,12 @@ public:
             int index = row * n + col;
 
             // skip repeated position
-            if (parent.count(index)) {
+            if (dsu.parent[index] != -1) {
                 ans.push_back(count);
                 continue;
             }
 
-            parent[index] = index;
-            size[index] = 1;
+            dsu.makeSet(index);
             
             unordered_set<int> neighborIslands;
             for (int i = 0; i < 4; i++) {
@@ -48,9 +60,9 @@ public:
                 int neiCol = col + colDelta[i];
                 if (neiRow >= 0 && neiRow < m && neiCol >= 0 && neiCol < n) {
                     int neiIndex = neiRow * n + neiCol;
-                    if (parent.count(neiIndex)) {
-                        neighborIslands.insert(findSet(neiIndex));
-                        unionSet(index, neiIndex);
+                    if (dsu.parent[neiIndex] != -1) {
+                        neighborIslands.insert(dsu.find(neiIndex));
+                        dsu.unite(index, neiIndex);
                     }
                 }
             }
