@@ -44,4 +44,10 @@ public:
     void solveSudoku(vector<vector<char>>& board) {
         backtrack(board, 0, 0);
     }
+
+    // For next exercise
+
+    // void solveSudoku(vector<vector<char>>& board) {
+
+    // }
 };
