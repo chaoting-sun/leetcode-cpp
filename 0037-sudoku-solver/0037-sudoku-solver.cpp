@@ -1,3 +1,7 @@
+// Backtracking
+// Time: O(9^81)
+// Space: O(81) = O(1)
+
 class Solution {
 public:
     bool isValid(vector<vector<char>>& board, int i, int j, int c) {
