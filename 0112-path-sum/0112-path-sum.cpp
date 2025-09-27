@@ -10,12 +10,13 @@
  * };
  */
 
-// Approach: DFS
-// Time: O(n). we visited each node exactly once
-// Space: O(n). in worst case the tree is unbalanced.
 
 class Solution {
 public:
+    // Approach: DFS
+    // Time: O(n). we visited each node exactly once
+    // Space: O(n). in worst case the tree is unbalanced.
+
     // bool hasPathSum(TreeNode* root, int targetSum) {
     //     if (!root) return false;
 
@@ -25,6 +26,10 @@ public:
     //     }
     //     return hasPathSum(root->left, targetSum) || hasPathSum(root->right, targetSum);
     // }
+
+    // Approach: Stack
+    // Time: O(n)
+    // Space: O(n)
 
     bool hasPathSum(TreeNode* root, int targetSum) {
         if (!root) return false;
