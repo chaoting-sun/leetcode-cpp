@@ -1,53 +1,43 @@
 class Solution {
 public:
-    int n = 9;
-    int nCells = 81;
-
-    bool backtrack(vector<vector<char>>& board, int index) {
-        if (index == nCells) {
-            return true;
+    bool isValid(vector<vector<char>>& board, int i, int j, int c) {
+        // row
+        for (int k = 0; k < 9; k++) {
+            if (board[i][k] == c) return false;
         }
-
-        int currentX = index / n, currentY = index % n;
-        
-        if (board[currentX][currentY] != '.') {
-            return backtrack(board, index + 1);
+        // col
+        for (int k = 0; k < 9; k++) {
+            if (board[k][j] == c) return false;
         }
-
-        // find candidates
-
-        unordered_set<char> candidates = { '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-        for (int x = 0; x < n; x++) {
-            if (x != currentX) candidates.erase(board[x][currentY]);
-        }
-        for (int y = 0; y < n; y++) {
-            if (y != currentY) candidates.erase(board[currentX][y]);
-        }
-        int startX = (currentX / 3) * 3, startY = (currentY / 3) * 3;
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                int x = startX + i;
-                int y = startY + j;
-                if (x != currentX || y != currentY) candidates.erase(board[x][y]);
+        int x = i / 3 * 3, y = j / 3 * 3;
+        for (int p = 0; p < 3; p++) {
+            for (int q = 0; q < 3; q++) {
+                if (board[x + p][y + q] == c) return false;
             }
         }
+        return true;
+    }
 
-        if (candidates.size() == 0) {
-            return false;
-        }
+    bool backtrack(vector<vector<char>>& board, int i, int j) {
+        if (i == 9) return true;
+        if (j == 9) return backtrack(board, i + 1, 0);
+        
+        // move to the next cell if the current one has been solved
+        if (board[i][j] != '.') return backtrack(board, i, j + 1);
 
-        for (char c: candidates) {
-            board[currentX][currentY] = c;
-            if (backtrack(board, index + 1)) {
+        for (char c = '1'; c <= '9'; c++) {
+            if (!isValid(board, i, j, c)) continue;
+            board[i][j] = c;
+            if (backtrack(board, i, j + 1)) {
                 return true;
             }
-            board[currentX][currentY] = '.';
+            board[i][j] = '.';
         }
 
         return false;
     }
 
     void solveSudoku(vector<vector<char>>& board) {
-        backtrack(board, 0);
+        backtrack(board, 0, 0);
     }
 };
