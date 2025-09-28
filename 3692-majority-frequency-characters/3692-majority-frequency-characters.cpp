@@ -31,4 +31,10 @@ public:
         }
         return group;
     }
+
+    // Practice
+
+    // string majorityFrequencyGroup(string s) {
+
+    // }
 };
