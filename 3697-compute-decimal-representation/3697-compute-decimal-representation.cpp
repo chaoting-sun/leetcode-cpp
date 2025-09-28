@@ -14,8 +14,7 @@ public:
             i *= 10;
         }
 
-        int m = ans.size();
-        for (int i = 0; i < m / 2; i++) swap(ans[i], ans[m - 1 - i]);
+        reverse(ans.begin(), ans.end());
         return ans;
     }
 };
