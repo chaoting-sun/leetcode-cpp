@@ -15,6 +15,7 @@ public:
         targetSum -= root->val;
         path.push_back(root->val);
 
+        // finish condition
         if (!root->left && !root->right) {
             if (targetSum == 0) {
                 ans.push_back(path);
@@ -24,8 +25,6 @@ public:
 
         if (root->left) dfs(ans, path, root->left, targetSum);
         if (root->right) dfs(ans, path, root->right, targetSum);
-    
-        // path.pop_back();
     }
     
     vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
