@@ -11,6 +11,10 @@
  */
 class Solution {
 public:
+    // Approach: DFS, Recursion
+    // Time: O(n)
+    // Space: O(h). h is the tree height
+
     void dfs(TreeNode* root, int pathSum, int& totalSum) {
         if (!root) return;
 
@@ -29,4 +33,10 @@ public:
         dfs(root, pathSum, totalSum);
         return totalSum;
     }
+
+    // Practice
+
+    int sumNumbers(TreeNode* root) {
+        
+    }    
 };
