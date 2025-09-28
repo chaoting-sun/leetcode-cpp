@@ -11,23 +11,27 @@
  */
 class Solution {
 public:
+    // Approach: DFS traversal with backtracking
+    // Time: O(n*n) in worst case (unbalanced)
+    // Space: O(n) in worst case (unbalanced)
+
     void dfs(vector<vector<int>>& ans, vector<int>& path, TreeNode* root, int targetSum) {
-        // select
+        // choose
         targetSum -= root->val;
         path.push_back(root->val);
 
         // finish condition
         if (!root->left && !root->right) {
             if (targetSum == 0) {
-                ans.push_back(path);
+                ans.push_back(path); // O(n) time
             }
         }
 
-        // recursively processing
+        // explore
         if (root->left) dfs(ans, path, root->left, targetSum);
         if (root->right) dfs(ans, path, root->right, targetSum);
         
-        // unselect
+        // unchoose
         path.pop_back();
     }
     
@@ -39,4 +43,10 @@ public:
         dfs(ans, path, root, targetSum);
         return ans;
     }
+
+    // Practice
+
+    // vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
+
+    // }
 };
