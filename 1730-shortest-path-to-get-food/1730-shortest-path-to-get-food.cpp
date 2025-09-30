@@ -8,40 +8,36 @@ public:
         if (m == 0 || n == 0) return -1;
 
         queue<pair<int,int>> q;
-        vector<vector<bool>> visited(m, vector<bool>(n, false));
         int step = 0;
 
         for (int x = 0; x < m; x++) {
             for (int y = 0; y < n; y++) {
                 if (grid[x][y] == '*') {
                     q.push({ x, y });
-                    visited[x][y] = true;
                 }
             }
         }
         
         while (!q.empty()) {
             int size = q.size();
-            
+            step++;
+
             for (int i = 0; i < size; i++) {
                 auto [x, y] = q.front();
                 q.pop();
 
-                if (grid[x][y] == '#') {
-                    return step;
-                }
-
                 for (int i = 0; i < 4; i++) {
                     int nx = x + dx[i];
                     int ny = y + dy[i];
-                    if (nx >= 0 && nx < m && ny >= 0 && ny < n && grid[nx][ny] != 'X' && !visited[nx][ny]) {
+                    if (nx >= 0 && nx < m && ny >= 0 && ny < n && grid[nx][ny] != 'X') {
+                        if (grid[nx][ny] == '#') {
+                            return step;
+                        }
                         q.push({ nx, ny });
-                        visited[nx][ny] = true;
+                        grid[nx][ny] = 'X';
                     }
                 }
             }
-
-            step++;
         }
 
         return -1;
