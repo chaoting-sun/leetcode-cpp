@@ -7,39 +7,41 @@ public:
         int m = grid.size(), n = grid[0].size();
         if (m == 0 || n == 0) return -1;
 
-        int x = -1, y = -1;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (grid[i][j] == '*') {
-                    x = i;
-                    y = j;
+        queue<pair<int,int>> q;
+        vector<vector<bool>> visited(m, vector<bool>(n, false));
+        int step = 0;
+
+        for (int x = 0; x < m; x++) {
+            for (int y = 0; y < n; y++) {
+                if (grid[x][y] == '*') {
+                    q.push({ x, y });
+                    visited[x][y] = true;
                 }
             }
         }
-
-        queue<pair<int,int>> q; // step, position
-        vector<vector<bool>> visited(m, vector<bool>(n, false));
-
-        q.push({ 0, x * n + y });
-        visited[x][y] = true;
         
         while (!q.empty()) {
-            auto [step, position] = q.front();
-            int cx = position / n, cy = position % n;
-            q.pop();
-
-            if (grid[cx][cy] == '#') {
-                return step;
-            }
+            int size = q.size();
             
-            for (int i = 0; i < 4; i++) {
-                int nx = cx + dx[i];
-                int ny = cy + dy[i];
-                if (nx >= 0 && nx < m && ny >= 0 && ny < n && grid[nx][ny] != 'X' && !visited[nx][ny]) {
-                    q.push({ step + 1, nx * n + ny });
-                    visited[nx][ny] = true;
+            for (int i = 0; i < size; i++) {
+                auto [x, y] = q.front();
+                q.pop();
+
+                if (grid[x][y] == '#') {
+                    return step;
+                }
+
+                for (int i = 0; i < 4; i++) {
+                    int nx = x + dx[i];
+                    int ny = y + dy[i];
+                    if (nx >= 0 && nx < m && ny >= 0 && ny < n && grid[nx][ny] != 'X' && !visited[nx][ny]) {
+                        q.push({ nx, ny });
+                        visited[nx][ny] = true;
+                    }
                 }
             }
+
+            step++;
         }
 
         return -1;
