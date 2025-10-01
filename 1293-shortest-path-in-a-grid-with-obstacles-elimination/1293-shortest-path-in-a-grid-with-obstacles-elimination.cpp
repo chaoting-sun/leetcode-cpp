@@ -1,5 +1,9 @@
 class Solution {
 public:
+    // Approach: BFS
+    // Time: O(mnk)
+    // Space: O(mnk)
+
     vector<int> dx = { 0, 0, 1, -1 };
     vector<int> dy = { 1, -1, 0, 0 };
 
