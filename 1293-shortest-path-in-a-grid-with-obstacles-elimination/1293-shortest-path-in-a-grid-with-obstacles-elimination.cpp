@@ -15,6 +15,7 @@ public:
         vector<vector<vector<bool>>> visited(m, vector<vector<bool>>(n, vector<bool>(k + 1, false)));
         queue<array<int,3>> q; // obstacles, x, y
 
+        visited[0][0][0] = true;
         q.push({ 0, 0, 0 });
         int steps = 0;
 
