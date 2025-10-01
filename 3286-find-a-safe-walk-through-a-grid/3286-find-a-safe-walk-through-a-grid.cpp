@@ -40,6 +40,10 @@ public:
     //     return false;
     // }
 
+    // Approach: 0-1 bfs
+    // Time: O(V + E) = O(mn)
+    // Space: O(mn)
+
     bool findSafeWalk(vector<vector<int>>& grid, int health) {
         int m = grid.size(), n = grid[0].size();
         if (m == 0 || n == 0) return false;
@@ -53,6 +57,11 @@ public:
         while (!dq.empty()) {
             auto [x, y] = dq.front();
             dq.pop_front();
+            
+            if (x == m - 1 && y == n - 1) {
+                return dist[m - 1][n - 1] < health;
+            }
+
             for (int i = 0; i < 4; i++) {
                 int nx = x + dx[i];
                 int ny = y + dy[i];
@@ -68,6 +77,6 @@ public:
             }
         }
 
-        return dist[m - 1][n - 1] >= health ? false : true;
+        return false;
     }
 };
