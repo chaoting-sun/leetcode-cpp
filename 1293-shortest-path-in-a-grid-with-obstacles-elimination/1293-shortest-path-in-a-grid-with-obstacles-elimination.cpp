@@ -7,31 +7,39 @@ public:
         int m = grid.size(), n = grid[0].size();
         if (m == 0 || n == 0) return 0;
 
-        // minSteps[i][j][k]: the min steps to arrive (i,j) after passing k obstacles
-        vector<vector<vector<int>>> minSteps(m, vector<vector<int>>(n, vector<int>(k + 1, INT_MAX)));
+        // visited[i][j][k]: the min steps to arrive (i,j) after passing k obstacles
+        vector<vector<vector<bool>>> visited(m, vector<vector<bool>>(n, vector<bool>(k + 1, false)));
         queue<array<int,3>> q; // obstacles, x, y
 
         q.push({ 0, 0, 0 });
-        minSteps[0][0][0] = 0;
+        int steps = 0;
 
         while (!q.empty()) {
-            auto [obstacles, x, y] = q.front();
-            q.pop();
+            int size = q.size();
+            for (int i = 0; i < size; i++) {
+                auto [obstacles, x, y] = q.front();
+                q.pop();
 
-            for (int i = 0; i < 4; i++) {
-                int nx = x + dx[i];
-                int ny = y + dy[i];
-                if (nx < 0 || nx >= m || ny < 0 || ny >= n) continue;
-                
-                int newObstacles = obstacles + grid[nx][ny];
-                if (newObstacles > k || minSteps[nx][ny][newObstacles] != INT_MAX) continue;
-                minSteps[nx][ny][newObstacles] = minSteps[x][y][obstacles] + 1;
-                q.push({ newObstacles, nx, ny });
+                if (x == m - 1 && y == n - 1) {
+                    return steps;
+                }
+
+                for (int j = 0; j < 4; j++) {
+                    int nx = x + dx[j];
+                    int ny = y + dy[j];
+                    if (nx < 0 || nx >= m || ny < 0 || ny >= n) continue;
+                    
+                    int newObstacles = obstacles + grid[nx][ny];
+                    if (newObstacles > k || visited[nx][ny][newObstacles]) continue;
+                    visited[nx][ny][newObstacles] = true;
+
+                    q.push({ newObstacles, nx, ny });
+                }
             }
+
+            steps++;
         }
 
-        int ans = INT_MAX;
-        for (int i = 0; i <= k; i++) ans = min(ans, minSteps[m-1][n-1][i]);
-        return ans == INT_MAX ? -1 : ans;
+        return -1;
     }
 };
