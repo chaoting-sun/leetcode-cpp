@@ -44,13 +44,10 @@ public:
 
         return -1;
     }
+
+    // Practice
+
+    // int minTimeToReach(vector<vector<int>>& moveTime) {
+
+    // }
 };
-
-// [[0,4],
-//  [4,4]]
-
-// pq = [(0,0)]
-
-// pop (0,0), pq = []
-// (1,0), weight = max(0, 4) + 1 = 5, 0 + 5 < INT_MAX, time[1][0] = 0 + 5 = 5 -> pq = [(5,2)]
-// (0,1) -> pq = [(5,2), (5,1)]
