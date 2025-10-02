@@ -5,7 +5,7 @@ public:
     // Approach: dijkstra
     // Time: O(mn*log(mn)). There are nm points and O(mn) edges. Dijkstra's algorithm
     // using a min heap performs at most O(nm) insertions and deletions. Each heap op
-    // takes O)(log(mn))
+    // takes O(log(mn))
     // Space: O(mn)
 
     vector<int> dx = { 1, -1, 0, 0 };
@@ -25,6 +25,10 @@ public:
             auto [currentTime, position] = pq.top();
             int x = position / m, y = position % m;
             pq.pop();
+
+            if (currentTime != time[x][y]) {
+                continue;
+            }
 
             if (x == n - 1 && y == m - 1) {
                 return currentTime;
