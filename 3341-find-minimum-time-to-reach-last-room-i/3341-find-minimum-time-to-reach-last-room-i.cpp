@@ -2,6 +2,12 @@ using PI2 = pair<int, int>;
 
 class Solution {
 public:
+    // Approach: dijkstra
+    // Time: O(mn*log(mn)). There are nm points and O(mn) edges. Dijkstra's algorithm
+    // using a min heap performs at most O(nm) insertions and deletions. Each heap op
+    // takes O)(log(mn))
+    // Space: O(mn)
+
     vector<int> dx = { 1, -1, 0, 0 };
     vector<int> dy = { 0, 0, 1, -1 };
 
