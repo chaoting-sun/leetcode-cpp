@@ -71,22 +71,28 @@ public:
     }
 
     int minimumEffortPath(vector<vector<int>>& heights) {
-        int m = heights.size(), n = heights[0].size();
-        if (m == 0 || n == 0) return -1; // invalid input
+        int m = heights.size();
+        if (m == 0) return -1;
+        int n = heights[0].size();
+        if (n == 0) return -1;
+
         if (m == 1 && n == 1) return 0; // early return for trivial case
 
+        auto idx = [n](int i, int j) { return i * n + j; };
+
         vector<array<int, 3>> edges;
+        edges.reserve(2*m*n - n - m);
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                int currentIndex = i * n + j;
+                int currentIndex = idx(i, j);
                 int iDown = i + 1;
                 if (iDown < m) {
-                    int neighborIndex = iDown * n + j;
+                    int neighborIndex = idx(iDown, j);
                     edges.push_back({ abs(heights[i][j] - heights[iDown][j]), currentIndex, neighborIndex });
                 }
                 int jRight = j + 1;
                 if (jRight < n) {
-                    int neighborIndex = i * n + jRight;
+                    int neighborIndex = idx(i, jRight);
                     edges.push_back({ abs(heights[i][j] - heights[i][jRight]), currentIndex, neighborIndex });
                 }
             }
@@ -96,11 +102,12 @@ public:
             return a[0] < b[0];
         });
 
-        parent.resize(m * n);
-        size.resize(m * n, 1);
-        for (int i = 0; i < m * n; i++) parent[i] = i;
+        int total = m * n;
+        parent.resize(total);
+        size.resize(total, 1);
+        for (int i = 0; i < total; i++) parent[i] = i;
 
-        int lastIndex = m * n - 1;
+        int lastIndex = total - 1;
         for (int i = 0; i < edges.size(); i++) {
             auto [effort, u, v] = edges[i];
             unite(u, v);
