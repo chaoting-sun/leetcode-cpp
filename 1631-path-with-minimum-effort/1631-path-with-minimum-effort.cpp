@@ -2,7 +2,9 @@ using PI2 = pair<int,int>;
 
 class Solution {
 public:
-    // dist[i'][j'] = max(abs(grid[i][j] - grid[i'][j']), dist[i][j]);
+    // Approach: Dijkstra
+    // Time: O(mn*log(mn))
+    // Space: O(mn)
 
     vector<int> dx = { 1, -1, 0, 0 };
     vector<int> dy = { 0, 0, 1, -1 };
@@ -22,6 +24,7 @@ public:
             int x = position / n, y = position % n;
             pq.pop();
 
+            if (currentDistance != distance[x][y]) continue;
             if (x == m - 1 && y == n - 1) {
                 return currentDistance;
             }
