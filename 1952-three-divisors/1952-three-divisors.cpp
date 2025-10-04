@@ -1,5 +1,9 @@
 class Solution {
 public:
+    // Approach: enumerate divisors
+    // Time: O(n)
+    // Space: O(1)
+
     // bool isThree(int n) {
     //     int divisors = 0;
     //     for (int i = 1; i <= n; i++) {
@@ -8,6 +12,10 @@ public:
     //     }
     //     return divisors == 3;
     // }
+
+    // Approach: Only need to enumerate to sqrt(n)
+    // Time: O(sqrt(n))
+    // Space: O(1)
 
     bool isThree(int n) {
         int divisors = 0;
