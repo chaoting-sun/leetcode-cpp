@@ -29,16 +29,10 @@ public:
         for (int val: arr) counts[val]++;
         for (auto& [val, currentCount]: counts) {
             if (currentCount == 0) continue;
-            if (val >= 0) {
-                int want = 2 * val;
-                if (!counts.count(want) || currentCount > counts[want]) return false;
-                counts[want] -= currentCount;
-            } else {
-                if (val % 2 != 0) return false;
-                int want = val / 2;
-                if (!counts.count(want) || currentCount > counts[want]) return false;
-                counts[want] -= currentCount;
-            }
+            if (val < 0 && val % 2 != 0) return false;
+            int want = val >= 0 ? val * 2 : val / 2;
+            if (!counts.count(want) || currentCount > counts[want]) return false;
+            counts[want] -= currentCount;
         }
         return true;
     }
