@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int isPrimeValue(int val) {
+    int isPrime(int val) {
         for (int i = 2; i <= (int)sqrt(val); i++) {
             if (val % i == 0) return false;    
         }
@@ -8,25 +8,24 @@ public:
     }
     
     int smallestValue(int n) {
-        unordered_set<int> primes;
-        int maxValue = 1;
-
+        unordered_set<int> primesInN;
+        for (int d = 2; d <= n; d++) {
+            if (isPrime(d)) primesInN.insert(d);
+        }
+    
         while (n > 2) {
             int m = n;
             unordered_map<int,int> primeCnt;
             while (m > 1) {
                 bool found = false;
                 for (int d = 2; d < n; d++) {
-                    maxValue = max(maxValue, d);
-                    if (primes.count(d) || isPrimeValue(d)) {
-                        primes.insert(d);
-                        while (m % d == 0) {
-                            found = true;
-                            primeCnt[d]++;
-                            m /= d;
-                        }
-                        if (m == 1) break;
+                    if (!primesInN.count(d)) continue;
+                    while (m % d == 0) {
+                        found = true;
+                        primeCnt[d]++;
+                        m /= d;
                     }
+                    if (m == 1) break;
                 }
                 if (!found) break;
             }
