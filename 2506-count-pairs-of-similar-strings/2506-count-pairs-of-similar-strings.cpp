@@ -1,23 +1,16 @@
 class Solution {
 public:
     int similarPairs(vector<string>& words) {
+        unordered_map<string,int> uniqueCharWords;
         for (auto& word: words) {
-            sort(word.begin(), word.end());
-        }
-        vector<string> uniqueCharWords;
-        for (auto& word: words) {
-            string c = "";
-            for (char w: word) {
-                if (c == "" || c.back() != w) c += w;
-            }
-            uniqueCharWords.push_back(c);
-        }
-        unordered_map<string,int> cnts;
-        for (auto& word: uniqueCharWords) {
-            cnts[word]++;
+            set<char> chars;
+            for (char w: word) chars.insert(w);
+            string s;
+            for (auto ch: chars) s += ch;
+            uniqueCharWords[s]++;
         }
         int ans = 0;
-        for (auto& [word, c]: cnts) {
+        for (auto& [word, c]: uniqueCharWords) {
             ans += c * (c - 1) / 2;
         }
         return ans;
