@@ -18,14 +18,17 @@ public:
             unordered_map<int,int> primeCnt;
             while (m > 1) {
                 bool found = false;
-                for (int d = 2; d < n; d++) {
-                    if (!primesInN.count(d)) continue;
-                    while (m % d == 0) {
-                        found = true;
-                        primeCnt[d]++;
-                        m /= d;
+                int d = 2;
+                while (d <= m) {
+                    if (primesInN.count(d)) {
+                        while (m % d == 0) {
+                            found = true;
+                            primeCnt[d]++;
+                            m /= d;
+                        }
                     }
                     if (m == 1) break;
+                    d++;
                 }
                 if (!found) break;
             }
