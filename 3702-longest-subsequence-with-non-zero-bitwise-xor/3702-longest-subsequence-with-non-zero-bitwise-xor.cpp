@@ -1,5 +1,9 @@
 class Solution {
 public:
+    // Approach: Bit Manipulation
+    // Time: O(n)
+    // Space: O(1)
+
     int longestSubsequence(vector<int>& nums) {
         int n = nums.size();
         int s = nums[0];
