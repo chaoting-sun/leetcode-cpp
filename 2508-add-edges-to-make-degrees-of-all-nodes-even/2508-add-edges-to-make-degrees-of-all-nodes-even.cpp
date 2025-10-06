@@ -8,31 +8,25 @@ public:
             nodes[v].insert(u);
         }
 
-        vector<int> oddNodes;
+        vector<int> odds;
 
         for (int i = 1; i <= n; i++) {
             if (nodes[i].size() % 2 == 1) {
-                oddNodes.push_back(i);
+                odds.push_back(i);
             }
         }
 
-        int nOdds = oddNodes.size();
-        if (nOdds == 0) return true;
-        if (nOdds != 2 && nOdds != 4) return false;
-
-        unordered_set<int> oddNodesSet(oddNodes.begin(), oddNodes.end());
-
-        if (nOdds == 2) {
-            int u = oddNodes[0], v = oddNodes[1];
+        if (odds.size() == 2) {
+            int u = odds[0], v = odds[1];
             if (!nodes[u].count(v)) return true;
             for (int i = 1; i <= n; i++) {
-                if (!oddNodesSet.count(i) && !nodes[i].count(u) && !nodes[i].count(v)) {
+                if (!nodes[i].count(u) && !nodes[i].count(v)) {
                     return true;
                 }
             }
             return false;
-        } else {
-            int u = oddNodes[0], v = oddNodes[1], x = oddNodes[2], y = oddNodes[3];
+        } else if (odds.size() == 4) {
+            int u = odds[0], v = odds[1], x = odds[2], y = odds[3];
             if (
                 (!nodes[u].count(v) && !nodes[x].count(y)) ||
                 (!nodes[u].count(x) && !nodes[v].count(y)) ||
@@ -42,6 +36,8 @@ public:
             } else {
                 return false;
             }
+        } else {
+            return odds.size() == 0;
         }
     }
 };
