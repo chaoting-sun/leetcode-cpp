@@ -8,8 +8,9 @@ public:
             } else {
                 stk.push_back({ s[i], 1 });
             }
-            if (stk.back().second >= k) stk.back().second -= k;
-            if (stk.back().second == 0) stk.pop_back();
+            if (stk.back().second == k) {
+                stk.pop_back();
+            }
         }
         string ans;
         for (auto [c, count]: stk) {
