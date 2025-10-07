@@ -13,7 +13,7 @@ public:
         }
         string ans;
         for (auto [c, count]: stk) {
-            for (int i = 0; i < count; i++) ans += c;
+            ans += string(count, c);
         }
         return ans;
     }
