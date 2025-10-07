@@ -16,6 +16,10 @@ public:
     //     return ans;
     // }
 
+    // Approach: Two Pointers
+    // Time: O(n)
+    // Space: O(n)
+
     string removeStars(string s) {
         int j = 0;
         for (int i = 0; i < s.size(); i++) {
