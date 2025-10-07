@@ -1,5 +1,9 @@
 class Solution {
 public:
+    // Approach: Stack
+    // Time: O(n)
+    // Space: O(1)
+
     // int minLength(string s) {
     //     string ans;
     //     for (char c: s) {
@@ -13,6 +17,10 @@ public:
     //     }
     //     return ans.size();
     // }
+
+    // Approach: Two Pointers
+    // Time: O(n)
+    // Space: O(1)
 
     int minLength(string s) {
         int end = 0;
