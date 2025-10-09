@@ -1,33 +1,64 @@
 class Solution {
 public:
+    // int findShortestSubArray(vector<int>& nums) {
+    //     int n = nums.size();
+    //     if (n == 0) return 0;
+        
+    //     unordered_map<int,int> firstIndex, distance, freq;
+    //     int highestFreq = 0, minDistance = INT_MAX;
+
+    //     for (int i = 0; i < n; i++) {
+    //         if (!firstIndex.count(nums[i])) {
+    //             firstIndex[nums[i]] = i;
+    //             distance[nums[i]] = 1;
+    //         } else {
+    //             distance[nums[i]] = i - firstIndex[nums[i]] + 1;
+    //         }
+    //         freq[nums[i]]++;
+    //     }
+
+    //     for (auto [v, f]: freq) {
+    //         if (f > highestFreq) {
+    //             highestFreq = f;
+    //             minDistance = distance[v];
+    //         } else if (f == highestFreq && distance[v] < minDistance) {
+    //             minDistance = distance[v];
+    //         }
+    //     }
+
+    //     return minDistance;
+    // }
+
+    // More concise
+
     int findShortestSubArray(vector<int>& nums) {
         int n = nums.size();
         if (n == 0) return 0;
-        
-        unordered_map<int,int> firstIndex, distance, freq;
+
+        unordered_map<int,int> firstIndex, freq;
         int highestFreq = 0, minDistance = INT_MAX;
 
         for (int i = 0; i < n; i++) {
             if (!firstIndex.count(nums[i])) {
                 firstIndex[nums[i]] = i;
-                distance[nums[i]] = 1;
-            } else {
-                distance[nums[i]] = i - firstIndex[nums[i]] + 1;
             }
             freq[nums[i]]++;
-        }
-
-        for (auto [v, f]: freq) {
-            if (f > highestFreq) {
-                highestFreq = f;
-                minDistance = distance[v];
-            } else if (f == highestFreq && distance[v] < minDistance) {
-                minDistance = distance[v];
+            if (freq[nums[i]] > highestFreq) {
+                highestFreq = freq[nums[i]];
+                minDistance = i - firstIndex[nums[i]] + 1;
+            } else if (freq[nums[i]] == highestFreq) {
+                minDistance = min(minDistance, i - firstIndex[nums[i]] + 1);
             }
         }
 
         return minDistance;
     }
+
+    // For exercise
+
+    // int findShortestSubArray(vector<int>& nums) {
+
+    // }
 };
 
 // [1,2,2,3,1]
