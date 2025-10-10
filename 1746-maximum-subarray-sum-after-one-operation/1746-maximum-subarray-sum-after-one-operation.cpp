@@ -31,14 +31,12 @@ public:
         int n = nums.size();
         if (n == 0) return 0;
 
-        int opUsed = nums[0] * nums[0];
-        int opNotUsed = nums[0];
-        int ans = opUsed;
+        int opUsed = 0, opNotUsed = 0, ans = INT_MIN;
 
-        for (int i = 1; i < n; i++) {
-            int numSquared = nums[i] * nums[i];
-            opUsed = max(numSquared, max(opNotUsed + numSquared, opUsed + nums[i]));
-            opNotUsed = max(opNotUsed + nums[i], nums[i]);
+        for (int x: nums) {
+            int xx = x * x;
+            opUsed = max(xx, max(opNotUsed + xx, opUsed + x));
+            opNotUsed = max(opNotUsed + x, x);
             ans = max(ans, opUsed);
         }
 
