@@ -1,5 +1,9 @@
 class Solution {
 public:
+    // Approach: DP
+    // Time: O(n)
+    // Space: O(n)
+
     // int maxTurbulenceSize(vector<int>& arr) {
     //     int n = arr.size();
     //     if (n == 0) return 0;
@@ -25,6 +29,10 @@ public:
 
     //     return maxLength;
     // }
+
+    // Approach: DP
+    // Time: O(n)
+    // Space: O(1)
 
     // int maxTurbulenceSize(vector<int>& arr) {
     //     int n = arr.size();
@@ -55,6 +63,10 @@ public:
 
     //     return maxLength;
     // }
+
+    // Approach: DP
+    // Time: O(n)
+    // Space: O(1)
 
     int maxTurbulenceSize(vector<int>& arr) {
         int n = arr.size();
