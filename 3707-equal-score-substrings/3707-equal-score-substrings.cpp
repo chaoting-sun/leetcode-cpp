@@ -1,5 +1,8 @@
 class Solution {
 public:
+    // Time: O(n)
+    // Space: O(1)
+
     bool scoreBalance(string s) {
         int totalScore = 0;
         for (char c: s) {
