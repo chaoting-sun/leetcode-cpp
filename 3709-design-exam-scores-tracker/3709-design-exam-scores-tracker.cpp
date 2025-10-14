@@ -40,14 +40,7 @@ public:
             }
         }
         int finalEnd = r;
-
-        if (finalEnd < 0) {
-            return 0;
-        } else if (finalStart < 0) {
-            return accScores[finalEnd];
-        } else {
-            return accScores[finalEnd] - accScores[finalStart];
-        }
+        return accScores[finalEnd] - accScores[finalStart];
     }
 };
 
