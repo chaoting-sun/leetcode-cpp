@@ -1,9 +1,3 @@
-struct Compare {
-    bool operator()(const vector<int> &a, const vector<int> &b) const {
-        return a[1] > b[1];
-    }
-};
-
 class Solution {
 public:
     // Approach: priority queue (min heap)
@@ -19,24 +13,21 @@ public:
     //     int n = intervals.size();
     //     if (n <= 1) return n;
 
-    //     sort(intervals.begin(), intervals.end(), [&](vector<int> &a, vector<int> &b) {
-    //         return a[0] < b[0];
-    //     });
-    //     priority_queue<vector<int>, vector<vector<int>>, Compare> pq;
-
-    //     int rooms = 0;
-    //     for (int i = 0; i < intervals.size(); i++) {
-    //         if (pq.empty() || pq.top()[1] > intervals[i][0]) {
-    //             pq.push(intervals[i]);
-    //             rooms = max(rooms, static_cast<int>(pq.size()));
-    //         } else {
-    //             pq.pop();
-    //             pq.push(intervals[i]);
-    //         }
-    //     }
-
-    //     return rooms;
-    // }
+    int minMeetingRooms(vector<vector<int>>& intervals) {
+        sort(intervals.begin(), intervals.end(), [](vector<int>& a, vector<int>& b) {
+            return a[0] < b[0];
+        });
+        priority_queue<int, vector<int>, greater<>> pq; // minheap
+        int maxRooms = 0;
+        for (auto& interval: intervals) {
+            while (!pq.empty() && pq.top() <= interval[0]) {
+                pq.pop();
+            }
+            pq.push(interval[1]);
+            maxRooms = max(maxRooms, (int)pq.size());
+        }
+        return maxRooms;
+    }
 
     // Approach: Chronological ordering
     // Time: O(nlogn)
@@ -74,21 +65,10 @@ public:
     //     return rooms;
     // }
 
-    int minMeetingRooms(vector<vector<int>>& intervals) {
-        sort(intervals.begin(), intervals.end(), [](vector<int>& a, vector<int>& b) {
-            return a[0] < b[0];
-        });
-        priority_queue<int, vector<int>, greater<>> pq; // minheap
-        int maxRooms = 0;
-        for (auto& interval: intervals) {
-            while (!pq.empty() && pq.top() <= interval[0]) {
-                pq.pop();
-            }
-            pq.push(interval[1]);
-            maxRooms = max(maxRooms, (int)pq.size());
-        }
-        return maxRooms;
-    }
+    // For practice
+
+    // int minMeetingRooms(vector<vector<int>>& intervals) {
+    // }
 };
 
 // [(0,1)] -> 1
