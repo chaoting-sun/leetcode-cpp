@@ -70,6 +70,8 @@ public:
     }
     
     long long totalScore(int startTime, int endTime) {
+        // lo = 第一個 >= startTime 的索引
+        // hi = 第一個 >  endTime   的索引
         int high = upper_bound(times.begin(), times.end(), endTime) - times.begin();
         int low = lower_bound(times.begin(), times.end(), startTime) - times.begin();
         return accScores[high - 1] - accScores[low - 1];
