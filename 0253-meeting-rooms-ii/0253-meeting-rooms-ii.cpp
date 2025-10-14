@@ -9,10 +9,6 @@ public:
     // Time: O(nlogn) -> sorting and push/pop of min heap
     // Space: O(n)
 
-    // int minMeetingRooms(vector<vector<int>>& intervals) {
-    //     int n = intervals.size();
-    //     if (n <= 1) return n;
-
     int minMeetingRooms(vector<vector<int>>& intervals) {
         sort(intervals.begin(), intervals.end(), [](vector<int>& a, vector<int>& b) {
             return a[0] < b[0];
