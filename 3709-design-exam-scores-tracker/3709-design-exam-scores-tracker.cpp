@@ -4,7 +4,7 @@ public:
     vector<long long> accScores{0};
     
     ExamTracker() {
-        
+
     }
     
     void record(int time, int score) {
@@ -18,10 +18,10 @@ public:
         if (n == 0) return 0;
     
         // startTime: 找最後一個 < startTime 的 t
-        while (l <= r) {
+        while (l < r) {
             int mid = l + (r - l) / 2;
             if (times[mid] < startTime) {
-                l = mid + 1;
+                l = mid;
             } else {
                 r = mid - 1;
             }
@@ -31,10 +31,10 @@ public:
         // endTime: 找最後一個 <= endTime 的 t
         l = 0;
         r = n - 1;
-        while (l <= r) {
+        while (l < r) {
             int mid = l + (r - l) / 2;
             if (times[mid] <= endTime) {
-                l = mid + 1;
+                l = mid;
             } else {
                 r = mid - 1;
             }
