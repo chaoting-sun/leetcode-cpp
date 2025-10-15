@@ -3,13 +3,16 @@ using PI2 = pair<int,int>;
 
 class Solution {
 public:
+    // Approach: sort + min heap
+    // Time: O(nlogn)
+    // Space: O(n)
+
     long long maxScore(vector<int>& nums1, vector<int>& nums2, int k) {
         int n = nums1.size();
 
         vector<PI2> nums(n);
         for (int i = 0; i < n; i++) {
-            nums[i].first = nums1[i];
-            nums[i].second = nums2[i];
+            nums[i] = { nums1[i], nums2[i] };
         }
         
         sort(nums.begin(), nums.end(), [](PI2& a, PI2& b) {
@@ -32,11 +35,8 @@ public:
         }
         return ans;
     }
+
+    // long long maxScore(vector<int>& nums1, vector<int>& nums2, int k) {
+        
+    // }
 };
-
-// [3,1,3,2]
-// [1,2,3,4]
-
-
-// [5,6,7,9,10]
-// [2,1,4,1,3]
