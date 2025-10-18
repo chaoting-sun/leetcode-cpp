@@ -1,18 +1,20 @@
 class Solution {
 public:
-    bool canMakeMBouquets(vector<int>& bloomDay, int m, int k, int day) {
+    int getNumBouquets(vector<int>& bloomDay, int k, int day) {
         int n = bloomDay.size();
-        int left = 0, right = 0;
-        int nBouquet = 0;
-        while (left < n) {
-            while (left < n && bloomDay[left] > day) left++;
-            if (left == n) break;
-            right = left;
-            while (right < n - 1 && bloomDay[right + 1] <= day) right++; 
-            nBouquet += (right - left + 1) / k;
-            left = right + 1;
+        int count = 0, nBouquet = 0;
+        for (int i = 0; i < n; i++) {
+            if (bloomDay[i] <= day) {
+                count++;
+            } else {
+                count = 0;
+            }
+            if (count == k) {
+                nBouquet += 1;
+                count = 0;
+            }
         }
-        return nBouquet >= m;
+        return nBouquet;
     }
 
     int minDays(vector<int>& bloomDay, int m, int k) {
@@ -22,7 +24,7 @@ public:
 
         while (low < high) {
             int mid = low + (high - low) / 2;
-            if (canMakeMBouquets(bloomDay, m, k, mid)) {
+            if (getNumBouquets(bloomDay, k, mid) >= m) {
                 high = mid;
             } else {
                 low = mid + 1;
