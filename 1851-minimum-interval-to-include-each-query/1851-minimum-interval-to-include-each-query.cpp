@@ -69,7 +69,7 @@ public:
 
         int n = intervals.size();
         int intervalIdx = 0;        
-        priority_queue<pair<int,int>, vector<pair<int,int>>, greater<>> pq;
+        priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> pq;
         vector<int> ans(nq, -1);
         for (auto [q, i]: sortedQueries) {
             while (intervalIdx < n && intervals[intervalIdx][0] <= q) {
