@@ -13,6 +13,7 @@ public:
                         count--;
                         totalSum -= i;
                     }
+                    if (count > 4) break;
                 }
             }
             if (count == 4) {
