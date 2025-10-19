@@ -1,3 +1,7 @@
+// Approach: DFS
+// Time: O(n)
+// Space: O(n)
+
 class Solution {
 public:
     int ans = 0;
