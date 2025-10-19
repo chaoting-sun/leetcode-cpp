@@ -17,37 +17,41 @@ public:
         return nBouquet;
     }
 
-    // int minDays(vector<int>& bloomDay, int m, int k) {
-    //     if ((long long)m * k > (long long)bloomDay.size()) return -1;
-    //     // find the first day such that we can make m bouquets
-    //     int low = 1, high = 1e9;
-
-    //     while (low < high) {
-    //         int mid = low + (high - low) / 2;
-    //         if (getNumBouquets(bloomDay, k, mid) >= m) {
-    //             high = mid;
-    //         } else {
-    //             low = mid + 1;
-    //         }
-    //     }
-    //     return high;
-    // }
-
     int minDays(vector<int>& bloomDay, int m, int k) {
         int n = bloomDay.size();
-        vector<int> days(n);
-        for (int i = 0; i < n; i++) days[i] = bloomDay[i];
-        sort(days.begin(), days.end());
-        int low = -1, high = n;
-        while (low + 1 < high) {
+        if ((long long)m * k > (long long)n) return -1;
+        // find the first day such that we can make m bouquets
+        int low = INT_MAX, high = INT_MIN;
+        for (int i = 0; i < n; i++) {
+            low = min(low, bloomDay[i]);
+            high = max(high, bloomDay[i]);
+        }
+        while (low < high) {
             int mid = low + (high - low) / 2;
-            if (getNumBouquets(bloomDay, k, days[mid]) >= m) {
+            if (getNumBouquets(bloomDay, k, mid) >= m) {
                 high = mid;
             } else {
-                low = mid;
+                low = mid + 1;
             }
         }
-        if (high == n || high == -1) return -1;
-        return days[high];
+        return high;
     }
+
+    // int minDays(vector<int>& bloomDay, int m, int k) {
+    //     int n = bloomDay.size();
+    //     vector<int> days(n);
+    //     for (int i = 0; i < n; i++) days[i] = bloomDay[i];
+    //     sort(days.begin(), days.end());
+    //     int low = -1, high = n;
+    //     while (low + 1 < high) {
+    //         int mid = low + (high - low) / 2;
+    //         if (getNumBouquets(bloomDay, k, days[mid]) >= m) {
+    //             high = mid;
+    //         } else {
+    //             low = mid;
+    //         }
+    //     }
+    //     if (high == n || high == -1) return -1;
+    //     return days[high];
+    // }
 };
