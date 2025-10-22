@@ -1,5 +1,5 @@
 class Solution {
-public: 
+public:
     vector<vector<int>> getSkyline(vector<vector<int>>& buildings) {
         set<int> edgeSet;
         for (auto& building: buildings) {
