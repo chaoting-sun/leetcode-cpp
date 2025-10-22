@@ -28,13 +28,15 @@ public:
     // Time: O(n)
     // Space: O(n)
     vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
-        unordered_set<int> occurrence;
-        unordered_set<int> seen;
-        for (int n: nums1) occurrence.insert(n);
+        unordered_set<int> candidates;
+        for (int n: nums1) candidates.insert(n);
+        vector<int> ans;
         for (int n: nums2) {
-            if (occurrence.count(n)) seen.insert(n);
+            if (candidates.count(n)) {
+                ans.push_back(n);
+                candidates.erase(n);
+            }
         }
-        vector<int> ans(seen.begin(), seen.end());
         return ans;
     }
 };
