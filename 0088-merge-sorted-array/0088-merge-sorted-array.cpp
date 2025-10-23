@@ -1,6 +1,9 @@
 class Solution {
 public:
+    // Approach: Three Pointers
     // Time: O(m + n)
+    // Space: O(1)
+    
     void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
         int i = m - 1, j = n - 1;
         int p = m + n - 1;
