@@ -7,14 +7,14 @@ public:
         });
 
         int n = intervals.size();
-        int maxRight = intervals[0][1];
+        int maxRight = -1;
         int remainingIntervals = n;
 
-        for (int i = 0; i < n - 1; i++) {
-            maxRight = max(maxRight, intervals[i][1]);
-            if (maxRight >= intervals[i + 1][1]) {
+        for (int i = 0; i < n; i++) {
+            if (maxRight >= intervals[i][1]) {
                 remainingIntervals--;
             }
+            maxRight = max(maxRight, intervals[i][1]);
         }
         return remainingIntervals;
     }
