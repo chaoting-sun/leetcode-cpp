@@ -7,28 +7,30 @@ public:
         for (int i = 0; i < n; i++) availableRooms.insert(i);
         sort(meetings.begin(), meetings.end());
         vector<int> useCount(n);
-        priority_queue<pair<ll,int>, vector<pair<ll,int>>, greater<pair<ll,int>>> minHeap; // end time, used room
-        ll time = 0;
-        int meetingIdx = 0;
-        while (meetingIdx < meetings.size()) {
-            auto& meeting = meetings[meetingIdx];
-            while (!minHeap.empty() && minHeap.top().first <= time) {
-                availableRooms.insert(minHeap.top().second); // release room
-                minHeap.pop();
+        priority_queue<pair<ll,int>, vector<pair<ll,int>>, greater<pair<ll,int>>> busy; // end time, used room
+
+        for (auto& meeting: meetings) {
+            int start = meeting[0], end = meeting[1];
+            int duration = end - start;
+            
+            while (!busy.empty() && busy.top().first <= start) {
+                availableRooms.insert(busy.top().second); // release room
+                busy.pop();
             }
-            if (availableRooms.empty()) {
-                time = minHeap.top().first;
-                continue;
+            
+            if (!availableRooms.empty()) {
+                // has available room -> assign the meeting to the room
+                int room = *availableRooms.begin();
+                availableRooms.erase(room);
+                busy.push({ end, room });
+                useCount[room]++;
+            } else {
+                // no available room -> assume that the earliest end time of a meeting has been arrived, and then remove it
+                auto [earliestEndTime, room] = busy.top();
+                busy.pop();
+                busy.push({ earliestEndTime + duration, room });
+                useCount[room]++;
             }
-            if (time < (ll)meeting[0]) {
-                time = meeting[0];
-                continue;
-            }
-            int room = *availableRooms.begin();
-            availableRooms.erase(room);
-            minHeap.push({ time + (meeting[1] - meeting[0]), room });
-            meetingIdx++;
-            useCount[room]++;
         }
 
         int maxUsedCount = -1, maxUsedRoom = -1;
@@ -42,45 +44,3 @@ public:
         return maxUsedRoom;
     }
 };
-
-// n = 2, meetings = [[0,10],[1,5],[2,7],[3,4]]
-
-// availableRooms = { 0, 1 }
-// useCount = [0, 0]
-// time = 0
-
-// meetingIdx = 0
-// availableRooms = {1}
-// minHeap = {{ 10, 0 }}
-// useCount = [1, 0]
-
-// time = 1
-
-
-// n
-// meetings = [start, end]
-// start
-
-// availableRooms = set { 0, 1, ..., n - 1 }
-// useCount = [ ] 0 +1+1
-
-// min heap key = meeting end
-// time = 0
-
-// loop meetings
-//     while there are ended meetings given time
-//         pop from min heap
-//         insert availableRooms
-
-//     if availableRooms is empty
-//         time = end time of the top in min heap
-//         continue
-    
-//     if time < start of meeting:
-//         time = start of meeting
-//         continue
-
-//     use the first room
-//     set useCount
-
-// find the lowest room with the most used count
