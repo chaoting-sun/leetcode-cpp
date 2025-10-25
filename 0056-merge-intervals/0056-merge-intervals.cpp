@@ -8,27 +8,27 @@ public:
 
     vector<vector<int>> merge(vector<vector<int>>& intervals) {
         int n = intervals.size();
-
         if (n == 0) return intervals;
 
-        sort(intervals.begin(), intervals.end(), [&](vector<int> &a, vector<int> &b) {
-            return a[0] < b[0];
+        sort(intervals.begin(), intervals.end(), [&](const vector<int> &iv1, const vector<int> &iv2) {
+            return iv1[0] < iv2[0];
         });
 
         vector<vector<int>> ans;
-        int left = -1;
-        int maxRight = INT_MIN;
-        for (auto& iv: intervals) {
-            if (maxRight < iv[0]) {
-                if (maxRight != INT_MIN) {
-                    ans.push_back({ left, maxRight });
-                }
-                left = iv[0];
-            }
-            maxRight = max(maxRight, iv[1]);
-        }
-        ans.push_back({ left, maxRight });
+        int currentL = intervals[0][0];
+        int currentR = intervals[0][1];
 
+        for (int i = 0; i < n; i++) {
+            const auto& iv = intervals[i];
+            if (iv[0] <= currentR) {
+                currentR = max(currentR, iv[1]);
+            } else {
+                ans.push_back({ currentL, currentR });
+                currentL = iv[0];
+                currentR = iv[1];
+            }
+        }
+        ans.push_back({ currentL, currentR });
         return ans;
     }
 
@@ -40,7 +40,7 @@ public:
     //         events.push_back({ iv[0], +1 });
     //         events.push_back({ iv[1], -1 });
     //     }
-    //     sort(events.begin(), events.end(), [](pair<int,int>& e1, pair<int,int>& e2) {
+    //     sort(events.begin(), events.end(), [](const pair<int,int>& e1, const pair<int,int>& e2) {
     //         if (e1.first == e2.first) return e1.second > e2.second;
     //         return e1.first < e2.first;
     //     });
