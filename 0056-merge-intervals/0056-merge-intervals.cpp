@@ -60,9 +60,6 @@ public:
                 ans.push_back({ start, pos });
             }
         }
-        if (count != 0) {
-            ans.push_back({ start, events.back().first });
-        }
         return ans;
     }
 };
