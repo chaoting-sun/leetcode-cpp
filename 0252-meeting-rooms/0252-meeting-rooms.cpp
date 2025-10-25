@@ -5,24 +5,35 @@ public:
     // has overlapped time.
 
     // Time: O(nlogn) for sorting
-    // Space: O(1)
+    // Space: O(logn) for sorting
+
+    // bool canAttendMeetings(vector<vector<int>>& intervals) {
+    //     int n = intervals.size();
+    //     if (n <= 1) return true;
+
+    //     sort(intervals.begin(), intervals.end(), [](vector<int> &a, vector<int> &b) {
+    //         return a[0] < b[0];
+    //     });
+
+    //     for (int i = 0; i < n - 1; i++) {
+    //         if (intervals[i][1] > intervals[i + 1][0]) {
+    //             return false;
+    //         }
+    //     }
+    //     return true;
+    // }
 
     bool canAttendMeetings(vector<vector<int>>& intervals) {
-        int n = intervals.size();
-        if (n <= 1) return true;
-
-        sort(intervals.begin(), intervals.end(), [](vector<int> &a, vector<int> &b) {
-            return a[0] < b[0];
-        });
-
-        for (int i = 0; i < n - 1; i++) {
-            if (intervals[i][1] > intervals[i + 1][0]) {
-                return false;
-            }
+        map<int,int> events;
+        for (auto& iv: intervals) {
+            events[iv[0]]++;
+            events[iv[1]]--;
+        }
+        int count = 0;
+        for (auto& [_, e]: events) {
+            count += e;
+            if (count > 1) return false;
         }
         return true;
     }
-
-    // bool canAttendMeetings(vector<vector<int>>& intervals) {
-    // }
 };
