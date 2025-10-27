@@ -1,5 +1,21 @@
 class Solution {
 public:
+    int eraseOverlapIntervals(vector<vector<int>>& intervals) {
+        sort(intervals.begin(), intervals.end(), [](vector<int>& iv1, vector<int>& iv2) {
+            return iv1[1] < iv2[1];
+        });
+        int removed = 0;
+        int currentEnd = INT_MIN;
+        for (auto& iv: intervals) {
+            if (iv[0] < currentEnd) {
+                removed++;
+            } else {
+                currentEnd = iv[1];
+            }
+        }
+        return removed;
+    }
+
     // Approach:
     // Greedy: sort by end time; always keep the interval that ends earliest.
     // That choice leaves maximum room for future intervals, minimizing removals.
@@ -48,29 +64,29 @@ public:
     // with that of the new intervals coming in. As they have already sorted by start
     // position, we can just check the end position to check for overlapping.
 
-    int eraseOverlapIntervals(vector<vector<int>>& intervals) {
-        int n = intervals.size();
-        if (n == 1) return 0;
+    // int eraseOverlapIntervals(vector<vector<int>>& intervals) {
+    //     int n = intervals.size();
+    //     if (n == 1) return 0;
 
-        sort(intervals.begin(), intervals.end(), [&](vector<int> &a, vector<int> &b) {
-            return a[0] < b[0];
-        });
+    //     sort(intervals.begin(), intervals.end(), [&](vector<int> &a, vector<int> &b) {
+    //         return a[0] < b[0];
+    //     });
 
-        int curr_end = intervals[0][1];
-        int n_remove = 0;
-        for (int i = 1; i < n; i++) {
-            // overlap
-            if (curr_end > intervals[i][0]) {
-                n_remove++;
-                curr_end = min(curr_end, intervals[i][1]);
-            } else {
-                curr_end = intervals[i][1];
-            }
-        }
+    //     int curr_end = intervals[0][1];
+    //     int n_remove = 0;
+    //     for (int i = 1; i < n; i++) {
+    //         // overlap
+    //         if (curr_end > intervals[i][0]) {
+    //             n_remove++;
+    //             curr_end = min(curr_end, intervals[i][1]);
+    //         } else {
+    //             curr_end = intervals[i][1];
+    //         }
+    //     }
 
-        return n_remove;
+    //     return n_remove;
 
-    }
+    // }
 };
 
 // [[1,4], [2,5], [3,6], [6,10]] -> n = 4
