@@ -6,6 +6,7 @@ public:
         ll repairedCars = 0;
         for (int r: ranks) {
             repairedCars += floor(sqrt(time / r));
+            if (repairedCars >= cars) return true;
         }
         return repairedCars >= cars;
     }
@@ -14,7 +15,7 @@ public:
         int minRank = INT_MAX;
         for (int r: ranks) minRank = min(minRank, r);
         ll left = 1;
-        ll right = minRank * cars * cars;
+        ll right = (ll)minRank * cars * cars;
         while (left < right) {
             ll mid = left + (right - left) / 2;
             if (isFeasible(ranks, cars, mid)) {
