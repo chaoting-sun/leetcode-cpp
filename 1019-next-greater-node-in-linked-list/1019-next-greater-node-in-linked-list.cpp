@@ -12,30 +12,46 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
+
+// class Solution {
+// public:
+//     vector<int> nextLargerNodes(ListNode* head) {
+//         vector<int> values;
+//         ListNode* curr = head;
+//         while (curr) {
+//             values.push_back(curr->val);
+//             curr = curr->next;
+//         }
+//         int n = values.size();
+//         vector<int> ans(n);
+//         stack<int> stk; // monotonic increasing
+//         for (int i = n - 1; i >= 0; i--) {
+//             while (!stk.empty() && values[i] >= values[stk.top()]) {
+//                 stk.pop();
+//             }
+//             if (!stk.empty()) ans[i] = values[stk.top()];
+//             stk.push(i);
+//         }
+//         return ans;
+//     }
+// };
+
 class Solution {
 public:
     vector<int> nextLargerNodes(ListNode* head) {
-        ListNode* current_node = head;
-        int length = 0;
-        while (current_node) {
-            length += 1;
-            current_node = current_node->next;
-        }
-        vector<int> answer(length, 0);
-
-        stack<pair<int, int>> value_stack; // index, value
-        current_node = head;
-        int current_index = 0;
-        while (current_node) {
-            while (!value_stack.empty() && value_stack.top().second < current_node->val) {
-                answer[value_stack.top().first] = current_node->val;
-                value_stack.pop();
+        ListNode* curr = head;
+        stack<pair<int,int>> stk; // idx, value
+        vector<int> ans;
+        while (curr) {
+            ans.push_back(0);
+            while (!stk.empty() && stk.top().second < curr->val) {
+                auto [idx, _] = stk.top();
+                ans[idx] = curr->val;
+                stk.pop();
             }
-            value_stack.push({ current_index, current_node->val });
-            current_node = current_node->next;
-            current_index++;
+            stk.push({ ans.size() - 1, curr->val });
+            curr = curr->next;
         }
-
-        return answer;
+        return ans;
     }
 };
