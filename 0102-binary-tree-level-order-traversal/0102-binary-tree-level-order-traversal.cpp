@@ -11,6 +11,28 @@
  */
 class Solution {
 public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        if (!root) return {};
+        
+        vector<vector<int>> ans;
+        queue<TreeNode*> q;
+        q.push(root);
+
+        while (!q.empty()) {
+            int sz = q.size();
+            vector<int> level(sz);
+            for (int i = 0; i < sz; i++) {
+                TreeNode* node = q.front();
+                q.pop();
+                level[i] = node->val;
+                if (node->left) q.push(node->left);
+                if (node->right) q.push(node->right);
+            }
+            ans.push_back(level);
+        }
+        return ans;
+    }
+
     // Approach: Preorder traversal
     // Time: O(n)
     // Space: O(tree height + # nodes) <= O(2n) = O(n)
@@ -33,28 +55,28 @@ public:
 
     // Iteration
 
-    vector<vector<int>> levelOrder(TreeNode* root) {
-        vector<vector<int>> ans;
-        queue<TreeNode*> q;
-        int level = 0;
+    // vector<vector<int>> levelOrder(TreeNode* root) {
+    //     vector<vector<int>> ans;
+    //     queue<TreeNode*> q;
+    //     int level = 0;
 
-        if (!root) return ans;        
+    //     if (!root) return ans;        
 
-        q.push(root);
+    //     q.push(root);
 
-        while (!q.empty()) {
-            int n = q.size();
-            ans.push_back(vector<int>());
+    //     while (!q.empty()) {
+    //         int n = q.size();
+    //         ans.push_back(vector<int>());
 
-            for (int i = 0; i < n; i++) {
-                ans[level].push_back(q.front()->val);
-                if (q.front()->left) q.push(q.front()->left);
-                if (q.front()->right) q.push(q.front()->right);
-                q.pop();
-            }
-            level++;
-        }
+    //         for (int i = 0; i < n; i++) {
+    //             ans[level].push_back(q.front()->val);
+    //             if (q.front()->left) q.push(q.front()->left);
+    //             if (q.front()->right) q.push(q.front()->right);
+    //             q.pop();
+    //         }
+    //         level++;
+    //     }
 
-        return ans;
-    }
+    //     return ans;
+    // }
 };
