@@ -12,6 +12,8 @@
 class Solution {
 public:
     int minDepth(TreeNode* root) {
+        if (!root) return {};
+        
         int minDepth = INT_MAX;
         int currentDepth = 0;
         queue<TreeNode*> q;
