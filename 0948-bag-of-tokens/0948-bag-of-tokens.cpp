@@ -6,19 +6,18 @@ public:
         if (n == 1) return tokens[0] <= power ? 1 : 0;
 
         sort(tokens.begin(), tokens.end());
-        deque<int> dq;
-        for (int token: tokens) dq.push_back(token);
         // left -> gain score, loss power, right -> loss score, gain power
         int maxScore = 0, currentScore = 0;
-        while (!dq.empty()) {
-            if (dq.front() <= power) {
+        int left = 0, right = n - 1;
+        while (left <= right) {
+            if (tokens[left] <= power) {
                 currentScore++;
-                power -= dq.front();
-                dq.pop_front();
+                power -= tokens[left];
+                left++;
             } else if (currentScore >= 1) {
                 currentScore--;
-                power += dq.back();
-                dq.pop_back();
+                power += tokens[right];
+                right--;
             } else {
                 break;
             }
