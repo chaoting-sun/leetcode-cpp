@@ -1,19 +1,74 @@
 class Solution {
 public:
+    // Approach: Graph + BFS
+
+    // string formGeneric(string word, int p) {
+    //     int n = word.size();
+    //     return word.substr(0, p) + "*" + word.substr(p + 1, n - p - 1);
+    // }
+
+    // int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+    //     unordered_map<string, vector<string>> all_comb_map;
+
+    //     // Time: O(N * L^2)
+    //     // Space: O(N * L^2). in worst case there are O(N*L) pattens, and each word appears
+    //     // in L lists.
+    //     for (string word: wordList) { // O(N)
+    //         for (int i = 0; i < word.size(); i++) { // O(L)
+    //             string generic_str = formGeneric(word, i); // O(L)
+    //             all_comb_map[generic_str].push_back(word); // O(1)
+    //         }
+    //     }
+
+    //     queue<pair<string, int>> q; // current string
+    //     unordered_set<string> visited;
+
+    //     q.push({ beginWord, 1 });
+
+    //     // BFS
+    //     // Time
+    //     // - generate patterns: O(N * L^2). need O(L^2) for one word to generate patterns
+    //     // - in worst case each pattern processes up to O(N) adjacent words. so there are
+    //     // O(N) compared with O(N) adjacent words one character by character O(L), which
+    //     // takes O(N^2 * L)
+    //     while (!q.empty()) {
+    //         int size = q.size();
+
+    //         for (int i = 0; i < size; i++) {
+    //             string word = q.front().first;
+    //             int level = q.front().second;
+    //             q.pop();
+
+    //             for (int j = 0; j < word.size(); j++) {
+    //                 string generic_str = formGeneric(word, j);
+    //                 for (string word: all_comb_map[generic_str]) {
+    //                     if (word == endWord) {
+    //                         return level + 1;
+    //                     }
+    //                     if (!visited.count(word)) {
+    //                         q.push({ word, level + 1 });
+    //                         visited.insert(word);
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+
+    //     return 0; // no such sequence
+    // }
+
+    // optimized
+
     int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
         unordered_set<string> dict(wordList.begin(), wordList.end());
-        if (!dict.count(endWord)) return 0;
 
-        queue<string> q; // word
-        q.push(beginWord);
-        int level = 0;
+        queue<pair<string, int>> q; // word, level
+        q.push({ beginWord, 1 });
 
         while (!q.empty()) {
             int size = q.size();
-            level++;
-
             for (int i = 0; i < size; i++) {
-                string word = q.front();
+                auto [word, level] = q.front();
                 q.pop();
                 if (word == endWord) {
                     return level;
@@ -28,7 +83,7 @@ public:
                         word[l] = c + 'a';
 
                         if (dict.count(word)) {
-                            q.push(word);
+                            q.push({ word, level + 1 });
                             dict.erase(word);
                         }
                         word[l] = ch;
@@ -40,46 +95,4 @@ public:
 
         return 0;
     }
-
-    // int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
-    //     int wordLength = beginWord.size();
-    //     vector<unordered_set<char>> choices(wordLength);
-    //     for (string& word: wordList) {
-    //         for (int i = 0; i < wordLength; i++) {
-    //             choices[i].insert(word[i]);
-    //         }
-    //     }
-        
-    //     unordered_set<string> wordSet;
-    //     for (string& word: wordList) {
-    //         wordSet.insert(word);
-    //     }
-
-    //     queue<string> q;
-    //     q.push(beginWord);
-    //     int steps = 0;
-        
-    //     while (!q.empty()) {
-    //         steps++;
-    //         int sz = q.size();
-    //         for (int i = 0; i < sz; i++) {
-    //             string word = q.front();
-    //             q.pop();
-    //             if (word == endWord) return steps;
-                
-    //             for (int j = 0; j < wordLength; j++) {
-    //                 string nextWord = word;
-    //                 for (char ch: choices[j]) {
-    //                     nextWord[j] = ch;
-    //                     if (wordSet.count(nextWord)) {
-    //                         q.push(nextWord);
-    //                         wordSet.erase(nextWord);
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     }
-
-    //     return 0;
-    // }
 };
