@@ -1,93 +1,98 @@
 class Solution {
 public:
-    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
-        int wordLength = beginWord.size();
-        vector<unordered_set<char>> choices(wordLength);
-        for (string& word: wordList) {
-            for (int i = 0; i < wordLength; i++) {
-                choices[i].insert(word[i]);
-            }
-        }
-        
-        unordered_set<string> wordSet;
-        for (string& word: wordList) {
-            wordSet.insert(word);
-        }
+    // Approach: Graph + BFS
 
-        if (!wordSet.count(endWord)) return 0;
+    // string formGeneric(string word, int p) {
+    //     int n = word.size();
+    //     return word.substr(0, p) + "*" + word.substr(p + 1, n - p - 1);
+    // }
 
-        unordered_set<string> fronts { beginWord };
-        unordered_set<string> ends { endWord };
-        wordSet.erase(beginWord);
-        wordSet.erase(endWord);
-        int steps = 1;
-
-        while (!fronts.empty() && !ends.empty()) {
-            if (fronts.size() > ends.size()) swap(fronts, ends);
-            steps++;
-
-            unordered_set<string> nextWords;
-            for (auto& word: fronts) {
-                auto curr = word;
-                for (int i = 0; i < wordLength; i++) {
-                    char org = curr[i];
-                    for (char ch: choices[i]) {
-                        curr[i] = ch;
-                        if (ends.count(curr)) return steps;
-                        if (!wordSet.count(curr)) continue;
-                        nextWords.insert(curr);
-                        wordSet.erase(curr);
-                        cout << curr << endl;
-                    }
-                    curr[i] = org;
-                }
-            }
-            fronts.swap(nextWords);
-        }
-
-        return 0;
-    }
-    
-    
     // int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
-    //     int wordLength = beginWord.size();
-    //     vector<unordered_set<char>> choices(wordLength);
-    //     for (string& word: wordList) {
-    //         for (int i = 0; i < wordLength; i++) {
-    //             choices[i].insert(word[i]);
+    //     unordered_map<string, vector<string>> all_comb_map;
+
+    //     // Time: O(N * L^2)
+    //     // Space: O(N * L^2). in worst case there are O(N*L) pattens, and each word appears
+    //     // in L lists.
+    //     for (string word: wordList) { // O(N)
+    //         for (int i = 0; i < word.size(); i++) { // O(L)
+    //             string generic_str = formGeneric(word, i); // O(L)
+    //             all_comb_map[generic_str].push_back(word); // O(1)
     //         }
     //     }
-        
-    //     unordered_set<string> wordSet;
-    //     for (string& word: wordList) {
-    //         wordSet.insert(word);
-    //     }
 
-    //     queue<string> q;
-    //     q.push(beginWord);
-    //     int steps = 0;
-        
+    //     queue<pair<string, int>> q; // current string
+    //     unordered_set<string> visited;
+
+    //     q.push({ beginWord, 1 });
+
+    //     // BFS
+    //     // Time
+    //     // - generate patterns: O(N * L^2). need O(L^2) for one word to generate patterns
+    //     // - in worst case each pattern processes up to O(N) adjacent words. so there are
+    //     // O(N) compared with O(N) adjacent words one character by character O(L), which
+    //     // takes O(N^2 * L)
     //     while (!q.empty()) {
-    //         steps++;
-    //         int sz = q.size();
-    //         for (int i = 0; i < sz; i++) {
-    //             string word = q.front();
+    //         int size = q.size();
+
+    //         for (int i = 0; i < size; i++) {
+    //             string word = q.front().first;
+    //             int level = q.front().second;
     //             q.pop();
-    //             if (word == endWord) return steps;
-                
-    //             for (int j = 0; j < wordLength; j++) {
-    //                 string nextWord = word;
-    //                 for (char ch: choices[j]) {
-    //                     nextWord[j] = ch;
-    //                     if (wordSet.count(nextWord)) {
-    //                         q.push(nextWord);
-    //                         wordSet.erase(nextWord);
+
+    //             for (int j = 0; j < word.size(); j++) {
+    //                 string generic_str = formGeneric(word, j);
+    //                 for (string word: all_comb_map[generic_str]) {
+    //                     if (word == endWord) {
+    //                         return level + 1;
+    //                     }
+    //                     if (!visited.count(word)) {
+    //                         q.push({ word, level + 1 });
+    //                         visited.insert(word);
     //                     }
     //                 }
     //             }
     //         }
     //     }
 
-    //     return 0;
+    //     return 0; // no such sequence
     // }
+
+    // optimized
+
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+        unordered_set<string> dict(wordList.begin(), wordList.end());
+
+        queue<pair<string, int>> q; // word, level
+        q.push({ beginWord, 1 });
+
+        while (!q.empty()) {
+            int size = q.size();
+            for (int i = 0; i < size; i++) {
+                auto [word, level] = q.front();
+                q.pop();
+                if (word == endWord) {
+                    return level;
+                }
+
+                // change each character in the word
+                for (int l = 0; l < word.size(); l++) {
+                    char ch = word[l];
+
+                    // to different characters
+                    for (int c = 0; c < 26; c++) {
+                        word[l] = c + 'a';
+
+                        if (dict.count(word)) {
+                            q.push({ word, level + 1 });
+                            dict.erase(word);
+                        }
+                        word[l] = ch;
+                    }
+                    
+                }
+            }
+        }
+
+        return 0;
+    }
 };
