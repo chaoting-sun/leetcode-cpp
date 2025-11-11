@@ -18,7 +18,6 @@ public:
         
         string start = getHash(board);
         string target = "123450";
-        if (start == target) return 0;
 
         int startIdx = 0;
         for (int i = 0; i < m * n; i++) {
@@ -34,7 +33,6 @@ public:
         visited.insert(start);
         int steps = 0;
         while (!q.empty()) {
-            steps++;
             int sz = q.size();
             while (sz--) {
                 auto [curr, idx] = q.front();
@@ -42,6 +40,8 @@ public:
                 int r = idx / n;
                 int c = idx % n;
                 
+                if (curr == target) return steps;
+
                 for (int i = 0; i < 4; i++) {
                     string next = curr;
                     int drow = rows[i];
@@ -59,13 +59,13 @@ public:
                     }
 
                     swap(next[idx], next[nextIdx]);
-                    if (next == target) return steps;
 
                     if (visited.count(next)) continue;
                     visited.insert(next);
                     q.push({ next, nextIdx });
                 }
             }
+            steps++;
         }
         return -1;
     }
