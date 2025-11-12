@@ -11,6 +11,8 @@ public:
         queue<pair<int,int>> q;
         unordered_set<uint64_t> visited;
         q.push({ 0, 0 });
+        visited.insert(pack(0, 0));
+
         int moves = 0;
         while (!q.empty()) {
             int sz = q.size();
@@ -23,7 +25,6 @@ public:
                     int nx = cx + dx[i];
                     int ny = cy + dy[i];
                     uint64_t key = pack(nx, ny);
-                    cout << key << endl;
                     if (visited.count(key)) continue;
 
                     q.push({ nx, ny });
