@@ -1,33 +1,25 @@
 class Solution {
 public:
-    // Approach: Stack
-    // Time: O(n), the time to traverse all tokens
-    // Space: O(n)
-
     int evalRPN(vector<string>& tokens) {
-        stack<int> st;
-        unordered_set<string> ops { "+", "-", "*", "/" };
-
-        for (int i = 0; i < tokens.size(); i++) {
-            if (ops.count(tokens[i])) {
-                int digit_second = st.top();
-                st.pop();
-                int digit_first = st.top();
-                st.pop();
-
-                if (tokens[i] == "+") st.push(digit_first + digit_second);
-                if (tokens[i] == "-") st.push(digit_first - digit_second);
-                if (tokens[i] == "/") st.push(digit_first / digit_second);
-                if (tokens[i] == "*") st.push(digit_first * digit_second);
+        stack<int> stk;
+        unordered_set<string> operators { "+", "-", "*", "/" };
+        for (string& token: tokens) {
+            if (operators.count(token)) {
+                int currentOperand = stk.top(); stk.pop();
+                int previousOperand = stk.top(); stk.pop();
+                if (token == "+") {
+                    stk.push(previousOperand + currentOperand);
+                } else if (token == "-") {
+                    stk.push(previousOperand - currentOperand);
+                } else if (token == "*") {
+                    stk.push(previousOperand * currentOperand);
+                } else if (token == "/") {
+                    stk.push(previousOperand / currentOperand);
+                }
             } else {
-                st.push(stoi(tokens[i]));
+                stk.push(stoi(token));
             }
         }
-        return st.top();
+        return stk.top();
     }
-
-    // For next practice
-
-    // int evalRPN(vector<string>& tokens) {
-    // }
 };
