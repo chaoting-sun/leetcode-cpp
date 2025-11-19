@@ -37,22 +37,20 @@ public:
     }
     
     bool hasNext() {
-        if (stk.empty()) return false;
-        NestedInteger current = stk.top();
-        
+        if (stk.empty()) return false;        
         // current is an integer
-        if (current.isInteger()) {
+        if (stk.top().isInteger()) {
             return true;
         }
 
         // current is a list
-        while (!current.isInteger()) {
-            vector<NestedInteger> currentList = current.getList();
+        while (!stk.top().isInteger()) {
+            vector<NestedInteger> currentList = stk.top().getList();
             stk.pop();
             for (int i = currentList.size() - 1; i >= 0; i--) {
                 stk.push(currentList[i]);
             }
-            current = stk.top();
+            if (stk.empty()) return false;
         }
         return true;
     }
