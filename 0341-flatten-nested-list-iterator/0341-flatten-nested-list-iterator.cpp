@@ -18,39 +18,43 @@
 
 class NestedIterator {
 public:
-    int index = -1;
-    vector<NestedInteger> nestedList;
-    vector<int> flattened;
+    stack<NestedInteger> stk;
 
     NestedIterator(vector<NestedInteger> &nestedList) {
-        flattened = dfs(nestedList, 0);
-    }
-
-    vector<int> dfs(vector<NestedInteger> &nestedList, int i) {
-        vector<int> flattenedParent;
-        while (i < nestedList.size()) {
-            if (nestedList[i].isInteger()) {
-                flattenedParent.push_back(nestedList[i].getInteger());
-            } else {
-                vector<int> flattendChild = dfs(nestedList[i].getList(), 0);
-                for (int n: flattendChild) flattenedParent.push_back(n);
-            }
-            i++;
+        for (int i = nestedList.size() - 1; i >= 0; i--) {
+            stk.push(nestedList[i]);
         }
-        return flattenedParent;
     }
 
     int next() {
         if (hasNext()) {
-            index++;
-            return flattened[index];
+            NestedInteger current = stk.top();
+            stk.pop();
+            return current.getInteger();
         } else {
             return -1;
         }
     }
     
     bool hasNext() {
-        return index + 1 < flattened.size();
+        if (stk.empty()) return false;
+        NestedInteger current = stk.top();
+        
+        // current is an integer
+        if (current.isInteger()) {
+            return true;
+        }
+
+        // current is a list
+        while (!current.isInteger()) {
+            vector<NestedInteger> currentList = current.getList();
+            stk.pop();
+            for (int i = currentList.size() - 1; i >= 0; i--) {
+                stk.push(currentList[i]);
+            }
+            current = stk.top();
+        }
+        return true;
     }
 
 };
