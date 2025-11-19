@@ -27,32 +27,27 @@ public:
     }
 
     int next() {
-        if (hasNext()) {
-            NestedInteger current = stk.top();
-            stk.pop();
-            return current.getInteger();
-        } else {
-            return -1;
-        }
+        if (!hasNext()) return -1;
+
+        NestedInteger current = stk.top();
+        stk.pop();
+        return current.getInteger();
     }
     
     bool hasNext() {
-        if (stk.empty()) return false;        
-        // current is an integer
-        if (stk.top().isInteger()) {
-            return true;
-        }
+        while (!stk.empty()) {
+            NestedInteger current = stk.top();
+            if (current.isInteger()) {
+                return true;
+            }
 
-        // current is a list
-        while (!stk.top().isInteger()) {
             vector<NestedInteger> currentList = stk.top().getList();
             stk.pop();
             for (int i = currentList.size() - 1; i >= 0; i--) {
                 stk.push(currentList[i]);
             }
-            if (stk.empty()) return false;
         }
-        return true;
+        return false;
     }
 
 };
