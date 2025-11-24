@@ -1,135 +1,48 @@
-
-
 class Solution {
 public:
-    // Approach1: brute-force
-    // Time: O(n^3), n is the length of heights
-    // Space: O(1)
-
-    // int largestRectangleArea(vector<int>& heights) {
-    //     int n = heights.size();
-    //     int ans = 0;
-
-    //     for (int i = 0; i < n; i++) {
-    //         for (int j = i; j < n; j++) {
-    //             int min_height = INT_MAX;
-    //             for (int k = i; k <= j; k++) min_height = min(min_height, heights[k]);
-    //             ans = max(ans, min_height * (j - i + 1));
-    //         }
-    //     }
-    //     return ans;
-    // }
-
-    // Approach1.1: better brute-force
-    // Time: O(n^2)
-    // Space: O(1)
-
-    // int largestRectangleArea(vector<int>& heights) {
-    //     int n = heights.size();
-    //     int ans = 0;
-
-    //     for (int i = 0; i < n; i++) {
-    //         int min_height = INT_MAX;
-    //         for (int j = i; j < n; j++) {
-    //             min_height = min(min_height, heights[j]);
-    //             ans = max(ans, min_height * (j - i + 1));
-    //         }
-    //     }
-    //     return ans;
-    // }
-
-    // Intuition: Divide and Conquer. We observe that the maximum area is the maximum of the:
-    // 1. The widest possible rectangle with height equal to the height of the shortest bar.
-    // 2. The largest rectangle confined to the left of the shortest bar(subproblem).
-    // 3. The largest rectangle confined to the right of the shortest bar(subproblem).
-    // Approach2: Divide and Conquer
-    // Time: O(n*log(n)) in average case. but O(n^2) if heights is sorted
-    // Space: O(1)
-
-    // int divide_and_conquer(vector<int>& heights, int start, int end) {
-    //     if (start > end) return -1;
-
-    //     int min_id = start;
-    //     for (int i = start; i <= end; i++) {
-    //         if (heights[i] < heights[min_id]) min_id = i;
-    //     }
-
-    //     int max_area_left = divide_and_conquer(heights, start, min_id - 1);
-    //     int max_area_right = divide_and_conquer(heights, min_id + 1, end);
-    //     int max_area_center = (end - start + 1) * heights[min_id];
-    //     return max(max(max_area_left, max_area_right), max_area_center);
-    // }
-
-    // int largestRectangleArea(vector<int>& heights) {
-    //     int n = heights.size();
-    //     return divide_and_conquer(heights, 0, n - 1);
-    // }
-
-    // Intuition: For each height, the largest rectangle it can make is bounded by the previous
-    // smaller height and the next smaller height. So we record the nextSmaller and prevSmaller
-    // array and compute the maximum height by comparing all those ones.
-    // Approach3.1: Monotonic stack + prev/next array
-    // Tutorial: https://www.youtube.com/watch?v=mesaogfSjD4
-    // Time: O(n)
-    // Space: O(n)
-
-    // int largestRectangleArea(vector<int>& heights) {
-    //     int n = heights.size();
-    //     stack<int> stk;
-
-    //     vector<int> nextSmaller(n, n);
-    //     for (int i = 0; i < n; i++) {
-    //         while (!stk.empty() && heights[stk.top()] > heights[i]) {
-    //             nextSmaller[stk.top()] = i;
-    //             stk.pop();
-    //         }
-    //         stk.push(i);
-    //     }
-
-    //     while (!stk.empty()) stk.pop();
-
-    //     vector<int> prevSmaller(n, -1);
-    //     for (int i = n - 1; i >= 0; i--) {
-    //         while (!stk.empty() && heights[stk.top()] > heights[i]) {
-    //             prevSmaller[stk.top()] = i;
-    //             stk.pop();
-    //         }
-    //         stk.push(i);
-    //     }
-
-    //     int max_area = -1;
-
-    //     for (int i = 0; i < n; i++) {
-    //         int area = heights[i] * (nextSmaller[i] - prevSmaller[i] - 1);
-    //         max_area = max(max_area, area);
-    //     }
-
-    //     return max_area;
-    // }
-
-    // Approach3.2: Optimize the 3.1 Method
-
     int largestRectangleArea(vector<int>& heights) {
-        // to avoid case like 3, 2, ...
-        // when loop to index = 1, and pop index = 0, then there is no left index to compute
-        heights.insert(heights.begin(), 0);
-        // to clear the stack in one pass
-        heights.push_back(0);
-        
         int n = heights.size();
-        stack<int> stk;
-        int max_area = 0;
+        if (n == 0) return 0;
 
+        vector<int> leftLower(n, -1), rightLower(n, n);
+        stack<int> stk; // monotonic strictly increasing stack; store index
+        
         for (int i = 0; i < n; i++) {
-            while (!stk.empty() && heights[stk.top()] > heights[i]) {
-                int height = heights[stk.top()];
+            while (!stk.empty() && heights[stk.top()] >= heights[i]) {
                 stk.pop();
-                int width = i - stk.top() - 1;
-                max_area = max(max_area, height * width);
             }
+            if (!stk.empty()) leftLower[i] = stk.top();
+            stk.push(i);
+        }
+        while (!stk.empty()) stk.pop();
+        for (int i = n - 1; i >= 0; i--) {
+            while (!stk.empty() && heights[i] <= heights[stk.top()]) {
+                stk.pop();
+            }
+            if (!stk.empty()) rightLower[i] = stk.top();
             stk.push(i);
         }
 
-        return max_area;
+        int maxArea = 0;
+        for (int i = 0; i < n; i++) {
+            maxArea = max(maxArea, (rightLower[i] - leftLower[i] - 1) * heights[i]);
+        }
+        return maxArea;
     }
 };
+
+// []
+// [1]
+// [3, 1]
+
+// 某個高度底下可以到多寬
+// 假想在某個 bar 的高為高度的前提下，矩形左右可以到多寬
+// 最大的矩形一定是最高處與某個 bar 一樣高
+
+// 對每個矩形，往左右兩邊找到比他矮的前一格
+// 先找左邊，比當前矩形還要小的人
+// 想找不到的情況 -> 左邊的人都比他高
+// 應該是用 monotonic stack 只是應該是用 decreasing 還是 increasing
+
+// monotonic strictly increasing stack
+// area = heights[i] * (r - l - 1)
