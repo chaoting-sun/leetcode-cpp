@@ -39,11 +39,10 @@ public:
         ListNode* dummyHead = new ListNode(0);
         dummyHead->next = head;
         ListNode *fast = dummyHead, *slow = dummyHead;
-        fast = fast->next->next;
-        while (fast) {
+
+        while (fast->next && fast->next->next) {
             slow = slow->next;
-            fast = fast->next;
-            if (fast) fast = fast->next;
+            fast = fast->next->next;
         }
         slow->next = slow->next->next;
         return head;
