@@ -1,66 +1,64 @@
+// class Solution {
+// public:
+//     vector<string> findRepeatedDnaSequences(string s) {
+//         int n = s.size();
+//         if (n <= 10) return {};
+        
+//         unordered_set<string> visited;
+//         unordered_set<string> visitedAgain;
+//         string current = s.substr(0, 10);
+//         visited.insert(current);
+
+//         for (int i = 10; i < n; i++) {
+//             string temp = current.substr(1);
+//             temp.push_back(s[i]);
+//             if (visited.count(temp)) {
+//                 visitedAgain.insert(temp);
+//             }
+//             visited.insert(temp);
+//             current = temp;
+//         }
+//         vector<string> ans;
+//         for (const string& seq: visitedAgain) {
+//             ans.push_back(seq);
+//         }
+//         return ans;
+//     }
+// };
+
 class Solution {
 public:
-    // Approach: Sliding Window
-    // Time: O((N-L)*L)
-    // Space: O((N-L)*L)
-
-    // vector<string> findRepeatedDnaSequences(string s) {
-    //     int L = 10;
-    //     unordered_set<string> seen, repeatedPattern;
-
-    //     for (int i = 0; i < (int)s.size() - L + 1; i++) { // N - L
-    //         string pattern = s.substr(i, 10); // L
-    //         if (seen.count(pattern)) {
-    //             repeatedPattern.insert(pattern);
-    //         } else {
-    //             seen.insert(pattern);
-    //         }
-    //     }
-
-    //     vector<string> ans;
-    //     for (string pattern: repeatedPattern) ans.push_back(pattern);
-    //     return ans;
-    // }
-
-    // Approach: Sliding Window with Bit Manipulation
-    // Time: O(L)
-    // Space: O(L)
-
     vector<string> findRepeatedDnaSequences(string s) {
-        int L = 10;
-        int bit = 2 * L;
-        int mask = (1 << bit) - 1;
-        unordered_map<char,int> char2bit = {
-            { 'A', 0 }, // 00
-            { 'T', 1 }, // 01
-            { 'C', 2 }, // 10
-            { 'G', 3 }, // 11
-        };
+        int n = s.size();
+        if (n <= 10) return {};
+        
+        unordered_set<int> visited;
+        unordered_set<string> visitedAgain;
+        int current = 0;
+        int mask = (1 << 20) - 1;
+
+        vector<int> toInt(26);
+        toInt['A' - 'A'] = 0;
+        toInt['T' - 'A'] = 1;
+        toInt['C' - 'A'] = 2;
+        toInt['G' - 'A'] = 3;
+
+        for (int i = 0; i < n; i++) {
+            current <<= 2;
+            current |= toInt[s[i] - 'A'];
+            current &= mask;
+            if (i < 9) continue;
+
+            if (visited.count(current)) {
+                visitedAgain.insert(s.substr(i - 9, 10));
+            }
+            visited.insert(current);
+        }
 
         vector<string> ans;
-        int n = s.size();
-        if (n < L) return {};
-
-        int pattern = 0;
-        unordered_set<int> added; // pattern added before
-        unordered_set<int> seen; // used to avoid repetitive addition to the ans
-        
-        for (int i = 0; i < L - 1; i++) {
-            pattern = (pattern << 2 | char2bit[s[i]]) & mask;
+        for (const string& seq: visitedAgain) {
+            ans.push_back(seq);
         }
-
-        for (int i = L - 1; i < n; i++) { // L
-            pattern = ((pattern << 2) | char2bit[s[i]]) & mask;
-            if (added.count(pattern)) {
-                if (!seen.count(pattern)) {
-                    seen.insert(pattern);
-                    ans.push_back(s.substr(i - L + 1, L));
-                }
-            } else {
-                added.insert(pattern);
-            }
-        }
-
         return ans;
     }
 };
