@@ -10,54 +10,22 @@
  */
 class Solution {
 public:
-    // Approach1: Two Pass
-    // Time: O(sz + n) = O(sz) (sz = the list size)
-    // Space: O(1)
-
-    // ListNode* removeNthFromEnd(ListNode* head, int n) {
-    //     ListNode* curr = head;
-    //     int sz = 0;
-    //     while (curr) {
-    //         sz++;
-    //         curr = curr->next;
-    //     }
-
-    //     ListNode* dummy = new ListNode(0, head);
-    //     curr = dummy;
-    //     int n_move = sz - n;
-    //     while (n_move--) curr = curr->next;
-
-    //     if (curr->next->next) {
-    //         curr->next = curr->next->next;
-    //     } else {
-    //         curr->next = nullptr;
-    //     }
-    //     return dummy->next;
-    // }
-
-
-    // Approach2: Two Pass. Two Pointers + Fast and Slow
-    // Time: O(sz + n) = O(sz) (sz = the list size)
-    // Space: O(1)
-
     ListNode* removeNthFromEnd(ListNode* head, int n) {
-        ListNode* dummy = new ListNode(0, head);
-        ListNode* slow = dummy;
-        ListNode* fast = dummy;
+        if (!head || !head->next) return nullptr;
 
-        int step = n;
-        while (step--) fast = fast->next;
+        ListNode *dummy = new ListNode(0, head);
+        ListNode *fast = dummy, *slow = dummy;
 
-        while (fast->next) {
-            slow = slow->next;
+        while (n--) fast = fast->next;
+        while (fast && fast->next) {
             fast = fast->next;
+            slow = slow->next;
         }
+        ListNode* toDelete = slow->next;
+        slow->next = slow->next->next;
 
-        if (slow->next->next) {
-            slow->next = slow->next->next;
-        } else {
-            slow->next = nullptr;
-        }
+        delete toDelete;
+        toDelete = nullptr;
 
         return dummy->next;
     }
