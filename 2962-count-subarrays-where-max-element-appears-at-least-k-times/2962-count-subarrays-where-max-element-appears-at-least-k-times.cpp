@@ -8,14 +8,13 @@ public:
 
         long long ans = 0;
         int l = 0, r = 0;
-        unordered_map<int, int> freq;
+        int count = 0;
 
         while (r < n) {
-            freq[nums[r]]++;
-            
-            while (freq[maxV] >= k) {
+            if (nums[r] == maxV) count++;
+            while (count >= k) {
                 ans += n - r;
-                freq[nums[l]]--;
+                if (nums[l] == maxV) count--;
                 l++;
             }
             r++;    
