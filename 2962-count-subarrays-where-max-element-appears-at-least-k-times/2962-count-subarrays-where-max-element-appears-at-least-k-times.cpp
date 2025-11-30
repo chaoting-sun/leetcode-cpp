@@ -1,5 +1,28 @@
 class Solution {
 public:
+    // long long countSubarrays(vector<int>& nums, int k) {
+    //     int n = nums.size();
+
+    //     int maxV = nums[0];
+    //     for (int i = 1; i < n; i++) maxV = max(maxV, nums[i]);
+
+    //     long long ans = 0;
+    //     int l = 0, r = 0;
+    //     int count = 0;
+
+    //     while (r < n) {
+    //         if (nums[r] == maxV) count++;
+    //         while (count >= k) {
+    //             ans += n - r;
+    //             if (nums[l] == maxV) count--;
+    //             l++;
+    //         }
+    //         r++;    
+    //     }
+
+    //     return ans;
+    // }
+
     long long countSubarrays(vector<int>& nums, int k) {
         int n = nums.size();
 
@@ -8,14 +31,16 @@ public:
 
         long long ans = 0;
         int l = 0, r = 0;
-        int count = 0;
+        queue<int> q;
 
         while (r < n) {
-            if (nums[r] == maxV) count++;
-            while (count >= k) {
-                ans += n - r;
-                if (nums[l] == maxV) count--;
-                l++;
+            if (nums[r] == maxV) {
+                q.push(r);
+            }
+            while (q.size() >= k) {
+                ans += (long long)(q.front() - l + 1) * (n - r);
+                l = q.front() + 1;
+                q.pop();
             }
             r++;    
         }
