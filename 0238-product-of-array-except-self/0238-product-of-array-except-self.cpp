@@ -1,80 +1,21 @@
 class Solution {
 public:
-    // Approach1: brute-force. sequentially do all the products for all elements -> TLE
-    // time: O(n**2)
-    // space: O(1)
-
-    // vector<int> productExceptSelf(vector<int>& nums) {
-    //     vector<int> ans;
-
-    //     for (int i = 0; i < nums.size(); i++) {
-    //         int product = 1;
-    //         for (int j = 0; j < nums.size(); j++) {
-    //             if (j != i) product *= nums[j];
-    //         }
-    //         ans.push_back(product);
-    //     }
-    //     return ans;
-    // }
-
-    // Approach2: divide into three cases (no 0s, one 0, and more than one 0s), and handle them separately
-    // time: O(n)
-    // space: O(1)
-
-    // vector<int> productExceptSelf(vector<int>& nums) {
-    //     // count the number of 0s
-    //     vector<int> zero_pos{};
-    //     int n = nums.size();
-
-    //     for (int i = 0; i < n; i++) {
-    //         if (nums[i] == 0) zero_pos.push_back(i);
-    //     }
-
-    //     vector<int> ans(n);
-
-    //     // handle 3 cases:
-    //     // 1. ans should be all 0s when there are at least two 0s.
-    //     if (zero_pos.size() >= 2) return ans;
-    //     // 2. only index = zero_pos[0] has non-zero value in ans.
-    //     else if (zero_pos.size() == 1) {
-    //         int product = 1;
-    //         for (int i = 0; i < n; i++) {
-    //             if (i != zero_pos[0]) product *= nums[i];
-    //         }
-    //         ans[zero_pos[0]] = product;
-    //         return ans;
-    //     }
-
-    //     int total_product = 1;
-    //     for (int n: nums) total_product *= n;
-    //     for (int i = 0; i < n; i++) {
-    //         ans[i] = total_product / nums[i];
-    //     }
-    //     return ans;
-    // }
-
-    // Approach2: prefix product and suffix product
-    // time: O(n)
-    // space: O(n)
-
     vector<int> productExceptSelf(vector<int>& nums) {
         int n = nums.size();
-        vector<int> prefix_products(n), suffix_products(n);
+        if (n == 0) return {};
 
-        prefix_products[0] = 1;
-        suffix_products[n - 1] = 1;
-
-        for (int i = 1; i < n; i++) {
-            prefix_products[i] = prefix_products[i - 1] * nums[i - 1];
-        }
-
-        for (int i = n - 2; i >= 0; i--) {
-            suffix_products[i] = suffix_products[i + 1] * nums[i + 1];
-        }
+        vector<int> prefix(n), suffix(n);
+        prefix[0] = nums[0];
+        for (int i = 1; i < n; i++) prefix[i] = prefix[i - 1] * nums[i];
+        suffix[n - 1] = nums[n - 1];
+        for (int i = n - 2; i >= 0; i--) suffix[i] = suffix[i + 1] * nums[i];
 
         vector<int> ans(n);
         for (int i = 0; i < n; i++) {
-            ans[i] = prefix_products[i] * suffix_products[i];
+            int res = 1;
+            if (i > 0) res *= prefix[i - 1];
+            if (i < n - 1) res *= suffix[i + 1];
+            ans[i] = res;
         }
         return ans;
     }
