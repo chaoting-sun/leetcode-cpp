@@ -1,31 +1,47 @@
 // class Solution {
 // public:
-//     // Approach: keeps removing the pattern in every run
-//     // Time: O(kn)
-//     // Space: O(1)
-
 //     string removeSubstring(string s, int k) {
-//         string ans;
+//         int n = s.size();
+//         if (n == 0) return "";
 
-//         for (char ch: s) {
-//             ans.push_back(ch);
-//             int n = ans.size();
-//             if (n >= 2 * k) {
-//                 bool hasPattern = true;
-//                 int right = n - k;
-//                 int left = right - 1;
-//                 for (int i = 0; i < k; i++) {
-//                     if (ans[left - i] != '(' || ans[right + i] != ')') {
-//                         hasPattern = false;
-//                         break;
-//                     }
+//         vector<pair<char, int>> p;
+//         int count = 1;
+//         for (int i = 1; i < n; i++) {
+//             if (s[i - 1] == s[i]) {
+//                 count++;
+//             } else {
+//                 p.push_back({ s[i - 1], count });
+//                 count = 1;
+//             }
+//         }
+//         p.push_back({ s[n - 1], count });
+
+//         vector<pair<char, int>> stk;
+//         int i = 0, np = p.size();
+
+//         for (int i = 0; i < p.size(); i++) {
+//             while (!stk.empty() && stk.back().first == '(' && p[i].first == ')'
+//                    && min(stk.back().second, p[i].second) >= k) {
+//                 stk.back().second -= k;
+//                 p[i].second -= k;
+//                 if (stk.back().second == 0) stk.pop_back();
+//                 if (!stk.empty() && stk.back().first == p[i].first) {
+//                     p[i].second += stk.back().second;
+//                     stk.pop_back();
 //                 }
-//                 if (hasPattern) {
-//                     ans.resize(n - 2 * k);
-//                 }
+//             }
+//             if (p[i].second == 0) continue;
+//             if (!stk.empty() && stk.back().first == p[i].first) {
+//                 stk.back().second += p[i].second;
+//             } else {
+//                 stk.push_back(p[i]);
 //             }
 //         }
 
+//         string ans = "";
+//         for (auto [ch, cnt]: stk) {
+//             while (cnt--) ans += ch;
+//         }
 //         return ans;
 //     }
 // };
@@ -56,7 +72,7 @@ public:
 
                     // 若某段用盡，彈出
                     if (right.second == 0) runs.pop_back();
-                    if (!runs.empty() && runs.back().second == 0) runs.pop_back(); // left 可能現在在頂端
+                    if (runs.back().second == 0) runs.pop_back(); // left 可能現在在頂端
                 }
             }
         }
