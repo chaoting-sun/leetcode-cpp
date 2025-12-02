@@ -1,50 +1,38 @@
 class Solution {
 public:
-    // Approach: BFS
-    // Time: O(mnk)
-    // Space: O(mnk)
-
-    vector<int> dx = { 0, 0, 1, -1 };
-    vector<int> dy = { 1, -1, 0, 0 };
-
     int shortestPath(vector<vector<int>>& grid, int k) {
         int m = grid.size(), n = grid[0].size();
-        if (m == 0 || n == 0) return 0;
-
-        // visited[i][j][k]: the min steps to arrive (i,j) after passing k obstacles
-        vector<vector<vector<bool>>> visited(m, vector<vector<bool>>(n, vector<bool>(k + 1, false)));
-        queue<array<int,3>> q; // obstacles, x, y
-
-        visited[0][0][0] = true;
-        q.push({ 0, 0, 0 });
-        int steps = 0;
+        vector<int> dRows = { 1, -1, 0, 0 };
+        vector<int> dCols = { 0, 0, 1, -1 };
+        
+        vector<vector<vector<int>>> minDistance(m, vector<vector<int>>(n, vector<int>(k + 1, INT_MAX)));
+        queue<pair<int,int>> q; // distance, current obstacles
+        q.push({ 0, 0 });
+        minDistance[0][0][0] = 0;
 
         while (!q.empty()) {
-            int size = q.size();
-            for (int i = 0; i < size; i++) {
-                auto [obstacles, x, y] = q.front();
-                q.pop();
+            auto [p, obstacles] = q.front();
+            q.pop();
+            int r = p / n;
+            int c = p % n;
+            for (int i = 0; i < 4; i++) {
+                int newR = r + dRows[i];
+                int newC = c + dCols[i];
+                if (newR < 0 || newR >= m || newC < 0 || newC >= n) continue;
+                
+                int newObstacles = obstacles + (grid[newR][newC] == 1 ? 1 : 0);
+                
+                if (newObstacles > k) continue; // invalid move
+                if (minDistance[newR][newC][newObstacles] != INT_MAX) continue; // visited
 
-                if (x == m - 1 && y == n - 1) {
-                    return steps;
-                }
-
-                for (int j = 0; j < 4; j++) {
-                    int nx = x + dx[j];
-                    int ny = y + dy[j];
-                    if (nx < 0 || nx >= m || ny < 0 || ny >= n) continue;
-                    
-                    int newObstacles = obstacles + grid[nx][ny];
-                    if (newObstacles > k || visited[nx][ny][newObstacles]) continue;
-                    visited[nx][ny][newObstacles] = true;
-
-                    q.push({ newObstacles, nx, ny });
-                }
+                minDistance[newR][newC][newObstacles] = minDistance[r][c][obstacles] + 1;
+                q.push({ newR * n + newC, newObstacles });
             }
-
-            steps++;
         }
-
-        return -1;
+        int minSteps = INT_MAX;
+        for (int i = 0; i <= k; i++) {
+            minSteps = min(minSteps, minDistance[m - 1][n - 1][i]);
+        }
+        return minSteps == INT_MAX ? -1 : minSteps;
     }
 };
