@@ -7,31 +7,26 @@ private:
     vector<ll> prefix;
     vector<vector<int>> rects;
 
-    ll getNumPoints(vector<int>& rect) {
-        ll width = rect[2] - rect[0] + 1;
-        ll height = rect[3] - rect[1] + 1;
-        return width * height;
-    }
-
-    ll getRandNumber() {
-        return uni(rng);
-    }
 public:
     Solution(vector<vector<int>>& rects) {
-        this->rects = rects;
+        this->rects = move(rects);
+        prefix.reserve(rects.size());
 
-        prefix.resize(rects.size());
-        prefix[0] = getNumPoints(rects[0]);
-        for (int i = 1; i < rects.size(); i++) {
-            prefix[i] = prefix[i - 1] + getNumPoints(rects[i]);
+        ll total_area = 0;
+        for (const auto& rect: this->rects) {
+            ll width = rect[2] - rect[0] + 1;
+            ll height = rect[3] - rect[1] + 1;
+            total_area += width * height;
+            prefix.push_back(total_area);
         }
+
         random_device rd;
         rng = mt19937_64(rd());
         uni = uniform_int_distribution<ll>(1, prefix.back());
     }
 
     vector<int> pick() {
-        ll target = getRandNumber();
+        ll target = uni(rng);
 
         int left = 0, right = prefix.size() - 1;
         while (left < right) {
@@ -42,11 +37,10 @@ public:
                 left = mid + 1;
             }
         }
-        ll k = (right == 0 ? target : target - prefix[right - 1]) - 1;
-        int width = rects[right][2] - rects[right][0] + 1;
-        int col = k % width;
-        int row = k / width;
-        return { rects[right][0] + col, rects[right][1] + row };
+        const auto& r = rects[right];
+        uniform_int_distribution<int> x_dist(r[0], r[2]);
+        uniform_int_distribution<int> y_dist(r[1], r[3]);
+        return { x_dist(rng), y_dist(rng) };
     }
 };
 
