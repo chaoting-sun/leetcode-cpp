@@ -56,6 +56,7 @@ public:
                 if (grid[i][j] == 1) {
                     bfsIsland(grid, firstVisited, { i, j });
                     found = true;
+                    break;
                 }
             }
             if (found) break;
@@ -71,6 +72,7 @@ public:
                 if (grid[i][j] == 1) {
                     bfsIsland(grid, secondVisited, start);
                     found = true;
+                    break;
                 }
             }
             if (found) break;
