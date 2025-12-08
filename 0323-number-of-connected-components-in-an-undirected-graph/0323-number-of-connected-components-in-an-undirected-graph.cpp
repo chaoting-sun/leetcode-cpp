@@ -1,42 +1,46 @@
 class Solution {
-public:
-    void dfs(vector<vector<int>>& nodes, vector<bool>& visited, int currentNode) {
-        visited[currentNode] = true;
-        for (int nextNode: nodes[currentNode]) {
-            if (!visited[nextNode]) {
-                dfs(nodes, visited, nextNode);
+private:
+    void DfsGraph(const vector<vector<int>>& adj, vector<bool>& visited, int u) {
+        visited[u] = true;
+        for (const int v: adj[u]) {
+            if (!visited[v]) {
+                DfsGraph(adj, visited, v);
             }
         }
     }
 
+public:
     int countComponents(int n, vector<vector<int>>& edges) {
-        // change to adjacency list
+        // build adjacency list
+        vector<vector<int>> adj(n);
 
-        // Time: O(V + E). initialize the entries + push back all edges
-        // Space: O(V + E)
-        vector<vector<int>> nodes(n);
-        for (auto& edge: edges) {
+        for (const auto& edge: edges) {
             int u = edge[0], v = edge[1];
-            nodes[u].push_back(v);
-            nodes[v].push_back(u);
+            adj[u].push_back(v);
+            adj[v].push_back(u);
         }
 
-        // do dfs and count the entries
+        // iterate from 0 to n - 1, start dfs if unvisited
+        // count the number of times that dfs is done
 
-        int numComponents = 0;
+        int num_connected_components = 0;
         vector<bool> visited(n, false);
-        // Time: O(V + E). loop through V vertices + explore all edges
-        // Space: O(V)
         for (int i = 0; i < n; i++) {
             if (!visited[i]) {
-                dfs(nodes, visited, i);
-                numComponents++;
+                DfsGraph(adj, visited, i);
+                num_connected_components++;
             }
         }
-        return numComponents;
+
+        return num_connected_components;
     }
-
-    // int countComponents(int n, vector<vector<int>>& edges) {
-
-    // }
 };
+
+// Submit Errors
+
+// visited is typed as const but being modified inside
+// void DfsGraph(const vector<vector<int>>& adj, const vector<bool>& visited, int u) {
+//     visited[u] = true;
+
+// for (const int& edge: edges)
+// for (const auto& edge: edges)
