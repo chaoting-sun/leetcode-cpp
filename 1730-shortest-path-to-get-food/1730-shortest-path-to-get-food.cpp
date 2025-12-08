@@ -1,53 +1,55 @@
 class Solution {
 public:
-    // Approach: BFS
-    // The problem asks the shortest path from the original cell to any food cell, so we can come up with the
-    // BFS method, in which we are able to explore the cell layer by layer. We use queue to store the position
-    // to be handled, and maintain a variable step to track the current layer. Once a cell is visited, we mark
-    // it as 'X' to avoid visiting again.
-
-    // Time: O(mn)
-    // Space: O(mn)
-
-    vector<int> dx = { -1, 1, 0, 0 };
-    vector<int> dy = { 0, 0, -1, 1 };
-
     int getFood(vector<vector<char>>& grid) {
-        if (grid.empty() || grid[0].empty()) return -1;
-        int m = grid.size(), n = grid[0].size();
+        // 1. find the '*'
+        // 2. BFS from '*': search 4 directions in each cell
+        //  - O -> keep the cell; set it to X
+        //  - X -> neglect the path
+        //  - # -> return the distance
 
-        queue<pair<int,int>> q;
-        int step = 0;
+        int m = grid.size();
+        if (m == 0) return -1;
+        int n = grid[0].size();
+        if (n == 0) return -1;
 
-        for (int x = 0; x < m; x++) {
-            for (int y = 0; y < n; y++) {
-                if (grid[x][y] == '*') {
-                    q.push({ x, y });
-                    grid[x][y] = 'X';
+        vector<pair<int,int>> directions {
+            { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 },
+        };
+
+        int start_x = 0, start_y = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == '*') {
+                    start_x = i;
+                    start_y = j;
                 }
             }
         }
-        
-        while (!q.empty()) {
-            int size = q.size();
-            step++;
 
-            for (int i = 0; i < size; i++) {
-                auto [x, y] = q.front();
-                q.pop();
+        queue<pair<int,int>> cells;
+        cells.push({ start_x, start_y });
+        int distance = 0;
 
-                for (int dir = 0; dir < 4; dir++) {
-                    int nx = x + dx[dir];
-                    int ny = y + dy[dir];
-                    if (nx >= 0 && nx < m && ny >= 0 && ny < n && grid[nx][ny] != 'X') {
-                        if (grid[nx][ny] == '#') {
-                            return step;
-                        }
-                        q.push({ nx, ny });
-                        grid[nx][ny] = 'X';
+        while (!cells.empty()) {
+            distance++;
+
+            int size = cells.size();
+            while (size--) {
+                auto [x, y] = cells.front();
+                cells.pop();
+
+                for (const auto [dx, dy]: directions) {
+                    int new_x = x + dx;
+                    int new_y = y + dy;
+                    if (new_x < 0 || new_x >= m || new_y < 0 || new_y >= n) continue;
+                    if (grid[new_x][new_y] == 'O') {
+                        cells.push({ new_x, new_y });
+                        grid[new_x][new_y] = 'X';
+                    } else if (grid[new_x][new_y] == '#') {
+                        return distance;
                     }
                 }
-            }
+            }            
         }
 
         return -1;
