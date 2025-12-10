@@ -2,68 +2,49 @@ class Solution {
 public:
     int numSquares(int n) {
         vector<int> dp(n + 1, INT_MAX);
-        dp[0] = 0;
-        vector<int> squares;
-        for (int i = 1; i * i <= n; i++) {
-            squares.push_back(i * i);
-        }
+        vector<int> perfect_squares;
         for (int i = 1; i <= n; i++) {
-            for (int sq: squares) {
-                if (i >= sq) {
-                    dp[i] = min(dp[i - sq] + 1, dp[i]);
-                } else {
-                    break;
+            int is_perfect_square = (int)sqrt(i) * (int)sqrt(i) == i;
+            if (is_perfect_square) {
+                dp[i] = 1;
+                perfect_squares.push_back(i);
+            } else {
+                for (int val: perfect_squares) {
+                    if (dp[i - val] != -1) {
+                        dp[i] = min(dp[i], dp[i - val] + 1);
+                    }
                 }
             }
         }
+
         return dp[n];
     }
 };
 
-// class Solution {
-// public:
-//     int numSquares(int n) {
-//         queue<int> q;
-//         q.push(0);
-//         int level = 0;
-//         while (!q.empty()) {
-//             int sz = q.size();
-//             level++;
-//             while (sz--) {
-//                 int curr = q.front();
-//                 q.pop();
-//                 int left = n - curr;
-//                 for (int i = 1; i * i <= left; i++) {
-//                     int squared = i * i;
-//                     if (squared == left) return level;
-//                     q.push(curr + squared);
-//                 }
-//             }
-//         }
-//         return -1;
-//     }
-// };
+// Dry run:
 
-// class Solution {
-// public:
-//     int numSquares(int n) {
-//         queue<pair<int,int>> q;
-//         q.push({ 0, 1 });
-//         int level = 0;
-//         while (!q.empty()) {
-//             int sz = q.size();
-//             level++;
-//             while (sz--) {
-//                 auto [curr, last] = q.front();
-//                 q.pop();
-//                 int left = n - curr;
-//                 for (int i = last; i * i <= left; i++) {
-//                     int squared = i * i;
-//                     if (squared == left) return level;
-//                     q.push({ curr + squared, i });
-//                 }
-//             }
-//         }
-//         return -1;
-//     }
-// };
+// base case: n = 1
+// dp = [-1, -1], perfect_squares = []
+// i == 1
+// is_perfect_square = true
+// dp[1] = 1, perfect_squares = [1]
+// return dp[1] -> 1
+
+// perfect square: n = 3
+// dp[-1, -1, -1, -1], perfect_squares = []
+// dp[-1, -1, -1, -1, -1], perfect_squares = []
+// i == 1
+// is_perfect_square = true
+// dp[1] = 1, perfect_squares = [1]
+// i == 2
+// is_perfect_square = false
+// dp[2] = min(INT_MAX, 1+1) = 2
+// i == 3
+// is_perfect_square = false
+
+// perfect square: n = 4
+// i == 3
+// ...
+// i == 4
+// is_perfect_square = true
+// dp[4] = 1
