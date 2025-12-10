@@ -1,19 +1,19 @@
 class Solution {
 public:
     int numSquares(int n) {
-        vector<int> dp(n + 1, INT_MAX);
         vector<int> perfect_squares;
+        for (int i = 1; i * i <= n; i++) {
+            perfect_squares.push_back(i * i);
+        }
+
+        // any number can at least be composed of by 1s
+        vector<int> dp(n + 1, n);
+        dp[0] = 0;
         for (int i = 1; i <= n; i++) {
-            int is_perfect_square = (int)sqrt(i) * (int)sqrt(i) == i;
-            if (is_perfect_square) {
-                dp[i] = 1;
-                perfect_squares.push_back(i);
-            } else {
-                for (int val: perfect_squares) {
-                    if (dp[i - val] != -1) {
-                        dp[i] = min(dp[i], dp[i - val] + 1);
-                    }
-                }
+            for (int square: perfect_squares) {
+                if (i < square)
+                    break;
+                dp[i] = min(dp[i], dp[i - square] + 1);
             }
         }
 
@@ -23,28 +23,20 @@ public:
 
 // Dry run:
 
-// base case: n = 1
-// dp = [-1, -1], perfect_squares = []
-// i == 1
-// is_perfect_square = true
-// dp[1] = 1, perfect_squares = [1]
-// return dp[1] -> 1
-
-// perfect square: n = 3
-// dp[-1, -1, -1, -1], perfect_squares = []
-// dp[-1, -1, -1, -1, -1], perfect_squares = []
-// i == 1
-// is_perfect_square = true
-// dp[1] = 1, perfect_squares = [1]
-// i == 2
-// is_perfect_square = false
-// dp[2] = min(INT_MAX, 1+1) = 2
-// i == 3
-// is_perfect_square = false
-
-// perfect square: n = 4
-// i == 3
-// ...
-// i == 4
-// is_perfect_square = true
-// dp[4] = 1
+// n = 12
+// perfect_squares = [1, 4, 9]
+// dp[0] = 0
+// i = 1
+// square = 1
+// dp[1] = min(12, 0 + 1) = 1
+// i = 2
+// square = 1
+// dp[2] = min(12, dp[1] + 1) = 2
+// i = 3
+// square = 1
+// dp[3] = min(12, dp[2] + 1) = 3
+// i = 4
+// square = 1
+// dp[4] = min(12, dp[3] + 1) = 4
+// square = 4
+// dp[4] = min(4, dp[0] + 1) = 1
