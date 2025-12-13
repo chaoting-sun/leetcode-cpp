@@ -1,49 +1,93 @@
 // board (m, n) range? 1 <= m,n <= 200
 
 // dfs problem
-// iterate board, do dfs on all unvisited cells.
-// for each dfs, storing all visited positions in a vector. if when no edges have not visited, update all visited positions 
+// 1. iterate all of the borders. if a cell is 'O', then run a DFS and mark all 'O' to '*'
+// 2. iterate all cells in grid, if a cell is 'O', mark it as 'X' as it is surrounded. if a cell is '*' mark it as 'O' as it is unsurrounded. 
+
+#include <vector>
+
+using namespace std;
 
 class Solution {
 private:
-    bool captureSurroundedRegion(vector<vector<char>>& board, vector<vector<bool>>& visited, int x, int y, vector<pair<int,int>>& current_visited) {
+    void captureUnsurroundedRegion(vector<vector<char>>& board, int i, int j) {
         int m = board.size();
         int n = board[0].size(); 
-        
-        if (x == 0 || x == m - 1 || y == 0 || y == n - 1) return false;
-        if (visited[x][y]) return true;
+    
+        if (i < 0 || i >= m || j < 0 || j >= n) return;
+        if (board[i][j] != 'O') return;
 
-        visited[x][y] = true;
-        current_visited.push_back({ x, y });
+        board[i][j] = '*';
 
-        int is_surrounded = true;
-        if (x > 0 && board[x - 1][y] == 'O') is_surrounded &= captureSurroundedRegion(board, visited, x - 1, y, current_visited);
-        if (x < m - 1 && board[x + 1][y] == 'O') is_surrounded &= captureSurroundedRegion(board, visited, x + 1, y, current_visited);
-        if (y > 0 && board[x][y - 1] == 'O') is_surrounded &= captureSurroundedRegion(board, visited, x, y - 1, current_visited);
-        if (y < n - 1 && board[x][y + 1] == 'O') is_surrounded &= captureSurroundedRegion(board, visited, x, y + 1, current_visited);
-        return is_surrounded;
+        captureUnsurroundedRegion(board, i - 1, j);
+        captureUnsurroundedRegion(board, i + 1, j);
+        captureUnsurroundedRegion(board, i, j - 1);
+        captureUnsurroundedRegion(board, i, j + 1);
     }
 
 public:
     void solve(vector<vector<char>>& board) {
         int m = board.size();
         int n = board[0].size();
-        
-        vector<vector<bool>> visited(m, vector<bool>(n, false));
-        for (int x = 1; x < m - 1; x++) {
-            for (int y = 1; y < n - 1; y++) {
-                if (visited[x][y] || board[x][y] != 'O') continue;
-                vector<pair<int,int>> current_visited;
-                bool is_surrounded_region = captureSurroundedRegion(board, visited, x, y, current_visited);
-                if (is_surrounded_region) {
-                    for (const auto& [visited_x, visited_y]: current_visited) {
-                        board[visited_x][visited_y] = 'X';
-                    }
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if ((i == 0 || i == m - 1 || j == 0 || j == n - 1) && board[i][j] == 'O') {
+                    captureUnsurroundedRegion(board, i, j);
                 }
+            }
+        }
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (board[i][j] == 'O') board[i][j] = 'X';
+                else if (board[i][j] == '*') board[i][j] = 'O';
             }
         }
     }
 };
 
+// Submit Error
+
+// error: use of undeclared identifier 'm'
+// if (i < 0 || i >= m || j < 0 || j >= n) return;
+// if (board[j][j] != 'O') return;
+// int m = board.size();
+// int n = board[0].size(); 
+// to
+// int m = board.size();
+// int n = board[0].size(); 
+// if (i < 0 || i >= m || j < 0 || j >= n) return;
+// if (board[j][j] != 'O') return;
+
+// error: typo
+// if (board[j][j] != 'O') return;
+// to
+// if (board[i][j] != 'O') return;
+
+// Dry Run
+
 // test case: board = [[O]]
 // board will not be changed
+
+// test case: board =
+// [["X","X","X","X"],
+//  ["X","O","O","X"],
+//  ["X","X","O","X"],
+//  ["X","O","X","X"]]
+// trace
+// m = 4, n = 4
+// i=0, j=0, (true && false)==false
+// i=3, j=1, (3==4-1 && true)==true
+// > captureUnsurroundedRegion(board, 3, 1)
+//   - cond: (3 < 0 || 3 >= 4 || 1 < 0 || 1 >= 4) -> false
+//   - cond: O != O -> false
+//   - board[3][1] = '*'
+//   > captureUnsurroundedRegion(board, 2, 1)
+//      - cond: X != O -> true -> return
+//   > captureUnsurroundedRegion(board, 4, 1)
+//      - cond: 4 >= 4 -> true -> return
+//   > captureUnsurroundedRegion(board, 3, 0)
+//      - cond: X != O -> true -> return
+//   > captureUnsurroundedRegion(board, 3, 2)
+//      - cond: X != O -> true -> return
