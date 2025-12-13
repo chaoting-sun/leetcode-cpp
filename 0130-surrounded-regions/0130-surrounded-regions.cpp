@@ -10,19 +10,29 @@ using namespace std;
 
 class Solution {
 private:
-    void captureUnsurroundedRegion(vector<vector<char>>& board, int i, int j) {
+    const int DIRECTIONS[4][2] = { {0, 1}, {0, -1}, {1, 0}, {-1, 0} };
+
+    void bfsBoundary(vector<vector<char>>& board, int start_row, int start_col) {
         int m = board.size();
-        int n = board[0].size(); 
-    
-        if (i < 0 || i >= m || j < 0 || j >= n) return;
-        if (board[i][j] != 'O') return;
+        int n = board[0].size();
 
-        board[i][j] = '*';
+        queue<pair<int,int>> q;
+        q.push({ start_row, start_col });
+        board[start_row][start_col] = '*';
 
-        captureUnsurroundedRegion(board, i - 1, j);
-        captureUnsurroundedRegion(board, i + 1, j);
-        captureUnsurroundedRegion(board, i, j - 1);
-        captureUnsurroundedRegion(board, i, j + 1);
+        while (!q.empty()) {
+            auto [current_row, current_col] = q.front();
+            board[current_row][current_col] = '*';
+            q.pop();
+            for (const auto& dir: DIRECTIONS) {
+                int next_row = current_row + dir[0];
+                int next_col = current_col + dir[1];
+                if (next_row >= 0 && next_row < m && next_col >= 0 && next_col < n && board[next_row][next_col] == 'O') {
+                    q.push({ next_row, next_col });
+                    board[next_row][next_col] = '*';
+                }
+            }
+        }
     }
 
 public:
@@ -31,13 +41,13 @@ public:
         int n = board[0].size();
 
         for (int i = 0; i < m; i++) {
-            if (board[i][0] == 'O') captureUnsurroundedRegion(board, i, 0);
-            if (board[i][n - 1] == 'O') captureUnsurroundedRegion(board, i, n - 1);
+            if (board[i][0] == 'O') bfsBoundary(board, i, 0);
+            if (board[i][n - 1] == 'O') bfsBoundary(board, i, n - 1);
         }
 
         for (int j = 1; j < n - 1; j++) {
-            if (board[0][j] == 'O') captureUnsurroundedRegion(board, 0, j);
-            if (board[m - 1][j] == 'O') captureUnsurroundedRegion(board, m - 1, j);
+            if (board[0][j] == 'O') bfsBoundary(board, 0, j);
+            if (board[m - 1][j] == 'O') bfsBoundary(board, m - 1, j);
         }
 
         for (int i = 0; i < m; i++) {
