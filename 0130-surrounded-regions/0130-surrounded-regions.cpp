@@ -31,11 +31,13 @@ public:
         int n = board[0].size();
 
         for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if ((i == 0 || i == m - 1 || j == 0 || j == n - 1) && board[i][j] == 'O') {
-                    captureUnsurroundedRegion(board, i, j);
-                }
-            }
+            if (board[i][0] == 'O') captureUnsurroundedRegion(board, i, 0);
+            if (board[i][n - 1] == 'O') captureUnsurroundedRegion(board, i, n - 1);
+        }
+
+        for (int j = 1; j < n - 1; j++) {
+            if (board[0][j] == 'O') captureUnsurroundedRegion(board, 0, j);
+            if (board[m - 1][j] == 'O') captureUnsurroundedRegion(board, m - 1, j);
         }
 
         for (int i = 0; i < m; i++) {
