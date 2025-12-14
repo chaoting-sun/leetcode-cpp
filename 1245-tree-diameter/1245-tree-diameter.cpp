@@ -9,7 +9,7 @@
 
 // Match and Plan
 
-// There is at least one node that is at the endpoint of of the diameter.
+// There is at least one node that is at the endpoint of the diameter.
 // A naive solution is to BFS from each of the node and find the maximum
 // distance, but it will take O(n^2) time, which is inefficient.
 // Another method is that, we randomly pick a node and do a DFS, then, from
@@ -21,54 +21,43 @@
 // Implementation
 
 class Solution {
-private:
-    // return the distance
-    int Dfs(const vector<vector<int>>& adjacency_list, vector<bool>& visited, int current_node, int& last_node, int distance, int& max_distance) {
-        visited[current_node] = true;
-        if (distance > max_distance) {
-            max_distance = distance;
-            last_node = current_node;
-        }
-
-        for (int next_node: adjacency_list[current_node]) {
-            if (!visited[next_node]) {
-                Dfs(adjacency_list, visited, next_node, last_node, distance + 1, max_distance);
-            }
-        }
-        return max_distance;
-    }
-
 public:
     int treeDiameter(vector<vector<int>>& edges) {
         int n = edges.size() + 1;
         
-        // build an adjacency list
-        vector<vector<int>> adjacency_list(n);
+        vector<vector<int>> adj(n);
         for (const auto& edge: edges) {
-            int u = edge[0], v = edge[1];
-            adjacency_list[u].push_back(v);
-            adjacency_list[v].push_back(u);
+            adj[edge[0]].push_back(edge[1]);
+            adj[edge[1]].push_back(edge[0]);
         }
 
-        // Start from the first node and do DFS
-        vector<bool> visited(n);
-        int first_node = 0;
-        int last_node = 0;
-        int distance = 0;
-        int max_distance = 0;
-        Dfs(adjacency_list, visited, first_node, last_node, distance, max_distance);
+        int global_max_height = 0;
 
-        // DFS again from the last node
-        for (int i = 0; i < n; i++) visited[i] = false;
-        first_node = last_node;
-        distance = 0;
-        max_distance = 0;
-        Dfs(adjacency_list, visited, first_node, last_node, distance, max_distance);
-        
-        return max_distance;
+        auto dfs = [&](auto&& self, int curr, int parent) -> int {
+            int max_height_1 = 0;
+            int max_height_2 = 0;
+
+            for (int neighbor: adj[curr]) {
+                if (neighbor == parent) continue;
+
+                int child_height = 1 + self(self, neighbor, curr);
+                if (child_height > max_height_1) {
+                    max_height_2 = max_height_1;
+                    max_height_1 = child_height;
+                } else if (child_height > max_height_2) {
+                    max_height_2 = child_height;
+                }
+
+                global_max_height = max(global_max_height, max_height_1 + max_height_2);
+            }
+            return max_height_1;
+        };
+
+        dfs(dfs, 0, -1);
+
+        return global_max_height;
     }
 };
-
 
 // Review
 
@@ -97,35 +86,35 @@ public:
 // last_node = 0
 // max_distance = 0
 // ------
-    // Dfs(current_node=1, last_node=0, distance=1, max_distance=0)
-    // visited[1] = true
-    // last_node = 1
-    // max_distance = 1
+//     Dfs(current_node=1, last_node=0, distance=1, max_distance=0)
+//     visited[1] = true
+//     last_node = 1
+//     max_distance = 1
 // ------
-    // Dfs(current_node=2, last_node=1, distance=1, max_distance=1)
-    // visited[2] = true
-    // last_node = 2
-    // max_distance = 1
+//     Dfs(current_node=2, last_node=1, distance=1, max_distance=1)
+//     visited[2] = true
+//     last_node = 2
+//     max_distance = 1
 // ------
 // ------
 // first_node = 1
 // distance = 0
 // max_distance = 0
 // ------
-    // Dfs(current_node=1, last_node=1, distance=0, max_distance=0)
-    // visited[1] = true
-    // last_node = 1
-    // max_distance = 0
-    // ------
-        // Dfs(current_node=0, last_node=1, distance=1, max_distance=0)
-        // visited[0] = true
-        // last_node = 0
-        // max_distance = 1
-        // ------
-            // Dfs(current_node=2, last_node=0, distance=2, max_distance=1)
-            // visited[2] = true
-            // last_node = 0
-            // max_distance = 2
+//     Dfs(current_node=1, last_node=1, distance=0, max_distance=0)
+//     visited[1] = true
+//     last_node = 1
+//     max_distance = 0
+//     ------
+//         Dfs(current_node=0, last_node=1, distance=1, max_distance=0)
+//         visited[0] = true
+//         last_node = 0
+//         max_distance = 1
+//         ------
+//             Dfs(current_node=2, last_node=0, distance=2, max_distance=1)
+//             visited[2] = true
+//             last_node = 0
+//             max_distance = 2
 // return max_distance (2)
 
 
@@ -139,6 +128,15 @@ public:
 
 // next_node?
 // last_node = next_node;
+// to
 // last_node = current_node;
 
-// wrong answer
+// wrong answer: the last node does not neccessarily store the node that achieved
+// the maximum distance found so far
+// last_node = current_node;
+// max_distance = max(max_distance, distance);
+// to
+// if (distance > max_distance) {
+//     max_distance = distance;
+//     last_node = current_node;
+// }
