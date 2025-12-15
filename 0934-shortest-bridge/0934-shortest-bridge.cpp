@@ -1,92 +1,71 @@
 class Solution {
+private:
+	const vector<vector<int>> DIRECTIONS = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
 public:
-    void bfsIsland(vector<vector<int>>& grid, unordered_set<int>& visited, int start) {
-        vector<int> dx = { 1, -1, 0, 0 };
-        vector<int> dy = { 0, 0, 1, -1 };
+	int shortestBridge(vector<vector<int>>& grid) {
+	int m = grid.size();
+	int n = grid[0].size();
+	
+	int start_x = 0, start_y = 0;
+	bool found = false;
+	for (int i = 0; i < m; i++) {
+		if (found) break;
+	for (int j = 0; j < n; j++) {
+	if (grid[i][j] == 1) {
+	start_x = i;
+	start_y = j;
+	found = true;
+	break;
+}
+}
+}
 
-        int m = grid.size();
-        int n = grid[0].size();
+queue<pair<int,int>> explore_q, source_q;
+explore_q.push({ start_x, start_y });
+source_q.push({ start_x, start_y });
+grid[start_x][start_y] = -1;
 
-        queue<int> cells;
+while (!explore_q.empty()) {
+	auto [x, y] = explore_q.front();
+	explore_q.pop();
 
-        cells.push(start);
-        visited.insert(start);
+	for (const auto& dir: DIRECTIONS) {
+		int neighbor_x = x + dir[0];
+int neighbor_y = y + dir[1];
+if (neighbor_x < 0 || neighbor_x >= m || neighbor_y < 0 || neighbor_y >= n) {
+continue;
+}
+if (grid[neighbor_x][neighbor_y] != 1) continue;
+explore_q.push({ neighbor_x, neighbor_y });
+source_q.push({ neighbor_x, neighbor_y });
+grid[neighbor_x][neighbor_y] = -1;
+}
+}
 
-        while (!cells.empty()) {
-            int position = cells.front();
-            cells.pop();
-            int x = position / n, y = position % n;
-            for (int k = 0; k < 4; k++) {
-                int newX = x + dx[k];
-                int newY = y + dy[k];
-                if (newX < 0 || newX >= m || newY < 0 || newY >= n) continue;
-                if (grid[newX][newY] == 0) continue;
+		int distance = 0;
+		while (!source_q.empty()) {
+int size = source_q.size();
+while (size--) {
+	auto [x, y] = source_q.front();
+	source_q.pop();
+	if (grid[x][y] == 1) return distance;
 
-                int newPosition = newX * n + newY;
-                if (visited.count(newPosition)) continue;
+	for (const auto& dir: DIRECTIONS) {
+		int neighbor_x = x + dir[0];
+int neighbor_y = y + dir[1];
+if (neighbor_x < 0 || neighbor_x >= m || neighbor_y < 0 || neighbor_y >= n) {
+	continue;
+}
+if (grid[neighbor_x][neighbor_y] == 1) return distance;
+if (grid[neighbor_x][neighbor_y] == -1) continue;
+source_q.push({ neighbor_x, neighbor_y });
+grid[neighbor_x][neighbor_y] = -1;
+	}
+	
+}
 
-                cells.push(newPosition);
-                visited.insert(newPosition);
-            }
-        }
-    }
-
-
-    int shortestBridge(vector<vector<int>>& grid) {
-        // approach:
-        // I will do BFS on one island, and use a set 'firstVisited' to store the cells
-        // in the island. Then, I do another BFS on the second island, and use a set
-        // 'secondVisited' to store the cells in the island. Lastly, I search for the
-        // minimum distance of any pair of cells from the 'firstVisited' and 'secondVisited'
-        // why:
-        // Basically, this problem asks the distance of the two islands, which exactly
-        // what BFS is used for.
-        // complexity:
-        // The time complexity is O(N^2*logn), mainly due to BFS, in which process each
-        // cell is visited in logn time. The space complexity is O(N^2), mainly
-        // due to the hashmap visited.
-
-        int m = grid.size();
-        int n = grid[0].size();
-
-        unordered_set<int> firstVisited;
-        bool found = false;
-
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (grid[i][j] == 1) {
-                    bfsIsland(grid, firstVisited, i * n + j);
-                    found = true;
-                    break;
-                }
-            }
-            if (found) break;
-        }
-
-        unordered_set<int> secondVisited;
-        found = false;
-
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                int start = i * n + j;
-                if (firstVisited.count(start)) continue;
-                if (grid[i][j] == 1) {
-                    bfsIsland(grid, secondVisited, start);
-                    found = true;
-                    break;
-                }
-            }
-            if (found) break;
-        }
-
-        int minDistance = INT_MAX;
-        for (const int& firstCell: firstVisited) {
-            for (const int& secondCell: secondVisited) {
-                int xDirDistance = abs(firstCell / n - secondCell / n);
-                int yDirDistance = abs(firstCell % n - secondCell % n);
-                minDistance = min(minDistance, xDirDistance + yDirDistance - 1);
-            }
-        }
-        return minDistance;
-    }
+	distance++;
+}
+return distance;
+}
 };
