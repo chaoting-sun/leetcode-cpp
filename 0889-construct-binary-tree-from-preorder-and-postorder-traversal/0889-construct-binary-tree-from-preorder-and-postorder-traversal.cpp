@@ -124,3 +124,21 @@ public:
 // 2. No ";" after lambda function
 
 // 3. heap-buffer-overflow
+// add "if (pre_left > pre_right) return nullptr;" in the lambda function
+// test case: preorder = [2, 1], postorder = [1, 2]
+// trace:
+// node_count = 2
+// post_index = { 1: 0, 2: 1 }
+// > construct(0, 1, 0, 1)
+//  - node = new TreeNode(2)
+//  - cond: 0 == 1? No.
+//  - left_child_value = preorder[1] = 1
+//  - left_subtree_size = 1
+//  - node->left = construct(1, 1, 0, 0)
+//      - node = new TreeNode(1)
+//      - cond: 1 == 1
+//      < returns node(1)
+//  - node->right = construct(2, 1, 1, -1)
+//      - cond: 2 > 1. yes
+//      < returns nullptr
+//  < returns node(2); node(2)->left = node(1); node(2)->right = nullptr
