@@ -26,14 +26,31 @@ public:
     //     return root;
     // }
 
+    // TreeNode* invertTree(TreeNode* root) {
+    //     if (!root) return nullptr;
+
+    //     stack<TreeNode*> todo_list;
+        
+    //     todo_list.push(root);
+    //     while (!todo_list.empty()) {
+    //         TreeNode* node = todo_list.top();
+    //         todo_list.pop();
+
+    //         swap(node->left, node->right);
+    //         if (node->left) todo_list.push(node->left);
+    //         if (node->right) todo_list.push(node->right);
+    //     }
+    //     return root;
+    // }
+
     TreeNode* invertTree(TreeNode* root) {
         if (!root) return nullptr;
-
-        stack<TreeNode*> todo_list;
         
+        queue<TreeNode*> todo_list;
+    
         todo_list.push(root);
         while (!todo_list.empty()) {
-            TreeNode* node = todo_list.top();
+            TreeNode* node = todo_list.front();
             todo_list.pop();
 
             swap(node->left, node->right);
@@ -41,7 +58,7 @@ public:
             if (node->right) todo_list.push(node->right);
         }
         return root;
-    }
+    }  
 };
 
 //     1
