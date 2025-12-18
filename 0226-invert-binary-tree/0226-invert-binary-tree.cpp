@@ -15,14 +15,31 @@
  */
 class Solution {
 public:
+    // TreeNode* invertTree(TreeNode* root) {
+    //     if (!root) return nullptr;
+        
+    //     TreeNode* left_child = invertTree(root->left);
+    //     TreeNode* right_child = invertTree(root->right);
+    //     root->left = right_child;
+    //     root->right = left_child;
+
+    //     return root;
+    // }
+
     TreeNode* invertTree(TreeNode* root) {
         if (!root) return nullptr;
-        
-        TreeNode* left_child = invertTree(root->left);
-        TreeNode* right_child = invertTree(root->right);
-        root->left = right_child;
-        root->right = left_child;
 
+        stack<TreeNode*> todo_list;
+        
+        todo_list.push(root);
+        while (!todo_list.empty()) {
+            TreeNode* node = todo_list.top();
+            todo_list.pop();
+
+            swap(node->left, node->right);
+            if (node->left) todo_list.push(node->left);
+            if (node->right) todo_list.push(node->right);
+        }
         return root;
     }
 };
