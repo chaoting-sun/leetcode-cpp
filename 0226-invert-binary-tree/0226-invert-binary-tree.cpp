@@ -1,3 +1,7 @@
+// Plan
+// recursively traverse the tree
+// for each node, swap the left subtree root and right subtree root.
+
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
@@ -11,45 +15,44 @@
  */
 class Solution {
 public:
-    // Approach1: recursion
-    // Time: O(n). n is the number of nodes. we have to traverse all nodes and flip their children in the tree
-    // Space: O(h) = O(n). h is the height of the tree, which, in worst case, is O(n)
-
-    // TreeNode* invertTree(TreeNode* root) {
-    //     if (!root) return nullptr;
-        
-    //     TreeNode* tmp = root->left;
-    //     root->left = root->right;
-    //     root->right = tmp;
-
-    //     invertTree(root->left);
-    //     invertTree(root->right);
-        
-    //     return root;
-    // }
-
-    // Approach2: iteration
-    // Time: O(n). Each node on the tree will be pushed and popped from queue one time
-    // Space: O(n)
-
     TreeNode* invertTree(TreeNode* root) {
         if (!root) return nullptr;
-
-        queue<TreeNode*> q;
-        q.push(root);
-
-        while (!q.empty()) {
-            TreeNode* node = q.front();
-            q.pop();
-
-            TreeNode* tmp = node->left;
-            node->left = node->right;
-            node->right = tmp;
-
-            if (node->left) q.push(node->left);
-            if (node->right) q.push(node->right);
-        }
         
+        TreeNode* left_child = invertTree(root->left);
+        TreeNode* right_child = invertTree(root->right);
+        root->left = right_child;
+        root->right = left_child;
+
         return root;
     }
 };
+
+//     1
+//   2
+// 3
+
+// > invertTree(node(1))
+//     left_child =
+//         > invertTree(node(2))
+//             left_child =
+//                 > invertTree(node(3))
+//                     left_child =
+//                         invertTree(null)
+//                         < null
+//                     right_child =
+//                         invertTree(null)
+//                         < null
+//                     node(3)->left = null
+//                     node(3)->right = null
+//                     < node(3)
+//             right_child =
+//                 > invertTree(null)
+//                     < null
+//             node(2)->left = null
+//             node(2)->right = node(3)
+//             < node(2)
+//     right_child =
+//         invertTree(null)
+//     node(1)->right = node(2)
+//     node(1)->left = null
+//     < node(1)
