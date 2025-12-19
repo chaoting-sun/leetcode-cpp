@@ -51,6 +51,8 @@ public:
 
         vector<int> dp(s_length + 1, s_length);
         dp[0] = 0;
+        string_view s_view(s);
+
         for (int i = 0; i < s_length; i++) {
             // s[i] is an extra character
             dp[i + 1] = min(dp[i + 1], dp[i] + 1);
@@ -58,7 +60,7 @@ public:
                 int word_length = word.size();
                 if (word_length > i + 1) continue;
                 
-                if (word == s.substr(i - word_length + 1, word_length)) {
+                if (word == s_view.substr(i - word_length + 1, word_length)) {
                     dp[i + 1] = min(dp[i + 1], dp[i + 1 - word_length]);
                 }
             }
