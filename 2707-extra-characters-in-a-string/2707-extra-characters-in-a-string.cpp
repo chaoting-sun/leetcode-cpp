@@ -37,39 +37,39 @@
 
 // ## Implementation
 
-class Solution {
-public:
-    int minExtraChar(string s, vector<string>& dictionary) {
-        int s_length = s.size();
-        if (s_length == 0) return 0;
+// class Solution {
+// public:
+//     int minExtraChar(string s, vector<string>& dictionary) {
+//         int s_length = s.size();
+//         if (s_length == 0) return 0;
         
-        vector<vector<string>> suffix_lookup(26);
-        for (const string& word: dictionary) {
-            char last_char = word.back();
-            suffix_lookup[last_char - 'a'].push_back(word);
-        }
+//         vector<vector<string>> suffix_lookup(26);
+//         for (const string& word: dictionary) {
+//             char last_char = word.back();
+//             suffix_lookup[last_char - 'a'].push_back(word);
+//         }
 
-        vector<int> dp(s_length + 1, s_length);
-        dp[0] = 0;
-        // string_view s_view(s);
+//         vector<int> dp(s_length + 1, s_length);
+//         dp[0] = 0;
+//         // string_view s_view(s);
 
-        for (int i = 0; i < s_length; i++) {
-            // s[i] is an extra character
-            dp[i + 1] = min(dp[i + 1], dp[i] + 1);
-            for (const string& word: suffix_lookup[s[i] - 'a']) {
-                int word_length = word.size();
-                if (word_length > i + 1) continue;
+//         for (int i = 0; i < s_length; i++) {
+//             // s[i] is an extra character
+//             dp[i + 1] = min(dp[i + 1], dp[i] + 1);
+//             for (const string& word: suffix_lookup[s[i] - 'a']) {
+//                 int word_length = word.size();
+//                 if (word_length > i + 1) continue;
                 
-                // if (word == s_view.substr(i - word_length + 1, word_length)) {
-                if (s.compare(i - word_length + 1, word_length, word) == 0) {
-                    dp[i + 1] = min(dp[i + 1], dp[i + 1 - word_length]);
-                }
-            }
-        }
+//                 // if (word == s_view.substr(i - word_length + 1, word_length)) {
+//                 if (s.compare(i - word_length + 1, word_length, word) == 0) {
+//                     dp[i + 1] = min(dp[i + 1], dp[i + 1 - word_length]);
+//                 }
+//             }
+//         }
 
-        return dp[s_length];
-    }
-};
+//         return dp[s_length];
+//     }
+// };
 
 
 // ## Review
@@ -124,3 +124,54 @@ public:
 
 
 // Submit Error
+
+class Solution {
+private:
+    struct Trie {
+        vector<Trie*> children[26];
+        bool is_word = false;
+        Trie() {}
+    };
+
+    Trie* buildTrie(const vector<string>& dictionary) {
+        Trie* root = new Trie();
+        for (const string& word: dictionary) {
+            Trie* curr = root;
+            for (char ch: word) {
+                if (!curr->children[ch - 'a']) {
+                    curr->children[ch - 'a'] = new Trie();
+                }
+                curr = curr->child[ch - 'a'];
+            }
+            curr->is_word = true;
+        }
+        return root;
+    }
+
+public:
+    int minExtraChar(string s, vector<string>& dictionary) {
+        int s_length = s.size();
+        if (s_length == 0) return 0;
+        
+        Trie* trie = buildTrie(dictionary);
+
+        vector<int> dp(s_length + 1, s_length);
+        dp[0] = 0;
+
+        for (int i = 0; i < s_length; i++) {
+            // not choose s[i]
+            dp[i + 1] = min(dp[i + 1], dp[i] + 1);
+            // choose s[i]
+            Trie* curr = trie;
+            for (int j = i; j < s_length; j++) {
+                if (!curr->children[s[j]]) break;
+                curr = curr->children[s[j]];
+                if (curr->is_word) {
+                    dp[j + 1] = min(dp[j + 1], dp[i]);
+                }
+            }
+        }
+
+        return dp[s_length];
+    }
+};
