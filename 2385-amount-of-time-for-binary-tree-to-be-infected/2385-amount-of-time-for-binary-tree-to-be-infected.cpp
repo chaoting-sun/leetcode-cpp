@@ -44,42 +44,32 @@
  */
 class Solution {
 private:
-    void buildAdj(TreeNode* root, unordered_map<int, vector<int>>& adj) {
-        if (!root) return;
+    void buildAdj(TreeNode* parent, TreeNode* node, vector<vector<int>>& adj) {
+        if (!node) return;
 
-        TreeNode* left_node = root->left;
-        TreeNode* right_node = root->right;
-
-        if (left_node) {
-            adj[root->val].push_back(left_node->val);
-            adj[left_node->val].push_back(root->val);
-            buildAdj(left_node, adj);
+        if (parent) {
+            adj[parent->val].push_back(node->val);
+            adj[node->val].push_back(parent->val);
         }
-
-        if (right_node) {
-            adj[root->val].push_back(right_node->val);
-            adj[right_node->val].push_back(root->val);
-            buildAdj(right_node, adj);
-        }
+        buildAdj(node, node->left, adj);
+        buildAdj(node, node->right, adj);
     }
 
 public:
     int amountOfTime(TreeNode* root, int start) {
         if (!root) return 0;
 
-        // build a map
-        // the node value are unique so we can use the values
-        unordered_map<int, vector<int>> adj;
-        buildAdj(root, adj);
-        
-        unordered_set<int> visited;
+        int MAX_VAL = 1e5;
+        vector<vector<int>> adj(MAX_VAL + 1);
+        buildAdj(nullptr, root, adj);
 
         // run a BFS
         queue<int> nodeToProcess;
-        int distance = 0;
+        int distance = -1;
+        vector<bool> visited(MAX_VAL + 1, false);
 
         nodeToProcess.push(start);
-        visited.insert(start);
+        visited[start] = true;
         
         while (!nodeToProcess.empty()) {
             int size = nodeToProcess.size();
@@ -87,15 +77,15 @@ public:
                 int curr = nodeToProcess.front();
                 nodeToProcess.pop();
                 for (int neighbor: adj[curr]) {
-                    if (visited.count(neighbor)) continue;
+                    if (visited[neighbor]) continue;
                     nodeToProcess.push(neighbor);
-                    visited.insert(neighbor);
+                    visited[neighbor] = true;
                 }
             }
             distance++;
         }
 
-        return distance - 1;
+        return distance;
     }
 };
 
