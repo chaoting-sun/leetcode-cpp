@@ -187,4 +187,7 @@ public:
 //     distance++;
 // }
 // return distance - 1;
-
+// 3.
+// adj[left_node->val].push_back(left_node->val);
+// to
+// adj[left_node->val].push_back(root->val);
