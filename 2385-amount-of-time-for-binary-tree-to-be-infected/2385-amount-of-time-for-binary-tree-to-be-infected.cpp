@@ -44,7 +44,7 @@
  */
 class Solution {
 private:
-    void buildAdj(TreeNode* root, map<int, vector<int>>& adj) {
+    void buildAdj(TreeNode* root, unordered_map<int, vector<int>>& adj) {
         if (!root) return;
 
         TreeNode* left_node = root->left;
@@ -69,7 +69,7 @@ public:
 
         // build a map
         // the node value are unique so we can use the values
-        map<int, vector<int>> adj;
+        unordered_map<int, vector<int>> adj;
         buildAdj(root, adj);
         
         unordered_set<int> visited;
