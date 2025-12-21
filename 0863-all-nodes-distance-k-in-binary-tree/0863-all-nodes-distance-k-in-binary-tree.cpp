@@ -59,3 +59,7 @@ public:
 // no return
 // to
 // return ans;
+
+// if (!root || !parent) return;
+// to
+// if (!root) return;
