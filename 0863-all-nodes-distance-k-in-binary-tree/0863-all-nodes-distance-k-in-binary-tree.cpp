@@ -23,8 +23,6 @@ public:
         vector<TreeNode*> parent_map(MAX_VAL + 1, nullptr);
         buildParentMap(parent_map, root, nullptr);
 
-        vector<int> ans;
-
         queue<TreeNode*> node_queue;
         vector<bool> visited(MAX_VAL + 1, false);
 
@@ -35,34 +33,36 @@ public:
         
         // bfs layer by layer
         while (!node_queue.empty()) {
-            if (distance > k) break;
+            if (distance == k) {
+                vector<int> result;
+                while (!node_queue.empty()) {
+                    result.push_back(node_queue.front()->val);
+                    node_queue.pop();
+                }
+                return result;
+            }
 
             int size = node_queue.size();
             for (int i = 0; i < size; i++) {
                 TreeNode* curr = node_queue.front();
                 node_queue.pop();
-                if (distance == k) ans.push_back(curr->val);
 
-                if (curr->left && !visited[curr->left->val]) {
-                    node_queue.push(curr->left);
-                    visited[curr->left->val] = true;
-                }
-                if (curr->right && !visited[curr->right->val]) {
-                    node_queue.push(curr->right);
-                    visited[curr->right->val] = true;
-                }
-                TreeNode* parent = parent_map[curr->val];
-                if (parent && !visited[parent->val]) {
-                    node_queue.push(parent);
-                    visited[parent->val] = true;
+                vector<TreeNode*> neighbors = { curr->left, curr->right, parent_map[curr->val] };
+                for (auto neighbor: neighbors) {
+                    if (neighbor && !visited[neighbor->val]) {
+                        node_queue.push(neighbor);
+                        visited[neighbor->val] = true;
+                    }
                 }
             }
             distance++;
         }
 
-        return ans;
+        return {};
     }
 };
+
+// 沒弄清楚所求範圍：這題 k 可以是 0，所以答案可以包含
 
 // class Solution {
 // private:
