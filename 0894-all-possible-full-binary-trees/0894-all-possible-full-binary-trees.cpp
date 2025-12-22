@@ -47,7 +47,7 @@ private:
         vector<TreeNode*> result;
         
         if (memo.count(remaining_node_count)) {
-            return { memo[remaining_node_count] };
+            return memo[remaining_node_count];
         }
         
         // base case
