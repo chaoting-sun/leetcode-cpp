@@ -56,22 +56,21 @@ private:
             result.push_back(root);
         }
 
-        remaining_node_count--; // the current node
         for (int i = 1; i < remaining_node_count; i += 2) {
             int left_node_count = i;
-            int right_node_count = remaining_node_count - i;
+            int right_node_count = remaining_node_count - i - 1;
             
             vector<TreeNode*> left_nodes = constructFBT(left_node_count);
             vector<TreeNode*> right_nodes = constructFBT(right_node_count);
             
-            for (auto& left_node: left_nodes) {
-                for (auto& right_node: right_nodes) {
+            for (const auto& left_node: left_nodes) {
+                for (const auto& right_node: right_nodes) {
                     TreeNode* root = new TreeNode(0);
                     root->left = left_node;
                     root->right = right_node;
                     result.push_back(root);
                 }
-            }
+            }j
         }
         return memo[remaining_node_count] = result;
     }
