@@ -64,11 +64,11 @@ private:
             vector<TreeNode*> left_nodes = constructFBT(left_node_count);
             vector<TreeNode*> right_nodes = constructFBT(right_node_count);
             
-            for(int j = 0; j < left_nodes.size(); j++) {
-                for (int k = 0; k < right_nodes.size(); k++) {
+            for (auto& left_node: left_nodes) {
+                for (auto& right_node: right_nodes) {
                     TreeNode* root = new TreeNode(0);
-                    root->left = left_nodes[j];
-                    root->right = right_nodes[k];
+                    root->left = left_node;
+                    root->right = right_node;
                     result.push_back(root);
                 }
             }
