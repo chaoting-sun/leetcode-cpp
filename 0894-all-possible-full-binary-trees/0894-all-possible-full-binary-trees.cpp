@@ -38,16 +38,22 @@
  */
 
 class Solution {
-public:
+private:
+    unordered_map<int, vector<TreeNode*>> memo;
+
     vector<TreeNode*> constructFBT(int remaining_node_count) {
         if (remaining_node_count == 0) return {};
 
         vector<TreeNode*> result;
         
+        if (memo.count(remaining_node_count)) {
+            return { memo[remaining_node_count] };
+        }
+        
         // base case
         if (remaining_node_count == 1) {
             TreeNode* root = new TreeNode(0);
-            return { root };
+            result.push_back(root);
         }
 
         remaining_node_count--; // the current node
@@ -67,7 +73,7 @@ public:
                 }
             }
         }
-        return result;
+        return memo[remaining_node_count] = result;
     }
 
 public:
@@ -207,4 +213,7 @@ public:
 // to
 // return constructFBT(n);
 
-// RE: AddressSanitizer: heap-buffer-overflow...
+// RE: AddressSanitizer: heap-buffer-overflow
+// for(int j = 0; j < left_node_count; j++) {
+// to
+// for(int j = 0; j < left_nodes.size(); j++) {
