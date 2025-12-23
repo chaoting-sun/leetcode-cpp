@@ -25,9 +25,12 @@
 class Solution {
 private:
     struct TrieNode {
-        unordered_map<char, TrieNode*> children;
+        TrieNode* children[26];
         int count = 0;
         TrieNode() {
+            for (int i = 0; i < 26; i++) {
+                children[i] = nullptr;
+            }
         }
     };
 
@@ -37,10 +40,10 @@ private:
         for (const string& word: words) {
             TrieNode* curr = root;
             for (char w: word) {
-                if (!curr->children.count(w)) {
-                    curr->children[w] = new TrieNode();
+                if (!curr->children[w - 'a']) {
+                    curr->children[w - 'a'] = new TrieNode();
                 }
-                curr = curr->children[w];
+                curr = curr->children[w - 'a'];
                 curr->count++;
             }
         }
@@ -58,7 +61,7 @@ public:
             int total_count = 0;
             TrieNode* curr = root;
             for (char w: words[i]) {
-                curr = curr->children[w];
+                curr = curr->children[w - 'a'];
                 total_count += curr->count;
             }
             answer[i] = total_count;
