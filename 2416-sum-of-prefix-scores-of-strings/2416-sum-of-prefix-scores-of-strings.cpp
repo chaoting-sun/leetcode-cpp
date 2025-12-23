@@ -37,10 +37,10 @@ private:
         for (const string& word: words) {
             TrieNode* curr = root;
             for (char w: word) {
-                if (!curr->children.count(w - 'a')) {
-                    curr->children[w - 'a'] = new TrieNode();
+                if (!curr->children.count(w)) {
+                    curr->children[w] = new TrieNode();
                 }
-                curr = curr->children[w - 'a'];
+                curr = curr->children[w];
                 curr->count++;
             }
         }
@@ -58,7 +58,7 @@ public:
             int total_count = 0;
             TrieNode* curr = root;
             for (char w: words[i]) {
-                curr = curr->children[w - 'a'];
+                curr = curr->children[w];
                 total_count += curr->count;
             }
             answer[i] = total_count;
@@ -89,7 +89,7 @@ public:
 
 // Time complexity: O(C), where C is the number of characters in words
 // for building a trie or finding the score, we need to process all characters
-// Space complexity: 
+// Space complexity: O(C). The number of created trie nodes is less than the number of characters in words
 
 
 // Submit Error
@@ -99,3 +99,6 @@ public:
 // for (char w: word)
 
 // Memory Limit Exceeded
+// original: created vector<TreeNode*> children with children.assign(26, nullptr)
+// to
+// now: unordered_map<char, TreeNode*>
