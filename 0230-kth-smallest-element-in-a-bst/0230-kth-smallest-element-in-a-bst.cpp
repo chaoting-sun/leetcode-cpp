@@ -10,63 +10,30 @@
  * };
  */
 class Solution {
-public:
-    // recursion: inorder traversal
-    // Time: O(H + k). inorder traversal go down to the left leaf before processing k nodes
-    // Space: O(H). the call stack is with depth H.
+private:
+    void inorderTraversal(TreeNode* root, int k, int& count, int& kth_val) {
+        if (!root) return;
 
-    // void inorderTraversal(TreeNode* root, int &curr, int k, int &ans) {
-    //     // base case
-    //     if (!root) return;
-
-    //     // go to the left node
-    //     inorderTraversal(root->left, curr, k, ans);
-
-    //     // handle the current node
-    //     curr++;
-    //     if (curr == k) {
-    //         ans = root->val;
-    //         return;
-    //     } 
-
-    //     // go to the right node
-    //     inorderTraversal(root->right, curr, k, ans);
-    // }
-
-    // int kthSmallest(TreeNode* root, int k) {
-    //     int ans = 0;
-    //     int curr = 0;
-    //     inorderTraversal(root, curr, k, ans);
-    //     return ans;
-    // }
-
-    // iteration
-    // Time: O(H + k). H is the tree height. Before starting popping out the node,
-    // we have to go down to the tree leaf, which takes the tree height (H). for
-    // balanced tree H = logn. for skewwed tree H = n
-    // Space: O(H)
-
-    int kthSmallest(TreeNode* root, int k) {
-
-        stack<TreeNode*> stk;
-        int cnt = 0;
-
-        while (!stk.empty() || root) {
-            while (root) {
-                stk.push(root);
-                root = root->left;
-            }
-
-            root = stk.top();
-            stk.pop();
-
-            cnt++;
-            if (cnt == k) {
-                return root->val;
-            }
-            root = root->right;
+        inorderTraversal(root->left, k, count, kth_val);
+        
+        count++;
+        if (count == k) {
+            kth_val = root->val;
+            return;
         }
 
-        return -1;
+        inorderTraversal(root->right, k, count, kth_val);
+    }
+
+public:
+    int kthSmallest(TreeNode* root, int k) {
+        int kth_val = -1;
+        int count = 0;
+        inorderTraversal(root, k, count, kth_val);
+        return kth_val;
     }
 };
+
+// Submit Error
+// CE: address of overloaded function 'count' does not match required type 'int'
+// Reason: does not define count before passing it into inorderTraversal
