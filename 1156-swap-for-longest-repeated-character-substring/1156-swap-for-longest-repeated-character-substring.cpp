@@ -37,57 +37,44 @@
 // Implementation
 
 class Solution {
+private:
+    struct Group {
+        char character;
+        int count;
+    };
+
 public:
     int maxRepOpt1(string text) {
         int text_length = text.size();
 
-        // firstly, I create a frequency map to store the count of all characters in text
-        vector<int> freq_count(26);
+        vector<int> total_count(26);
         for (int i = 0; i < text_length; i++) {
-            freq_count[text[i] - 'a']++;
+            total_count[text[i] - 'a']++;
         }
         
-        // then, I build the compressed representation of text, dividing the text into smaller chunks
-        // here, I store the character using integer for convenience
-        vector<pair<int, int>> compressed;
+        vector<Group> compressed;
         for (int i = 0; i < text_length; i++) {
-            // for the current element to be processed, I combine it with the previous chunk if they are
-            // the same character. This helps me calculate the longest substring
-            if (!compressed.empty() && compressed.back().first == text[i] - 'a') {
-                compressed.back().second++;
+            if (!compressed.empty() && compressed.back().character == text[i]) {
+                compressed.back().count++;
             } else {
-                // if they are not the same, I create a new chunk for the the current character
-                compressed.push_back({ text[i] - 'a', 1 });
+                compressed.push_back({ text[i], 1 });
             }
         }
         
-        // I use the global variable to track the longest substring as the answer
         int longest_substring_length = 0;
         int compressed_length = compressed.size();
 
-        // then, for each character, I try to build the longest substring using the compressed representation
-        for (int c = 0; c < 26; c++) {
-            // when the character is not in text, it won't do any contribution
-            if (freq_count[c] == 0) continue;
+        for (int i = 0; i < compressed_length; i++) {
+            int current_char = compressed[i].character;
+            int current_count = compressed[i].count;
 
-            for (int i = 0; i < compressed_length; i++) {
-                // There are two cases
-                // I firstly handle the case that the character of the current chunks are the same as the the current character
-                if (compressed[i].first == c) {
-                    // If there are other same characters not in this chunk, I can swap to increment the length of the chunk
-                    int final_length = freq_count[c] > compressed[i].second ? compressed[i].second + 1 : compressed[i].second;
-                    longest_substring_length = max(longest_substring_length, final_length);
-                } else {
-                    // if the character in this chunk is not the same as the current character,
-                    // we can merge its both-side neighbors if they are the current character
-                    if (i > 0 && i < compressed_length - 1 && compressed[i - 1].first == c && compressed[i + 1].first == c && compressed[i].second == 1) {
-                        // they can at least merge using a character in one's end point
-                        int merged_length = compressed[i - 1].second + compressed[i + 1].second;
-                        // however, if there still another same characters not in these chunks, the merged length can increment by 1
-                        int final_length = freq_count[c] > merged_length ? merged_length + 1 : merged_length;
-                        longest_substring_length = max(longest_substring_length, final_length);
-                    }
-                }
+            int extended_length = total_count[current_char - 'a'] > current_count ? current_count + 1 : current_count;
+            longest_substring_length = max(longest_substring_length, extended_length);
+
+            if (i >= 2 && compressed[i - 1].count == 1 && compressed[i - 2].character == current_char) {
+                int merged_length = compressed[i - 2].count + current_count;
+                if (total_count[current_char - 'a'] > merged_length) merged_length++;
+                longest_substring_length = max(longest_substring_length, merged_length);
             }
         }
 
