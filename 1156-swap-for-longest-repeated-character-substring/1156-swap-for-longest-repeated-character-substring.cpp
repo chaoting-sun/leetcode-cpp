@@ -37,12 +37,6 @@
 // Implementation
 
 class Solution {
-private:
-    struct Group {
-        char character;
-        int count;
-    };
-
 public:
     int maxRepOpt1(string text) {
         int text_length = text.size();
@@ -52,35 +46,78 @@ public:
             total_count[text[i] - 'a']++;
         }
         
-        vector<Group> compressed;
-        for (int i = 0; i < text_length; i++) {
-            if (!compressed.empty() && compressed.back().character == text[i]) {
-                compressed.back().count++;
-            } else {
-                compressed.push_back({ text[i], 1 });
+        int max_substring_length = 0;
+        for (int c = 0; c < 26; c++) {
+            int left = 0;
+            int right = 0;
+            int mistakes = 0;
+            while (right < text_length) {
+                if (text[right] - 'a' != c) {
+                    mistakes++;
+                }
+                while (mistakes > 1) {
+                    if (text[left] - 'a' != c) mistakes--;
+                    left++;
+                }
+                int current_length = right - left + 1;
+                if (mistakes == 0) {
+                    max_substring_length = max(max_substring_length, current_length);
+                }
+                if (mistakes == 1 && total_count[c] > current_length - 1) {
+                    max_substring_length = max(max_substring_length, current_length);
+                }
+                right++;
             }
         }
-        
-        int longest_substring_length = 0;
-        int compressed_length = compressed.size();
-
-        for (int i = 0; i < compressed_length; i++) {
-            int current_char = compressed[i].character;
-            int current_count = compressed[i].count;
-
-            int extended_length = total_count[current_char - 'a'] > current_count ? current_count + 1 : current_count;
-            longest_substring_length = max(longest_substring_length, extended_length);
-
-            if (i >= 2 && compressed[i - 1].count == 1 && compressed[i - 2].character == current_char) {
-                int merged_length = compressed[i - 2].count + current_count;
-                if (total_count[current_char - 'a'] > merged_length) merged_length++;
-                longest_substring_length = max(longest_substring_length, merged_length);
-            }
-        }
-
-        return longest_substring_length;
+        return max_substring_length;
     }
 };
+
+// class Solution {
+// private:
+//     struct Group {
+//         char character;
+//         int count;
+//     };
+
+// public:
+//     int maxRepOpt1(string text) {
+//         int text_length = text.size();
+
+//         vector<int> total_count(26);
+//         for (int i = 0; i < text_length; i++) {
+//             total_count[text[i] - 'a']++;
+//         }
+        
+//         vector<Group> compressed;
+//         for (int i = 0; i < text_length; i++) {
+//             if (!compressed.empty() && compressed.back().character == text[i]) {
+//                 compressed.back().count++;
+//             } else {
+//                 compressed.push_back({ text[i], 1 });
+//             }
+//         }
+        
+//         int longest_substring_length = 0;
+//         int compressed_length = compressed.size();
+
+//         for (int i = 0; i < compressed_length; i++) {
+//             int current_char = compressed[i].character;
+//             int current_count = compressed[i].count;
+
+//             int extended_length = total_count[current_char - 'a'] > current_count ? current_count + 1 : current_count;
+//             longest_substring_length = max(longest_substring_length, extended_length);
+
+//             if (i >= 2 && compressed[i - 1].count == 1 && compressed[i - 2].character == current_char) {
+//                 int merged_length = compressed[i - 2].count + current_count;
+//                 if (total_count[current_char - 'a'] > merged_length) merged_length++;
+//                 longest_substring_length = max(longest_substring_length, merged_length);
+//             }
+//         }
+
+//         return longest_substring_length;
+//     }
+// };
 
 
 // ## Review
