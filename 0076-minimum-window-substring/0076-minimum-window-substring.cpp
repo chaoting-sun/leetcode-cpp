@@ -1,48 +1,94 @@
 class Solution {
 public:
-    // Approach: Sliding Window
-    // count the characters numbers of t in a hashmap (t_counts) first. then loop s and count the character numbers in another hashmap (s_counts).
-    // we also maintain two variables: have and need:
-    //  - "have" is the number of distinct characters we have found, in which the number of each character is more than that in the t_counts in [left, right]
-    //  - "need" is the total number of distinct characters we need to found. ex: if t = "abccc" -> need = 3
-    // Time: O(len(s) + len(t))
-    // Space: O(1)
-
     string minWindow(string s, string t) {
-        unordered_map<char, int> s_counts, t_counts;
-        for (char ch: t) t_counts[ch]++;
+        int s_length = s.size();
+        if (s_length == 0) return "";
 
-        int left = 0, right = 0;
-        int n = s.size();
-        int have = 0, need = t_counts.size();
-        int min_left = 0, min_len = INT_MAX;
+        vector<int> t_char_freq(256);
+        for (char ch: t) t_char_freq[ch]++;
+        int to_satisfied_count = 0;
+        for (int i = 0; i < 256; i++) {
+            if (t_char_freq[i] > 0) {
+                to_satisfied_count++;
+            }
+        }
 
-        while (right < n) {
-            s_counts[s[right]]++;
-
-            // if the count of the current character (ch) is equal to t, then we have found enough number of ch that t_counts needs
-            if (t_counts.find(s[right]) != t_counts.end() && s_counts[s[right]] == t_counts[s[right]]) {
-                have++;
+        vector<int> widow_char_freq(256);
+        int left = 0;
+        int right = 0;
+        int min_start_idx = -1;
+        int min_length = INT_MAX;
+        
+        while (right < s_length) {
+            widow_char_freq[s[right]]++;
+            if (widow_char_freq[s[right]] == t_char_freq[s[right]]) {
+                to_satisfied_count--;
             }
 
-            // if the current interval is a valid substring, then move left toward step by step until the interval is invalid
-            // also, we update min_len to search for the min substring length
-            while (have == need) {
-                if ((right - left + 1) < min_len) {
-                    min_len = right - left + 1;
-                    min_left = left;
+            while (to_satisfied_count == 0) {
+                int current_length = right - left + 1;
+                if (current_length < min_length) {
+                    min_length = current_length;
+                    min_start_idx = left;
                 }
-
-                s_counts[s[left]]--;
-                if (t_counts.find(s[left]) != t_counts.end() && s_counts[s[left]] < t_counts[s[left]]) {
-                    have--;
+                if (widow_char_freq[s[left]] == t_char_freq[s[left]]) {
+                    to_satisfied_count++;
                 }
+                widow_char_freq[s[left]]--;
                 left++;
             }
+
             right++;
         }
 
-        if (min_len == INT_MAX) return "";
-        return s.substr(min_left, min_len);
+        return min_length == INT_MAX ? "" : s.substr(min_start_idx, min_length);
     }
 };
+
+// test case
+// s = 'abc', t = 'acc'
+// t_char_freq = [1 0 2 ....]
+// to_satisfied_count = 2
+// l = 0, r = 0
+// widow_char_freq[0] = 1 -> t_char_freq[0] == 1 -> to_satisfied_count = 1
+// l = 0, r = 1
+// widow_char_freq[1] = 1 -> t_char_freq[1] == 0
+// l = 0, r = 2
+// widow_char_freq[2] = 1 -> t_char_freq[2] == 2
+// < min? no. -> ""
+
+// s = 'abc', t = 'ac'
+// t_char_freq = [1 0 1 ....]
+// to_satisfied_count = 2
+// l = 0, r = 0
+// widow_char_freq[0] = 1 -> t_char_freq[0] == 1 -> to_satisfied_count = 1
+// l = 0, r = 1
+// widow_char_freq[1] = 1 -> t_char_freq[1] == 0
+// l = 0, r = 2
+// widow_char_freq[2] = 1 -> t_char_freq[2] == 1 -> to_satisfied_count = 0
+// while loop
+//  current_length = 3
+//  min_length = 3
+//  idx = 0
+//  to_satisfied_count = 1
+//  widow_char_freq[0] = 0
+//  l = 1
+// < min = s[0..2] = abc
+
+// CE:
+// for (int i = 0; i < 256; i++) {
+//     if (t_char_freq[ch] > 0) {
+//         to_satisfied_count++;
+//     }
+// }
+// to
+// for (int i = 0; i < 256; i++) {
+//     if (t_char_freq[ch] > 0) {
+//         to_satisfied_count++;
+//     }
+// }
+
+// CE:
+// return min_length == INT_MAX ? "" : s.substr(min_start_idx, current_length);
+// to
+// return min_length == INT_MAX ? "" : s.substr(min_start_idx, min_length);
