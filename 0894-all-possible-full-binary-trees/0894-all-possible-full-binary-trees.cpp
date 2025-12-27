@@ -23,7 +23,7 @@ private:
 
         if (n == 1) {
             TreeNode* root = new TreeNode(0);
-            return { root };
+            return memo[1] = { root };
         }
 
         for (int i = 1; i < n - 1; i += 2) {
