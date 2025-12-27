@@ -9,107 +9,58 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+// class Solution {
+// private:
+//     bool isValid(TreeNode* root, long long left_bound, long long right_bound) {
+//         if (!root) return true;
+
+//         long long current_val = root->val;
+//         if (current_val <= left_bound || current_val >= right_bound) {
+//             return false;
+//         }
+        
+//         bool is_left_valid = isValid(root->left, left_bound, current_val);
+//         bool is_right_valid = isValid(root->right, current_val, right_bound);
+//         return is_left_valid && is_right_valid;
+//     }
+// public:
+//     bool isValidBST(TreeNode* root) {
+//         long long left_bound = LLONG_MIN;
+//         long long right_bound = LLONG_MAX;
+//         return isValid(root, left_bound, right_bound);
+//     }
+// };
+
 class Solution {
 public:
-    // Approach1.1: Recursion (track upper bound and lower bound); Preorder Traversal
-    // Time: O(n)
-    // Space: O(n)
-
-    // bool recursion(TreeNode* root, int lb, int ub, bool has_lb, bool has_ub) {
-    //     // base case
-    //     if (!root) return true;
-
-    //     // check if the current node is valid
-    //     if (has_lb && root->val <= lb) return false;
-    //     if (has_ub && root->val >= ub) return false;
-
-    //     // go to the left node
-    //     int left_ub = min(root->val, ub);
-    //     bool is_left_valid = recursion(root->left, lb, left_ub, has_lb, true);
-        
-    //     // go to the right node
-    //     int right_lb = max(root->val, lb);
-    //     bool is_right_valid = recursion(root->right, right_lb, ub, true, has_ub);
-
-    //     return is_left_valid && is_right_valid;
-    // }
-    
-
-    // bool isValidBST(TreeNode* root) {
-    //     return recursion(root, INT_MIN, INT_MAX, false, false);
-    // }
-
-    // Recursion1.2: Recursion (track by node); Preorder Traversal
-    // Time: O(n)
-    // Space: O(n)
-
-    // bool recursion(TreeNode* root, TreeNode* lb, TreeNode* ub) {
-    //     // base case
-    //     if (!root) return true;
-
-    //     // check if the current node is valid
-    //     if (lb && lb->val >= root->val) return false;
-    //     if (ub && ub->val <= root->val) return false;
-
-    //     // go to the left node
-    //     bool is_left_valid = recursion(root->left, lb, root);
-    //     // go to the right node
-    //     bool is_right_valid = recursion(root->right, root, ub);
-
-    //     return is_left_valid && is_right_valid;
-    // }
-    
-    // bool isValidBST(TreeNode* root) {
-    //     return recursion(root, nullptr, nullptr);
-    // }
-
-    // Recursion2: Recursion; inorder traversal
-    // Time: O(n)
-    // Space: O(n)
-
-    // bool recursion(TreeNode* root, TreeNode* &prev) {
-    //     if (!root) return true;
-
-    //     // go to the left node
-    //     if (!recursion(root->left, prev)) return false;
-
-    //     // handle current node
-    //     if (prev && prev->val >= root->val) return false;
-    //     prev = root;
-
-    //     // go to the right node
-    //     if (!recursion(root->right, prev)) return false;
-
-    //     return true;
-    // }
-
-    // bool isValidBST(TreeNode* root) {
-    //     TreeNode* prev = nullptr;
-    //     return recursion(root, prev);
-    // }
-
-    // Iteration
-    // Time: O(n)
-    // Space: O(n)
-
     bool isValidBST(TreeNode* root) {
+        if (!root) return true;
+        
         stack<TreeNode*> stk;
-        TreeNode* prev = nullptr;
+        long long curr_max = LLONG_MIN;
+        TreeNode* curr = root;
 
-        while (!stk.empty() || root) {
-            while (root) {
-                stk.push(root);
-                root = root->left;
+        while (curr || !stk.empty()) {
+            while (curr) {
+                stk.push(curr);
+                curr = curr->left;
             }
 
-            root = stk.top();
+            curr = stk.top();
             stk.pop();
+            if ((long long)curr->val <= curr_max) {
+                return false;
+            }
+            curr_max = (long long)curr->val;
 
-            if (prev && root->val <= prev->val) return false;
-            prev = root;
-            root = root->right;
+            curr = curr->right;
         }
 
         return true;
     }
 };
+
+// Submit Error
+// -1e+31 is outside the range of representable values of type 'long long'
+// to
+// long long left_bound = LLONG_MIN;
