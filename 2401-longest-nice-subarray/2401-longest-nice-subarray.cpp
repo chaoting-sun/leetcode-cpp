@@ -33,44 +33,44 @@
 
 // ## Implementation
 
-class Solution {
-public:
-    int longestNiceSubarray(vector<int>& nums) {
-        // let's handle the base case for early stop
-        int length = nums.size();
-        if (length == 0) return 0;
+// class Solution {
+// public:
+//     int longestNiceSubarray(vector<int>& nums) {
+//         // let's handle the base case for early stop
+//         int length = nums.size();
+//         if (length == 0) return 0;
 
-        // create a bit vector to record the usage of each bit in the current subarray
-        vector<int> bit_usage(31);
+//         // create a bit vector to record the usage of each bit in the current subarray
+//         vector<int> bit_usage(31);
 
-        // run the sliding window
-        int left = 0;
-        int right = 0;
-        int max_length = 0;
+//         // run the sliding window
+//         int left = 0;
+//         int right = 0;
+//         int max_length = 0;
 
-        while (right < length) {
-            // we interate through all bits, check if any bit is invalid
-            for (int i = 0; i <= 30; i++) {
-                int new_bit = (nums[right] >> i) & 1;
-                // we need to handle the invalidity immediately, shrinking the left pointer to make the subarray valid
-                while (new_bit == 1 && bit_usage[i] == 1) {
-                    // we flip the 1 bit to 0 if it is contributed by the current value
-                    for (int j = 0; j <= 30; j++) {
-                        int old_bit = (nums[left] >> j) & 1;
-                        if (old_bit == 1) bit_usage[j] = 0;
-                    }
-                    left++;
-                }
-                if (new_bit > 0) bit_usage[i] = new_bit;
-            }
+//         while (right < length) {
+//             // we interate through all bits, check if any bit is invalid
+//             for (int i = 0; i <= 30; i++) {
+//                 int new_bit = (nums[right] >> i) & 1;
+//                 // we need to handle the invalidity immediately, shrinking the left pointer to make the subarray valid
+//                 while (new_bit == 1 && bit_usage[i] == 1) {
+//                     // we flip the 1 bit to 0 if it is contributed by the current value
+//                     for (int j = 0; j <= 30; j++) {
+//                         int old_bit = (nums[left] >> j) & 1;
+//                         if (old_bit == 1) bit_usage[j] = 0;
+//                     }
+//                     left++;
+//                 }
+//                 if (new_bit > 0) bit_usage[i] = new_bit;
+//             }
 
-            max_length = max(max_length, right - left + 1);
-            right++;
-        }
+//             max_length = max(max_length, right - left + 1);
+//             right++;
+//         }
 
-        return max_length;
-    }
-};
+//         return max_length;
+//     }
+// };
 
 
 // ## Review
@@ -103,8 +103,62 @@ public:
 // < returns 1
 
 
-// Evaluation
+// ## Evaluation
 
 // Time: in sliding window, each element is at most processed twice
 // the time will be O(n) * 31 * 2 = O(n). it is linear time
 // the space is contant. O(1)
+
+// ## Submit Errors
+// No
+
+// ## Follow up
+
+// Challenge: Can you optimize the implementation to remove the bit_usage vector and the inner for loops entirely?
+// me: Failed.
+
+class Solution {
+public:
+    int longestNiceSubarray(vector<int>& nums) {
+        // let's handle the base case for early stop
+        int length = nums.size();
+        if (length == 0) return 0;
+
+        int bit_usage = 0;
+
+        // run the sliding window
+        int left = 0;
+        int right = 0;
+        int max_length = 0;
+
+        while (right < length) {
+            while (bit_usage & nums[right] > 0) {
+                bit_usage ^= nums[left];
+                left++;
+            }
+            bit_usage |= nums[right];
+            max_length = max(max_length, right - left + 1);
+            right++;
+        }
+
+        return max_length;
+    }
+};
+
+// [5, 2, 1] -> [101, 010, 001] (ans = 2)
+// trace:
+// length = 3
+// bit_usage = 0
+// left = 0, right = 0
+// bit_usage = 101
+// max_length = 1
+// right = 1
+// bit_usage = 111
+// max_length = 2
+// right = 2
+// bit_usage = 010
+// left = 1
+// bit_usage = 000
+// left = 2
+// bit_usage = 001
+// < max_length = 2
