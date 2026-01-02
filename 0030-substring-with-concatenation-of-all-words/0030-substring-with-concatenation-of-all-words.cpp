@@ -1,70 +1,88 @@
+// words = ['ab', 'bc'], s = 'abbcd'
+//                            01234
+// trace:
+// required words = { 'ab', 'bc' }
+// for loop: r = 0, 2
+//  r = 0
+//  curr = ab
+//  c
+
 class Solution {
-public:
-    // Intuition: The first method that comes to mind is searching from every index,
-    // checking if there is a valid substring starting at that index. However, this
-    // would repeatedly check the same words for cases like s = "aaaaa...aaa" with
-    // words including "a". Since the problem specifies that all words are of the
-    // same length, we know that the start index (start) will satisfy
-    // 0 <= start % wl < wl, where wl is the word length. Therefore, we divide the
-    // search into wl cases. For each case, we use a standard sliding window to
-    // search for a valid substring. We use start and end to bound the current
-    // substring under consideration. When we still need to find unmatched words,
-    // we expand end. If a word occurs more times than expected, we shrink start.
-    //
-    // Approach: Sliding Window
-    // Time: O(n*wl + nw*wl) (n = length of s; wl = word length; nw = number of words)
-    // Space: O(wl * (# distinct words))
+private:
+    void findStartingIndices(const string& s, unordered_map<string, int>& required_words, int start, vector<int>& starting_indices, const int word_length, const int required_word_count) {
+        int s_length = s.size();
+        unordered_map<string, int> seen_words;
+        int current_word_count = 0;
+        int left = start;
 
-    // Approach: Sliding Window
-    // Time: O(n*wl+nw*wl) (n = length of s; wl = word length; nw = number of words)
-    // Space: O(wl*(# distinct words))
+        for (int right = start; right < s_length - 1; right += word_length) {
+            string current = s.substr(right, word_length);
+            if (!required_words.count(current)) {
+                left = right + word_length;
+                current_word_count = 0;
+                seen_words.clear();
+                continue;
+            }
 
-    vector<int> findSubstring(string s, vector<string>& words) {
-        int n = s.size();
-        int numWords = words.size();
-        if (n == 0 || numWords == 0) return {};
+            seen_words[current]++;
+            current_word_count++;
 
-        unordered_map<string,int> wordCount;
-        for (string& word: words) wordCount[word]++; // O(wl*nw)
-        vector<int> ans;
+            while (seen_words[current] > required_words[current]) {
+                string previous = s.substr(left, word_length);
+                current_word_count--;
+                seen_words[previous]--;
+                left += word_length;
+            }
 
-        int wordLength = words[0].size();
-        for (int i = 0; i < wordLength; i++) { // O(wl)
-            int start = i;
-            unordered_map<string,int> currentCount;
-            int numCurrentWords = 0;
-
-            for (int end = i; end <= n - wordLength + 1; end += wordLength) { // O(n/wl)
-                string word = s.substr(end, wordLength); // O(wl)
-                // not exist -> search on the next block
-                if (!wordCount.count(word)) {
-                    start = end + wordLength;
-                    // reset and start from the next position
-                    currentCount.clear();
-                    numCurrentWords = 0;
-                    continue;
-                }
-
-                // if adding the current word make the substring invalid
-                // then modify the position of "start"
-                while (currentCount[word] >= wordCount[word]) {
-                    string firstWord = s.substr(start, wordLength);
-                    currentCount[firstWord]--;
-                    numCurrentWords--;
-                    start += wordLength;
-                }
-
-                currentCount[word]++;
-                if (currentCount[word] <= wordCount[word]) {
-                    numCurrentWords++;
-                }
-                
-                if (numCurrentWords == numWords) {
-                    ans.push_back(start);
-                }
+            if (current_word_count == required_word_count) {
+                starting_indices.push_back(left);
+                string previous = s.substr(left, word_length);
+                seen_words[previous]--;
+                current_word_count--;
+                left += word_length;
             }
         }
+    }
+
+public:
+    vector<int> findSubstring(string s, vector<string>& words) {
+        int s_length = s.size();
+        if (s_length == 0) return {};
+
+        unordered_map<string, int> required_words;
+        int required_word_count = 0;
+        for (const string& word: words) {
+            required_word_count++;
+            required_words[word]++;
+        }
         
-        return ans;
+        vector<int> starting_indices;
+        int word_length = words[0].size();
+        for (int i = 0; i < word_length; i++) {
+            findStartingIndices(s, required_words, i, starting_indices, word_length, required_word_count);
+        }
+        return starting_indices;
     }
 };
+
+// s = 'abbckab' words = ['ab', 'bc']
+// required_words = { 'ab', 'bc' }
+// s = 'abbckab'
+//      0123456
+//          r
+//        l
+// r=0
+// seen_words = { 'ab' }
+// r=2
+// seen_words = { 'ab', 'bc' }
+// starting_indices = [0]
+// seen_words = { 'bc' }
+// l=2
+// r=4
+// l=6, seen_words = {}
+// r=6
+
+// Submit Error
+// CE: use of undeclared identifier 's_length'
+// WA: word can be repeated
+// CE: error: use of undeclared identifier 'required_word_count'
