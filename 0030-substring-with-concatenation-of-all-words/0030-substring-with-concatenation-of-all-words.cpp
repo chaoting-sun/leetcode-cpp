@@ -15,7 +15,7 @@ private:
         int current_word_count = 0;
         int left = start;
 
-        for (int right = start; right < s_length - 1; right += word_length) {
+        for (int right = start; right < s_length; right += word_length) {
             string current = s.substr(right, word_length);
             if (!required_words.count(current)) {
                 left = right + word_length;
