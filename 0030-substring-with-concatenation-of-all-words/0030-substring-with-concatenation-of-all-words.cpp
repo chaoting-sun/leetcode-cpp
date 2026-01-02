@@ -9,37 +9,37 @@
 
 class Solution {
 private:
-    void findStartingIndices(const string& s, unordered_map<string, int>& required_words, int start, vector<int>& starting_indices, const int word_length, const int required_word_count) {
+    void findStartingIndices(const string& s, const unordered_map<string_view, int>& required_words, int start, vector<int>& starting_indices, int word_len, int total_words) {
         int s_length = s.size();
-        unordered_map<string, int> seen_words;
-        int current_word_count = 0;
+        unordered_map<string_view, int> seen_words;
+        int count = 0;
         int left = start;
 
-        for (int right = start; right < s_length; right += word_length) {
-            string current = s.substr(right, word_length);
+        for (int right = start; right < s_length; right += word_len) {
+            string_view current = string_view(s).substr(right, word_len);
             if (!required_words.count(current)) {
-                left = right + word_length;
-                current_word_count = 0;
+                left = right + word_len;
+                count = 0;
                 seen_words.clear();
                 continue;
             }
 
             seen_words[current]++;
-            current_word_count++;
+            count++;
 
-            while (seen_words[current] > required_words[current]) {
-                string previous = s.substr(left, word_length);
-                current_word_count--;
+            while (seen_words[current] > required_words.at(current)) {
+                string_view previous = string_view(s).substr(left, word_len);
+                count--;
                 seen_words[previous]--;
-                left += word_length;
+                left += word_len;
             }
 
-            if (current_word_count == required_word_count) {
+            if (count == total_words) {
                 starting_indices.push_back(left);
-                string previous = s.substr(left, word_length);
+                string_view previous = string_view(s).substr(left, word_len);
                 seen_words[previous]--;
-                current_word_count--;
-                left += word_length;
+                count--;
+                left += word_len;
             }
         }
     }
@@ -49,17 +49,17 @@ public:
         int s_length = s.size();
         if (s_length == 0) return {};
 
-        unordered_map<string, int> required_words;
-        int required_word_count = 0;
+        unordered_map<string_view, int> required_words;
+        int total_words = 0;
         for (const string& word: words) {
-            required_word_count++;
+            total_words++;
             required_words[word]++;
         }
         
         vector<int> starting_indices;
         int word_length = words[0].size();
         for (int i = 0; i < word_length; i++) {
-            findStartingIndices(s, required_words, i, starting_indices, word_length, required_word_count);
+            findStartingIndices(s, required_words, i, starting_indices, word_length, total_words);
         }
         return starting_indices;
     }
@@ -86,3 +86,5 @@ public:
 // CE: use of undeclared identifier 's_length'
 // WA: word can be repeated
 // CE: error: use of undeclared identifier 'required_word_count'
+// WA: forgot to reset current_word_count when the current word is not in required words
+// CE: required_words 原本傳進去是 const，比較 seen_words[current] > required_words[current] 時會報錯
