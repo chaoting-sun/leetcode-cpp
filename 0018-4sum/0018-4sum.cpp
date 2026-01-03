@@ -1,69 +1,52 @@
-// Approach: Recursion + Two-Sum Solution
-// Time: O(n^3). if k == 2, we take O(n) to find the solution. for k == 4, we needs O(n^3)
-// Space: O(1)
-
-using ll = long long;
-
 class Solution {
 private:
     vector<vector<int>> ans;
 
-    bool tooLarge(int k, int i, ll target, vector<int>& nums) {
+    void kSum(int k, const vector<int>& nums, vector<int>& subset, long long target, int start_idx) {
         int n = nums.size();
-        ll maxSum = nums[i];
-        for (int j = 1; j < k; j++) maxSum += nums[n - j];
-        return maxSum < target;
-    }
 
-    bool tooSmall(int k, int i, ll target, vector<int>& nums) {
-        ll minSum = nums[i];
-        for (int j = 1; j < k; j++) minSum += nums[i + j];
-        return minSum > target;
-    }
+        if (start_idx + k > n) return;
 
-public:
-    void kSum(int k, int start, ll target, vector<int>& nums, vector<int>& subset) {
-        int n = nums.size();
-        if (k > 2) {
-            for (int i = start; i < n - k + 1; i++) {
-                if (i > start && nums[i - 1] == nums[i]) continue;
-                if (tooSmall(k, i, target, nums)) break;
-                if (tooLarge(k, i, target, nums)) continue;
-                
-                subset.push_back(nums[i]);
-                kSum(k - 1, i + 1, target - nums[i], nums, subset);
-                subset.pop_back();
+        if (k == 2) {
+            int left = start_idx;
+            int right = n - 1;
+
+            while (left < right) {
+                long long current = (long long)nums[left] + nums[right];
+                if (current > target) {
+                    right--;
+                } else if (current < target) {
+                    left++;
+                } else {
+                    vector<int> temp = subset;
+                    temp.push_back(nums[left]);
+                    temp.push_back(nums[right]);
+                    ans.push_back(temp);
+                    left++;
+                    right--;
+                    while (left < right && nums[left - 1] == nums[left]) left++;
+                    while (left < right && nums[right] == nums[right + 1]) right--;
+                }
             }
             return;
         }
 
-        // Two Sum Method: Two Pointers
-        int left = start, right = n - 1;
-        while (left < right) {
-            ll addedSum = nums[left] + nums[right];
-            if (addedSum > target) {
-                right--;
-            } else if (addedSum < target) {
-                left++;
-            } else {
-                subset.push_back(nums[left]);
-                subset.push_back(nums[right]);
-                ans.push_back(subset);
-                right--;
-                left++;
-                while (right > left && nums[right] == nums[right + 1]) right--;
-                while (right > left && nums[left - 1] == nums[left]) left++;
-                subset.pop_back();
-                subset.pop_back();
-            }
+        for (int i = start_idx; i <= n - k; i++) {
+            if (i > start_idx && nums[i - 1] == nums[i]) continue;
+            subset.push_back(nums[i]);
+            kSum(k - 1, nums, subset, target - nums[i], i + 1);
+            subset.pop_back();
         }
     }
 
+public:
     vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        int n = nums.size();
+        if (n < 4) return {};
+        
         sort(nums.begin(), nums.end());
         vector<int> subset;
-        subset.reserve(4);
-        kSum(4, 0, (ll)target, nums, subset);
+        kSum(4, nums, subset, target, 0);
         return ans;
     }
 };
