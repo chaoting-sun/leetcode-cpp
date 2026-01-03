@@ -7,6 +7,9 @@ private:
 
         if (start_idx + k > n) return;
 
+        if (target < (long long)nums[start_idx] * k) return;
+        if (target > (long long)nums.back() * k) return;
+
         if (k == 2) {
             int left = start_idx;
             int right = n - 1;
