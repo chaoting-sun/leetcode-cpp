@@ -1,40 +1,69 @@
+// topological sort
+// Kadane's algorithm (?)
+
 class Solution {
 public:
     bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
-        vector<int> indegree(numCourses, 0);
-        vector<vector<int>> courses_order(numCourses); // class A -> classes after class A
+        vector<vector<int>> course_order(numCourses);
+        vector<int> in_degree(numCourses);
 
-        for (auto pre: prerequisites) {
-            indegree[pre[0]]++;
-            courses_order[pre[1]].push_back(pre[0]);
+        for (auto& courses: prerequisites) {
+            // b is a's prerequisite
+            course_order[courses[1]].push_back(courses[0]);
+            in_degree[courses[0]]++;
         }
 
-        queue<int> courses_queue;
-        int count = 0;
-
+        queue<int> courses;
         for (int i = 0; i < numCourses; i++) {
-            if (indegree[i] == 0) {
-                courses_queue.push(i);
-            }
+            if (in_degree[i] == 0) courses.push(i);
         }
+        
+        int taken_courses = 0;
 
-        while (!courses_queue.empty()) {
-            int size = courses_queue.size();
-            count += size;
+        while (!courses.empty()) {
+            int current_course = courses.front();
+            courses.pop();
+            taken_courses++;
 
-            for (int i = 0; i < size; i++) {
-                int current_course = courses_queue.front();
-                courses_queue.pop();
-
-                for (int next_course: courses_order[current_course]) {
-                    indegree[next_course]--;
-                    if (indegree[next_course] == 0) {
-                        courses_queue.push(next_course);
-                    }
+            for (int next_course: course_order[current_course]) {
+                // has been processed or pushed to courses
+                if (in_degree[next_course] == 0) continue;
+                in_degree[next_course]--;
+                if (in_degree[next_course] == 0) {
+                    courses.push(next_course);   
                 }
             }
         }
-
-        return count == numCourses;
+        return taken_courses == numCourses;
     }
 };
+
+// test case: numCourses = 2, prerequisites = [[1,0], [0,1]] -> no
+// trace:
+// in_degree[0] = 1, in_degree[1] = 1
+// < returns 0 == 2
+
+// test case: numCourses = 3, prerequisites = [[1,0], [1,2]] -> yes
+// trace:
+// course_order[0] = [1], in_degree[1] = 1
+// course_order[2] = [1], in_degree[1] = 2
+// courses = [0,2]
+// while loop:
+//  current = 0
+//  courses = [2]
+//  taken = 1
+//      next = 1
+//      in_degree[1] = 1
+//  current = 2
+//  courses = []
+//  taken = 2
+//      next = 1
+//      in_degree[1] = 0
+//      courses = [1]
+//  current = 1
+//  courses = []
+//  taken = 3
+//  < returns 3 == 3
+
+// Submit Error
+// courses.push_back(i); -> courses.push(i);
