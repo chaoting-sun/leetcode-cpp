@@ -4,35 +4,37 @@ public:
         int s_length = s.size();
         if (s_length == 0) return "";
 
-        // reverse the whole string
         reverse(s.begin(), s.end());
 
-        // reverse each word + trim the empty space at two endpoint
-        int left = 0, right = 0;
-        string reversed_s = "";
-        s.push_back(' ');
+        int write = 0;
+        int read = 0;
 
-        while (right < s_length && s[right] == ' ') {
-            right++;
-        }
-        left = right;
-
-        while (right < s_length) {
-            while (right < s_length && s[right] != ' ') {
-                right++;
+        while (read < s_length) {
+            if (s[read] == ' ') {
+                read++;
+                continue;
             }
-            string substr_s = s.substr(left, right - left);
-            reverse(substr_s.begin(), substr_s.end());
-            reversed_s += substr_s + ' ';
 
-            while (right < s_length && s[right] == ' ') {
-                right++;
+            if (write > 0) {
+                s[write] = ' ';
+                write++;
             }
-            left = right;
+
+            while (read < s_length && s[read] != ' ') {
+                s[write++] = s[read++];
+            }
         }
 
-        reversed_s.pop_back();
-        return reversed_s;
+        s.resize(write);
+
+        int left = 0;
+        for (int right = 0; right <= s_length; right++) {
+            if (right == s_length || s[right] == ' ') {
+                reverse(s.begin() + left, s.begin() + right);
+                left = right + 1;
+            }
+        }
+        return s;
     }
 };
 
@@ -40,23 +42,8 @@ public:
 // trace:
 // s = " ab bc "
 
-// test case: s = " ab  bc " -> "bc ab"
-//                 01234567
-// trace:
-// s_length = 8
-// s = " cb  ba "
-//      01234567
-// left = 0, right = 0
-// right = 1, left = 1
-// right = 3, reversed_s = "bc ", right = 5, left = 5
-// right = 5, reversed_s = "bc ab ", right = 8, left = 8
-// reversed_s = "bc ab"
-// < returns "bc ab"
-
-
-
 
 
 // | olleh  world |
-//          r
-//          l
+//       r
+//  l
