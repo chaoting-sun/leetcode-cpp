@@ -19,16 +19,21 @@ public:
         if (idx == n || !isdigit(s[idx])) return 0;
         
         // compute the number
-        long long val = 0;
+        int result = 0;
         while (idx < n && isdigit(s[idx])) {
-            val = val * 10 + (s[idx] - '0');
-            // round the integer to remain in the range
-            long long current_result = sign * val;
-            if (current_result > INT_MAX) return INT_MAX;
-            else if (current_result < INT_MIN) return INT_MIN;
+            int digit = s[idx] - '0';
+            if (result > INT_MAX / 10 || (result == INT_MAX / 10 && digit > INT_MAX % 10)) {
+                return sign == 1 ? INT_MAX : INT_MIN;
+            }
+            result = result * 10 + digit;
             idx++;
         }
 
-        return (int)(sign * val);
+        return sign * result;
     }
 };
+
+// Submit Error
+// WA: val = val * 10 + s[idx];
+// to
+// val = val * 10 + (s[idx] - '0');
