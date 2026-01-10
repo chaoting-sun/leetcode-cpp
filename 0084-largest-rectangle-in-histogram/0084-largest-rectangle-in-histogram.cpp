@@ -54,7 +54,7 @@ public:
         stack<int> stk;
 
         for (int i = 0; i < heights.size(); i++) {
-            while (!stk.empty() && heights[stk.top()] >= heights[i]) {
+            while (!stk.empty() && heights[stk.top()] > heights[i]) {
                 int current_height = heights[stk.top()];
                 stk.pop();
                 int left_min = stk.empty() ? -1 : stk.top();
