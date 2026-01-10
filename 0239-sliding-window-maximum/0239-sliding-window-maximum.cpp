@@ -1,31 +1,33 @@
 class Solution {
 public:
-    // Approach1: Monotonic Deque.
-    // We can maintain a deque as the sliding window in a way such that we can get the maximum value in O(1).
-    // To achieve this, the deque should be monotonic. also, the values inside should be decreasing such that
-    // we can track if the window size is not larger than k.
-    // Therefore, we loop nums and push the element into the deque. Before pushing, we pop out all the values
-    // that is not larger than the current value to maintain the monotonic decreasing property. We store the
-    // index into the deque, so before we check the maximum value in deque's front, we can compute if the current
-    // deque contain window that is larger than k.
-
-    // Time: O(n)
-    // Space: O(k)
-
     vector<int> maxSlidingWindow(vector<int>& nums, int k) {
-        vector<int> ans;
-        deque<int> dq;
-
         int n = nums.size();
+        if (n < k) return {};
+
+        priority_queue<pair<int,int>> max_heap;
+        vector<int> result;
 
         for (int i = 0; i < n; i++) {
-            while (!dq.empty() && nums[dq.back()] <= nums[i]) dq.pop_back();
-            dq.push_back(i);
+            max_heap.push({ nums[i], i });
+            if (i < k - 1) continue;
 
-            while (i - dq.front() + 1 > k) dq.pop_front();
-            if (i >= k - 1) ans.push_back(nums[dq.front()]);
+            // [i - k + 1, i]
+            while (max_heap.top().second <= i - k) {
+                max_heap.pop();
+            }
+            max_heap.push({ nums[i], i });
+            result.push_back(max_heap.top().first);
         }
 
-        return ans;
+        return result;
     }
 };
+
+// max heap (k) -> (val, idx)
+
+// 1   3   4   5   7
+// [       ]
+
+// 1. if the element is in the window -> pop
+// 2. add new element
+// 3. get the max value on the top
