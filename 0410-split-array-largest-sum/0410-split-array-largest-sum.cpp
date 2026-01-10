@@ -1,19 +1,17 @@
 class Solution {
 private:
-    bool isValid(const vector<int>& nums, int sum_constraint, int k) {
-        int groups = 0;
-        int current_sum = 0;
+    bool isValid(const vector<int>& nums, long long limit, int k) {
+        int groups = 1;
+        long long current_sum = 0;
         for (int i = 0; i < nums.size(); i++) {
-            int next_sum = current_sum + nums[i];
-            if (next_sum > sum_constraint) {
+            if (current_sum + nums[i] > limit) {
+                if (groups == k) return false;
                 groups++;
                 current_sum = nums[i];
-                if (groups == k) return false;
             } else {
-                current_sum = next_sum;
+                current_sum += nums[i];
             }
         }
-        groups++; // consider the last group
         return groups <= k;
     }
 
@@ -30,18 +28,18 @@ public:
             max_val = max(max_val, n);
         }
         
-        int left = max_val;
-        int right = total_sum;
+        long long left = max_val;
+        long long right = total_sum;
 
         // find the first max subarrray sum that is possible
         while (left < right) {
-            int sum_constraint = left + (right - left) / 2;
-            if (isValid(nums, sum_constraint, k)) {
-                right = sum_constraint;
+            long long limit = left + (right - left) / 2;
+            if (isValid(nums, limit, k)) {
+                right = limit;
             } else {
-                left = sum_constraint + 1;
+                left = limit + 1;
             }
         }
-        return right;
+        return (int)right;
     }
 };
