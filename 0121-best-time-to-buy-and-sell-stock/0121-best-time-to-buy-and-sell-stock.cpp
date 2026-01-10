@@ -1,32 +1,15 @@
 class Solution {
 public:
-    // Approach1: loop the prices and keep updating the min. price and max. profit.
-    // Time: O(n)
-    // Space: O(1)
-
-    // int maxProfit(vector<int>& prices) {
-    //     int max_profit = 0;
-    //     int min_price = prices[0];
-
-    //     for (int i = 1; i < prices.size(); i++) {
-    //         int profit = prices[i] - min_price;
-    //         max_profit = max(max_profit, profit);
-    //         min_price = min(min_price, prices[i]);
-    //     }
-
-    //     return max_profit;
-    // }
-
     int maxProfit(vector<int>& prices) {
         int n = prices.size();
-        if (n == 0) return 0;
+        if (n < 2) return 0;
 
-        int lowestPrice = prices[0];
-        int maxProfit = 0;
-        for (int i = 1; i < n; i++) {
-            maxProfit = max(maxProfit, prices[i] - lowestPrice);
-            lowestPrice = min(lowestPrice, prices[i]);
+        int min_price = prices[0];
+        int max_profit = 0;
+        for (int i = 0; i < n; i++) {
+            max_profit = max(max_profit, prices[i] - min_price);
+            min_price = min(min_price, prices[i]);
         }
-        return maxProfit;
+        return max_profit;
     }
 };
