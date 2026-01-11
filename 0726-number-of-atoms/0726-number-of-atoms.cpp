@@ -1,4 +1,27 @@
 class Solution {
+private:
+    int parseCount(const string& formula, int& i) {
+        int n = formula.size();
+        if (i >= n || !isdigit(formula[i])) return 1;
+        int count = 0;
+        while (i < n && isdigit(formula[i])) {
+            count = count * 10 + (formula[i] - '0');
+            i++;
+        }
+        return count;
+    }
+
+    string parseName(const string& formula, int& i) {
+        int n = formula.size();
+        string name;
+        name += formula[i++];
+        while (i < n && islower(formula[i])) {
+            name += formula[i];
+            i++;
+        }
+        return name;
+    }
+
 public:
     string countOfAtoms(string formula) {
         int n = formula.size();
@@ -6,48 +29,30 @@ public:
 
         stack<map<string, int>> stk;
         stk.push({});
-        int idx = 0;
+        int i = 0;
 
-        while (idx < n) {
-            if (isupper(formula[idx])) {
-                string curr = "";
-                curr += formula[idx];
-                while (idx + 1 < n && islower(formula[idx + 1])) {
-                    curr += formula[idx + 1];
-                    idx++;
-                }
-                int count = 1;
-                if (idx + 1 < n && isdigit(formula[idx + 1])) {
-                    count = 0;
-                    while (idx + 1 < n && isdigit(formula[idx + 1])) {
-                        count = count * 10 + (formula[idx + 1] - '0');
-                        idx++;
-                    }
-                }
-                stk.top()[curr] += count;
-            } else if (formula[idx] == '(') {
+        while (i < n) {
+            if (formula[i] == '(') {
                 stk.push({});
-            } else if (formula[idx] == ')') {
-                int group_count = 1;
-                if (idx + 1 < n && isdigit(formula[idx + 1])) {
-                    group_count = 0;
-                    while (idx + 1 < n && isdigit(formula[idx + 1])) {
-                        group_count = group_count * 10 + (formula[idx + 1] - '0');
-                        idx++;
-                    }
-                }
-                map<string, int> top_group = stk.top();
+                i++;
+            } else if (formula[i] == ')') {
+                auto top_map = stk.top();
                 stk.pop();
-                for (auto [ch, count]: top_group) {
-                    stk.top()[ch] += count * group_count;
+                i++;
+                int multiplier = parseCount(formula, i);
+                for (auto [name, count]: top_map) {
+                    stk.top()[name] += count * multiplier;
                 }
+            } else {
+                string name = parseName(formula, i);
+                int count = parseCount(formula, i);
+                stk.top()[name] += count;
             }
-            idx++;
         }
 
         string result = "";
-        for (auto [ch, count]: stk.top()) {
-            result += ch;
+        for (auto [name, count]: stk.top()) {
+            result += name;
             if (count > 1) result += to_string(count);
         }
         return result;
