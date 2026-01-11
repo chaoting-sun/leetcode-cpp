@@ -1,43 +1,38 @@
 class LRUCache {
+private:
+    list<pair<int,int>> lst; // value
+    unordered_map<int, list<int>::iterator> mp; // key, iterator of value in lst
+    int capacity;
 public:
-    int cap;
-    list<int> dllist; // key
-    unordered_map<int, list<int>::iterator> key2iter; // key -> interator
-    unordered_map<int, int> key2val;
-
     LRUCache(int capacity) {
-        cap = capacity;
+        this->capacity = capacity;
     }
     
     int get(int key) {
-        if (key2iter.find(key) == key2iter.end()) return -1;
+        auto it = mp.find(key);
+        if (it == mp.end()) return -1;
         
-        auto it = key2iter[key];
-        dllist.erase(it);
-        dllist.push_back(key);
-        key2iter[key] = prev(dllist.end());
-        return key2val[key];
+        int value = *(it->second);
+        lst.push_back({ key, value });
+        mp[key] = prev(lst.end());
+        
+        lst.erase(it->first);
+        return val;
     }
     
     void put(int key, int value) {
-        // remove the old one if exists
-        if (key2iter.find(key) != key2iter.end()) {
-            dllist.erase(key2iter[key]);
-            key2iter.erase(key);
+        auto it = mp.find(key);
+        if (it != mp.end()) {
+            lst.erase(it);
         }
-
-        // add the new in the back
-        dllist.push_back(key);
-        key2iter[key] = prev(dllist.end());
-        key2val[key] = value;
-
-        // remove the oldest if the amount > capacity
-        if (dllist.size() > cap) {
-            int old_key = dllist.front();
-            auto old_it = key2iter[old_key];
-            dllist.erase(old_it);
-            key2iter.erase(old_key);
-            key2val.erase(old_key);
+        
+        lst.push_back({ key, value });
+        mp[key] = prev(lst.end());
+        
+        if (lst.size() > capacity) {
+            int deleted_key = (*lst.begin())->first;
+            mp.erase(deleted_key);
+            lst.erase(lst.begin());
         }
     }
 };
@@ -48,3 +43,16 @@ public:
  * int param_1 = obj->get(key);
  * obj->put(key,value);
  */
+
+
+// { key1: val1, key2: val2, ... }
+
+// key1 -> key2 -> key3 ...
+
+// get
+// key1 -> key2 -> key3 ... -> keyn
+// key1 -> key3 ... -> keyn -> key2
+
+// put
+// key1 -> key2 -> key3 ... -> keyn
+// key1 -> key2 -> key3 ... -> keyn -> key(n+1)
