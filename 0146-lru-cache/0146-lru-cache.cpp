@@ -1,7 +1,7 @@
 class LRUCache {
 private:
     list<pair<int,int>> lst; // value
-    unordered_map<int, list<int>::iterator> mp; // key, iterator of value in lst
+    unordered_map<int, list<pair<int,int>>::iterator> mp; // key, iterator of value in lst
     int capacity;
 public:
     LRUCache(int capacity) {
@@ -12,25 +12,26 @@ public:
         auto it = mp.find(key);
         if (it == mp.end()) return -1;
         
-        int value = *(it->second);
+        int value = (*(it->second)).second;
+        lst.erase(it->second);
+
         lst.push_back({ key, value });
         mp[key] = prev(lst.end());
         
-        lst.erase(it->first);
-        return val;
+        return value;
     }
     
     void put(int key, int value) {
         auto it = mp.find(key);
         if (it != mp.end()) {
-            lst.erase(it);
+            lst.erase(it->second);
         }
         
         lst.push_back({ key, value });
         mp[key] = prev(lst.end());
         
         if (lst.size() > capacity) {
-            int deleted_key = (*lst.begin())->first;
+            int deleted_key = (*lst.begin()).first;
             mp.erase(deleted_key);
             lst.erase(lst.begin());
         }
