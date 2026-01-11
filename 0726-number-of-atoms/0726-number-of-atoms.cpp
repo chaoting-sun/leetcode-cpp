@@ -1,25 +1,32 @@
 class Solution {
 private:
-    int parseCount(const string& formula, int& i) {
-        int n = formula.size();
-        if (i >= n || !isdigit(formula[i])) return 1;
+    int parseCount(const string& s, int& i) {
+        if (i >= s.size() || !isdigit(s[i])) return 1;
         int count = 0;
-        while (i < n && isdigit(formula[i])) {
-            count = count * 10 + (formula[i] - '0');
+        while (i < s.size() && isdigit(s[i])) {
+            count = count * 10 + (s[i] - '0');
             i++;
         }
         return count;
     }
 
-    string parseName(const string& formula, int& i) {
-        int n = formula.size();
+    string parseName(const string& s, int& i) {
         string name;
-        name += formula[i++];
-        while (i < n && islower(formula[i])) {
-            name += formula[i];
+        name += s[i++];
+        while (i < s.size() && islower(s[i])) {
+            name += s[i];
             i++;
         }
         return name;
+    }
+
+    string mapToString(const map<string,int>& mp) {
+        string result = "";
+        for (auto [name, count]: mp) {
+            result += name;
+            if (count > 1) result += to_string(count);
+        }
+        return result;
     }
 
 public:
@@ -27,7 +34,7 @@ public:
         int n = formula.size();
         if (n == 0) return "";
 
-        stack<map<string, int>> stk;
+        stack<map<string,int>> stk;
         stk.push({});
         int i = 0;
 
@@ -50,12 +57,7 @@ public:
             }
         }
 
-        string result = "";
-        for (auto [name, count]: stk.top()) {
-            result += name;
-            if (count > 1) result += to_string(count);
-        }
-        return result;
+        return mapToString(stk.top());
     }
 };
 
