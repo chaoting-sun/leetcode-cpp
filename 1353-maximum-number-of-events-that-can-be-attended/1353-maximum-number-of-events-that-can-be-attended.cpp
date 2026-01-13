@@ -5,11 +5,11 @@ public:
 
         priority_queue<int, vector<int>, greater<>> event_to_attend; // end
 
-        int day = events.front()[0], last_day = 1e5;
+        int day = events.front()[0];
         int event_idx = 0;
         int event_count = 0;
 
-        while (day <= last_day) {
+        while (event_idx < events.size() || !event_to_attend.empty()) {
             // push in all available events
             while (event_idx < events.size() && events[event_idx][0] <= day) {
                 event_to_attend.push(events[event_idx][1]);
@@ -29,8 +29,6 @@ public:
             // day
             if (event_to_attend.empty() && event_idx < events.size()) {
                 day = events[event_idx][0];
-            } else if (event_to_attend.empty() && event_idx == events.size()) {
-                break;
             } else {
                 day++;
             }
