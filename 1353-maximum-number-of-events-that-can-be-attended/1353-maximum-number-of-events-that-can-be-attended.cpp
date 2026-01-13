@@ -5,13 +5,18 @@ public:
 
         priority_queue<int, vector<int>, greater<>> event_to_attend; // end
 
-        int day = events.front()[0];
+        int n = events.size();
+        int day = 0;
         int event_idx = 0;
         int event_count = 0;
 
-        while (event_idx < events.size() || !event_to_attend.empty()) {
+        while (event_idx < n || !event_to_attend.empty()) {
+            if (event_to_attend.empty() && event_idx < n) {
+                day = max(day, events[event_idx][0]);
+            }
+        
             // push in all available events
-            while (event_idx < events.size() && events[event_idx][0] <= day) {
+            while (event_idx < n && events[event_idx][0] <= day) {
                 event_to_attend.push(events[event_idx][1]);
                 event_idx++;
             }
@@ -25,18 +30,26 @@ public:
                 event_to_attend.pop();
                 event_count++;
             }
-            
-            // day
-            if (event_to_attend.empty() && event_idx < events.size()) {
-                day = events[event_idx][0];
-            } else {
-                day++;
-            }
+
+            day++;
         }
 
         return event_count;
     }
 };
+
+// test case: [[1,4],[4,4],[2,2],[3,4],[1,1]] -> 4
+// events = [[1,1],[1,4],[2,2],[3,4],[4,4]]
+//                       idx
+// while loop
+//  day = 1
+//  event_to_attend = [1,4]
+//  event_idx = 2
+//  event_to_attend = [4]
+//  event_count = 1
+// 
+
+// event_to_attend = [4]
 
 // test case: events = [(1,2), (100,200)]
 // trace:
