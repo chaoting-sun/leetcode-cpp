@@ -1,71 +1,70 @@
 class Solution {
 public:
     int calculate(string s) {
-        int currentNum = 0;
-        char sign = '+';
+        int n = s.size();
+        if (n == 0) return 0;
+
         stack<int> stk;
-        
-        for (int i = 0; i < s.size(); i++) {
-            char ch = s[i];
-            if (isdigit(ch)) {
-                currentNum = currentNum * 10 + (ch - '0');
-            }
-            if ((!isdigit(ch) && !iswspace(ch)) || i == s.size() - 1) {
+        int operand = 0;
+        char sign = '+';
+
+        for (int i = 0; i <= n; i++) {
+            if (i == n || s[i] == '+' || s[i] == '-' || s[i] ==  '*' || s[i] == '/') {
                 if (sign == '+') {
-                    stk.push(currentNum);
+                    stk.push(operand);
                 } else if (sign == '-') {
-                    stk.push((-1) * currentNum);
+                    stk.push(-operand);
                 } else if (sign == '*') {
-                    int previousNum = stk.top();
-                    stk.pop();
-                    stk.push(previousNum * currentNum);
+                    stk.top() *= operand;
                 } else {
-                    int previousNum = stk.top();
-                    stk.pop();
-                    stk.push(previousNum / currentNum);
+                    stk.top() /= operand;
                 }
-                currentNum = 0;
-                sign = ch;
+                if (i < n) {
+                    operand = 0;
+                    sign = s[i];
+                }
+            } else if (isdigit(s[i])) {
+                operand = operand * 10 + (s[i] - '0');
             }
         }
-
+        
         int ans = 0;
         while (!stk.empty()) {
-            ans += stk.top();
-            stk.pop();
+            ans += stk.top(); stk.pop();
         }
         return ans;
     }
 };
 
-// class Solution {
-// public:
-//     int calculate(string s) {
-//         char sign = '+';
-//         int ans = 0;
-//         int lastNum = 0, num = 0;
-        
-//         for (int i = 0; i < s.size(); i++) {
-//             char ch = s[i];
-//             if (isdigit(ch)) {
-//                 num = num * 10 + (ch - '0');
-//             }
-//             if ((!isdigit(ch) && !iswspace(ch)) || i == s.size() - 1) {
-//                 if (sign == '+') {
-//                     ans += lastNum;
-//                     lastNum = num;
-//                 } else if (sign == '-') {
-//                     ans += lastNum;
-//                     lastNum = -1 * num;
-//                 } else if (sign == '*') {
-//                     lastNum *= num;
-//                 } else {
-//                     lastNum /= num;
-//                 }
-//                 num = 0;
-//                 sign = ch;
-//             }
-//         }
-//         return ans;
-//     }
-// };
+// test case: s = "3+2*2"
+//                 012345
+//                      i
+// trace:
+// i = 0: operand = 3
+// i = 1: stk = [3], operand = 0, sign = +
+// i = 2: operand = 2
+// i = 3: stk = [3,2], operand = 0, sign = *
+// i = 4: operand = 2
+// i = 5: stk = [3, 4]
+// ans = 7
+
+// test case: s = "-1" = -1
+// trace:
+// i = 0: stk = [0], operator = -
+// i = 1: operand = 1
+// i = 2: stk = [0, -1]
+// ans = 0 - 1 = -1
+
+// test case: s = "12-2*4+1" = 5
+//                 01234567
+//                         i
+// i = 0: operand = 1
+// i = 1: operand = 12
+// i = 2: stk = [12], operand = 0, operator = -
+// i = 3: operand = 2
+// i = 4: stk = [12, -2], operand = 0, operator = *
+// i = 5: operand = 4
+// i = 6: stk = [12, -8], operand = 0, operator = +
+// i = 7: operand = 1
+// i = 8: stk = [12, -8, 1]
+// ans = 12 - 8 + 1 = 5
