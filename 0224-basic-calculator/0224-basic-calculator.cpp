@@ -1,45 +1,42 @@
 class Solution {
 public:
     int calculate(string s) {
-        int ans = 0;
+        stack<int> stk;
+
         int sign = 1;
         int operand = 0;
+        int ans = 0;
 
-        stack<int> stk;
-        for (char ch: s) {
-            if (isdigit(ch)) {
-                operand = operand * 10 + (ch - '0');
-            } else if (ch == '+') {
-                ans += sign * operand;
+        for (int i = 0; i < s.size(); i++) {
+            if (isdigit(s[i])) {
+                operand = operand * 10 + sign * (s[i] - '0');
+            } else if (s[i] == '+') {
+                ans += operand;
                 sign = 1;
                 operand = 0;
-            } else if (ch == '-') {
-                ans += sign * operand;
+            } else if (s[i] == '-') {
+                ans += operand;
                 sign = -1;
                 operand = 0;
-            } else if (ch == '(') {
+            } else if (s[i] == '(') {
+                // save the snapshot
                 stk.push(ans);
                 stk.push(sign);
-                
+                // reset
                 ans = 0;
-                sign = 1;
                 operand = 0;
-            } else if (ch == ')') {
-                ans += sign * operand;
+                sign = 1;
+            } else if (s[i] == ')') {
+                int currentAns = ans + operand;
                 int prevSign = stk.top(); stk.pop();
-                int prevOperand = stk.top(); stk.pop();
-                ans = prevOperand + prevSign * ans;
-                
+                int prevAns = stk.top(); stk.pop();
+                ans = prevAns + prevSign * currentAns;
                 operand = 0;
             }
         }
-        ans += sign * operand;
+
+        ans += operand;
+
         return ans;
     }
 };
-
-
-
-
-
-
