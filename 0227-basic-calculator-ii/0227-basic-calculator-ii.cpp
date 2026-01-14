@@ -4,14 +4,15 @@ public:
         int n = s.size();
         if (n == 0) return 0;
 
-        stack<int> stk;
+        int result = 0;
+        int last_operand = 0;
         int operand = 0;
         char sign = '+';
 
         for (int i = 0; i <= n; i++) {
             if (i == n || s[i] == '+' || s[i] == '-' || s[i] ==  '*' || s[i] == '/') {
                 if (sign == '+') {
-                    stk.push(operand);
+                    result += last_operand;
                 } else if (sign == '-') {
                     stk.push(-operand);
                 } else if (sign == '*') {
@@ -35,6 +36,44 @@ public:
         return ans;
     }
 };
+
+// class Solution {
+// public:
+//     int calculate(string s) {
+//         int n = s.size();
+//         if (n == 0) return 0;
+
+//         stack<int> stk;
+//         int operand = 0;
+//         char sign = '+';
+
+//         for (int i = 0; i <= n; i++) {
+//             if (i == n || s[i] == '+' || s[i] == '-' || s[i] ==  '*' || s[i] == '/') {
+//                 if (sign == '+') {
+//                     stk.push(operand);
+//                 } else if (sign == '-') {
+//                     stk.push(-operand);
+//                 } else if (sign == '*') {
+//                     stk.top() *= operand;
+//                 } else {
+//                     stk.top() /= operand;
+//                 }
+//                 if (i < n) {
+//                     operand = 0;
+//                     sign = s[i];
+//                 }
+//             } else if (isdigit(s[i])) {
+//                 operand = operand * 10 + (s[i] - '0');
+//             }
+//         }
+        
+//         int ans = 0;
+//         while (!stk.empty()) {
+//             ans += stk.top(); stk.pop();
+//         }
+//         return ans;
+//     }
+// };
 
 // test case: s = "3+2*2"
 //                 012345
