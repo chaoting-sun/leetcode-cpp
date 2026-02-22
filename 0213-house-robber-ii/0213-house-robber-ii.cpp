@@ -5,7 +5,9 @@ private:
         vector<int> dp(n);
         dp[start] = nums[start];
         for (int i = start + 1; i <= end; i++) {
-            dp[i] = max(dp[i - 1], dp[i - 2] + nums[i]);
+            int curr_max = dp[i - 1];
+            if (i >= 2) curr_max = max(curr_max, dp[i - 2] + nums[i]);
+            dp[i] = curr_max;
         }
         return dp[end];
     }
@@ -25,8 +27,10 @@ public:
 // trace:
 // n = 3
 // max1 = rob_in_range(nums, 0, 1)
-//  - dp = [0 2 0 0]
-//  - for loop: 2 - 1
+//  - start = 0, end = 1
+//  - dp = [2 0 0]
+//  - for loop: 1 - 1
+//  - dp[1] = max(2, )
 //  < returns 2
 // max2 = rob_in_range(nums, 1, 2)
 //  - dp = [0 0 4 0]
