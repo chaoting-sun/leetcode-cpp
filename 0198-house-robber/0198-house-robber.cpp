@@ -3,22 +3,30 @@ public:
     int rob(vector<int>& nums) {
         int n = nums.size();
         
-        vector<int> dp_rob(n + 1, 0); // nums[i - 1] -> dp1[i]
-        vector<int> dp_not_rob(n + 1, 0);
+        vector<int> max_money(n + 1, 0);
+        max_money[1] = nums[0];
 
-        for (int i = 1; i <= n; i++) {
-            dp_rob[i] = dp_not_rob[i - 1] + nums[i - 1];
-            dp_not_rob[i] = max(dp_rob[i - 1], dp_not_rob[i - 1]);
+        for (int i = 2; i <= n; i++) {
+            max_money[i] = max(max_money[i - 2] + nums[i - 1], max_money[i - 1]);
         }
         
-        return max(dp_rob[n], dp_not_rob[n]);
+        return max_money[n];
     }
 };
 
-// i:
-// i - 1 is stolen -> i: x
-// i - 1 is not stolen -> i: x, o
+// class Solution {
+// public:
+//     int rob(vector<int>& nums) {
+//         int n = nums.size();
 
-// dp1: dp[i] max money from 0 to i if i is stolen
-// dp2: dp[i] max money from 0 to i if i is not stolen
-// answer max(dp1[n], dp2[n])
+//         int max_prev_rob = 0, max_prev_not_rob = 0;
+
+//         for (int i = 1; i <= n; i++) {
+//             int tmp_max_prev_rob = max_prev_rob;
+//             max_prev_rob = max_prev_not_rob + nums[i - 1];
+//             max_prev_not_rob = max(tmp_max_prev_rob, max_prev_not_rob);
+//         }
+        
+//         return max(max_prev_rob, max_prev_not_rob);
+//     }
+// };
