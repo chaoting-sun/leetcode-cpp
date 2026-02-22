@@ -2,89 +2,99 @@ class Solution {
 public:
     vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges) {
         if (n == 1) return { 0 };
-        if (n == 2) return { 0, 1 };
-
-        // compute the degree of each node
-        // build an adjacency list
-        vector<int> node_degree(n);
+        
         vector<vector<int>> adj(n);
-        for (const auto& edge: edges) {
+        vector<int> degree(n);
+
+        for (auto& edge: edges) {
             int u = edge[0], v = edge[1];
-            node_degree[u]++;
-            node_degree[v]++;
             adj[u].push_back(v);
             adj[v].push_back(u);
+            degree[u]++;
+            degree[v]++;
         }
 
-        // BFS:
-        // we remove the nodes layer by layer using BFS
-        // we start by pushing all nodes with degree 1 into the queue
-        // In each layer, we remove the node, and push their adjacent nodes if they become 1 degree
-        // when the left nodes <= 2 nodes, then the left nodes are the center nodes.
-        queue<int> nodes;
+        queue<int> q;
         for (int i = 0; i < n; i++) {
-            if (node_degree[i] == 1) nodes.push(i);
+            if (degree[i] == 1) {
+                q.push(i);
+            }
         }
 
-        int node_count = n;
-        while (!nodes.empty()) {
-            int size = nodes.size();
+        int n_left = n;
+        
+        while (n_left > 2) {
+            int size = q.size();
+            n_left -= size;
             while (size--) {
-                int u = nodes.front();
-                nodes.pop();
-                node_count--;
-
-                for (int v: adj[u]) {
-                    node_degree[v]--;
-                    if (node_degree[v] == 1) {
-                        nodes.push(v);
+                int curr = q.front();
+                q.pop();
+                // remove the edge of curr
+                for (int neighbor: adj[curr]) {
+                    degree[neighbor]--;
+                    if (degree[neighbor] == 1) {
+                        q.push(neighbor);
                     }
                 }
             }
-            if (node_count <= 2) break;
         }
 
-        vector<int> left_nodes;
-        while (!nodes.empty()) {
-            left_nodes.push_back(nodes.front());
-            nodes.pop();
+        vector<int> ans;
+        while (!q.empty()) {
+            ans.push_back(q.front());
+            q.pop();
         }
-        return left_nodes;
+        return ans;
     }
 };
 
-// Dry Run
-
-// node_degree = [1, 3, 1, 1]
+// trap path:
+// n = 4, edges = [[0,1],[1,2],[2,3]]
+// trace:
 // adj
-// 0 -> 1
-// 1 -> 0 2 3
-// 2 -> 1
-// 3 -> 1
-// BFS
-// nodes = [0, 2, 3]
-// node_count = 4
+// 0: 1
+// 1: 0 2
+// 2: 1 3
+// 3: 2
+// degree = [1,1,1,1]
+// q = [0, 3]
+// n_left = 4
+// n_left = 2
+// curr = 0, q = [3]
+// q = [3,1]
+// curr = 3, q = [1]
+// q = [1,2]
+// ans = [1,2]
+// < returns [1,2]
 
-// pop 0, nodes = [2,3]
-// node_count = 3
-// node_degree = [1, 2, 1, 1]
+// happy path:
+// n = 3, edges = [[0,1], [1,2]] -> 0--1--2
+// trace:
+// adj
+// 0: 1
+// 1: 0 2
+// 2: 1
+// degree = [1,0,1]
+// q = [0,2]
+// n_left = 3
+// n_left = 1
+// curr = 0, q = [2]
+// q = [2, 1]
+// curr = 2
+// q = [1]
+// ans = [1]
+// returns 1
 
-// pop 2, nodes = [3]
-// node_count = 2
-// node_degree = [1, 1, 1, 1]
-// nodes = [3, 1]
+// base case:
+// n = 1, edges = [[]]
+// < returns [0]
 
-// pop 3, nodes = [1]
-// node_count = 1
-// node_degree = [1, 0, 1, 1]
-
-
-// Submit Error
-
-// 1. wrong API name
-// left_nodes.push(nodes.front());
-// left_nodes.push_back(nodes.front());
-
-// 2. edge case
-// n == 1, edges = []
-// n == 2, edges = [[0,1]]
+// base case:
+// n = 2, edges = [[0, 1]] -> 0--1
+// trace:
+// adj
+// 0: 1
+// 1: 0
+// degree = [1,1]
+// q = [0,1]
+// < returns [0,1]
