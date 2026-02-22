@@ -11,42 +11,24 @@
  */
 class Solution {
 private:
-    unordered_map<TreeNode*, int> memo_rob, memo_not_rob;
+    unordered_map<TreeNode*, pair<int, int>> memo; // rob, not rob
 
-    int dfs(TreeNode* root, bool is_parent_robbed) {
-        if (!root) return 0;
-    
-        int max_not_rob = 0, max_rob = 0;
-        
-        // not rob the node
-        auto it_not_rob = memo_not_rob.find(root);
-        if (it_not_rob != memo_not_rob.end()) {
-            max_not_rob = it_not_rob->second;
-        } else {
-            max_not_rob += dfs(root->left, false);
-            max_not_rob += dfs(root->right, false);
-            memo_not_rob[root] = max_not_rob;
-        }
+    pair<int,int> dfs(TreeNode* root) {
+        if (!root) return { 0, 0 };
 
-        if (is_parent_robbed) return max_not_rob;
+        pair<int,int> left_result = dfs(root->left);
+        pair<int,int> right_result = dfs(root->right);
 
-        // rob the node
-        auto it_rob = memo_rob.find(root);
-        if (it_rob != memo_rob.end()) {
-            max_rob = it_rob->second;
-        } else {
-            max_rob = root->val;
-            max_rob += dfs(root->left, true);
-            max_rob += dfs(root->right, true);
-            memo_rob[root] = max_rob;
-        }
+        int max_rob = root->val + left_result.second + right_result.second;
+        int max_not_rob = max(left_result.first, left_result.second) + max(right_result.first, right_result.second);
 
-        return max(max_rob, max_not_rob);
+        return { max_rob, max_not_rob };
     }
 
 public:
     int rob(TreeNode* root) {
-        return dfs(root, false);
+        pair<int,int> root_result = dfs(root);
+        return max(root_result.first, root_result.second);
     }
 };
 
