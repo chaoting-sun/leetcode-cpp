@@ -27,24 +27,57 @@
  *     const vector<NestedInteger> &getList() const;
  * };
  */
-class Solution {
-private:
-    void dfs(vector<NestedInteger>& nestedList, int depth, int& total_sum) {
-        int current_sum = 0;
-        for (NestedInteger& element: nestedList) {
-            if (element.isInteger()) {
-                current_sum += element.getInteger();
-            } else {
-                dfs(element.getList(), depth + 1, total_sum);
-            }
-        }
-        total_sum += current_sum * depth;
-    }
+// class Solution {
+// private:
+//     void dfs(vector<NestedInteger>& nestedList, int depth, int& total_sum) {
+//         int current_sum = 0;
+//         for (NestedInteger& element: nestedList) {
+//             if (element.isInteger()) {
+//                 current_sum += element.getInteger();
+//             } else {
+//                 dfs(element.getList(), depth + 1, total_sum);
+//             }
+//         }
+//         total_sum += current_sum * depth;
+//     }
 
+// public:
+//     int depthSum(vector<NestedInteger>& nestedList) {
+//         int total_sum = 0;
+//         dfs(nestedList, 1, total_sum);
+//         return total_sum;
+//     }
+// };
+
+class Solution {
 public:
     int depthSum(vector<NestedInteger>& nestedList) {
         int total_sum = 0;
-        dfs(nestedList, 1, total_sum);
+        int depth = 1;
+        queue<NestedInteger> q;
+
+        for (NestedInteger& element: nestedList) {
+            q.push(element);
+        }
+
+        while (!q.empty()) {
+            int size = q.size();
+            int current_sum = 0;
+            while (size--) {
+                NestedInteger nested = q.front();
+                q.pop();
+                if (nested.isInteger()) {
+                    current_sum += nested.getInteger();
+                } else {
+                    for (NestedInteger& nested_child: nested.getList()) {
+                        q.push(nested_child);
+                    }
+                }
+            }
+            total_sum += current_sum * depth;
+            depth++;
+        }
+
         return total_sum;
     }
 };
