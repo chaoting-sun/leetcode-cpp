@@ -1,128 +1,30 @@
+// The naive method is
+// we store the count of each element in a hash map
+// then, we sort by the count and get the top k elements
+// this cost O(NlogN) in worst case
+
 class Solution {
 public:
-    // Approach1: count the elements and sort by array
-    // time: O(n*log(n))
-    // space: O(n)
-
-    // vector<int> topKFrequent(vector<int>& nums, int k) {
-    //     unordered_map<int, int> count;
-    //     for (int n: nums) {
-    //         if (count.find(n) == count.end()) {
-    //             count.insert({ n, 1 });
-    //         } else {
-    //             count[n]++;
-    //         }
-    //     }
-
-    //     vector<pair<int, int>> count_arr;
-    //     for (auto c: count) {
-    //         count_arr.push_back(make_pair(c.first, c.second));
-    //     }
-
-    //     sort(count_arr.begin(), count_arr.end(), [&](pair<int, int>& c1, pair<int, int>& c2){
-    //         return c1.second > c2.second;
-    //     });
-
-    //     vector<int> ans;
-    //     for (int i = 0; i < k; i++) {
-    //         ans.push_back(count_arr[i].first);
-    //     }
-
-    //     return ans;
-    // }
-
-    // Approach2.1: count the elements and sort by max heap
-    // time: O(n+n*log(n)+k)=O(n*log(n)), where n is the length of nums
-    // space: O(n)
-
-    // vector<int> topKFrequent(vector<int>& nums, int k) {
-    //     unordered_map<int, int> count;
-    //     for (int n: nums) {
-    //         if (count.find(n) == count.end()) {
-    //             count.insert({ n, 1 });
-    //         } else {
-    //             count[n]++;
-    //         }
-    //     }
-
-    //     priority_queue<pair<int, int>> pq;
-    //     for (auto c: count) {
-    //         pq.push(make_pair(c.second, c.first));
-    //     }
-
-    //     vector<int> ans;
-    //     for (int i = 0; i < k; i++) {
-    //         ans.push_back(pq.top().second);
-    //         pq.pop();
-    //     }
-
-    //     return ans;
-    // }
-
-    // Approach2.2: count the elements and sort by min heap, when the
-    // number of elements > k, then pop one to keep them k elements.
-    // time:
-    //  1. store in hash map: O(n)
-    //  2. store in min heap:
-    //      - push first k elements: O(log1+log2+...+logk) = O(log(k!)) = O(k*logk)
-    //      - push and pop remaining n-k elements: O(2*((n-k)*logk)) = O((n-k)*logk)
-    //      -> total: O(n*logk)
-    // 3. total: O(n) + O(n*logk) = O(n*logk)
-    // space: O(n)
-
-    // vector<int> topKFrequent(vector<int>& nums, int k) {
-    //     unordered_map<int, int> count;
-    //     for (int n: nums) {
-    //         if (count.find(n) == count.end()) {
-    //             count.insert({ n, 1 });
-    //         } else {
-    //             count[n]++;
-    //         }
-    //     }
-
-    //     priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
-    //     for (auto c: count) {
-    //         pq.push(make_pair(c.second, c.first));
-    //         if (pq.size() > k) pq.pop();
-    //     }
-
-    //     vector<int> ans;
-    //     for (int i = 0; i < k; i++) {
-    //         ans.push_back(pq.top().second);
-    //         pq.pop();
-    //     }
-
-    //     return ans;
-    // }
-
-    // Approach 3. count the elements and use an array to store counts of elements
-    // time: suppose the max count is MC. in worst case it's n. so it's
-    //  O(n+n+MC+n) <= O(n+n+n+n) = O(n)
-    // space: O(n)
-
     vector<int> topKFrequent(vector<int>& nums, int k) {
-        unordered_map<int, int> count;
-        int max_count = 0;
-        for (int n: nums) {
-            count[n]++;
-            max_count = max(max_count, count[n]);
-        }
+        unordered_map<int, int> freq;
+        for (int val: nums) freq[val]++;
 
-        vector<vector<int>>count_arr(max_count+1);
-        for (auto& c: count) {
-            count_arr[c.second].push_back(c.first);
-        }
+        vector<pair<int,int>> val_freq;
+        for (auto [val, f]: freq) val_freq.push_back({ val, f });
+        sort(val_freq.begin(), val_freq.end(), [](pair<int,int>& p1, pair<int,int>& p2) {
+            return p1.second > p2.second;
+        });
 
         vector<int> ans;
-        int n_left = k;
-        for (int i = max_count; i >= 0; i--) {
-            for (int j = 0; j < count_arr[i].size(); j++) {
-                ans.push_back(count_arr[i][j]);
-                n_left--;
-                if (n_left == 0) break;
-            }
-            if (n_left == 0) break;
-        }
+        for (int i = 0; i < k; i++) ans.push_back(val_freq[i].first);
+
         return ans;
     }
 };
+
+// test case: nums = [1,1,2], k = 1
+// freq = { 1: 2, 2: 1 }
+// val_freq = [{1,2}, {2,1}]
+// sort -> val_freq = [{1,2}, {2,1}]
+// ans = [1]
+// < returns [1]
