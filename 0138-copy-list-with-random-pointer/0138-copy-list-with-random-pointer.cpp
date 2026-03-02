@@ -20,8 +20,6 @@ public:
         unordered_map<Node*, Node*> mp;
 
         Node* curr = head;
-        Node* dummy_copy = new Node(0);
-        Node* curr_copy = dummy_copy;
 
         while (curr) {
             // handle the current node
@@ -46,12 +44,9 @@ public:
             }
 
             curr = curr->next;
-
-            curr_copy->next = copy;
-            curr_copy = copy;
         }
         
-        return dummy_copy->next;
+        return mp[head];
     }
 };
 
