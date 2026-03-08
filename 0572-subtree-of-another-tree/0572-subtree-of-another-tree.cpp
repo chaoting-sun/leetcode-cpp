@@ -10,23 +10,26 @@
  * };
  */
 class Solution {
-public:
+private:
     bool isSameTree(TreeNode* root, TreeNode* subRoot) {
-        // base case
         if (!root && !subRoot) return true;
-        if ((!root && subRoot) || (root && !subRoot)) return false;
-        
-        // check if the current node is the same
-        if (root->val != subRoot->val) return false;
-        // check if both the left and right subtree is the same
-        return isSameTree(root->left, subRoot->left) && isSameTree(root->right, subRoot->right);
+        if ((root && !subRoot) || (!root && subRoot)) return false;
+        return (
+            root->val == subRoot->val &&
+            isSameTree(root->left, subRoot->left) &&
+            isSameTree(root->right, subRoot->right)
+        );
     }
 
-
-    bool isSubtree(TreeNode* root, TreeNode* &subRoot) {
-        if (!root) return false;
-
-        if (isSameTree(root, subRoot)) return true;
-        return isSubtree(root->left, subRoot) || isSubtree(root->right, subRoot);
+public:
+    bool isSubtree(TreeNode* root, TreeNode* subRoot) {
+        if (!root && !subRoot) return true;
+        if ((root && !subRoot) || (!root && subRoot)) return false;
+        
+        return (
+            isSameTree(root, subRoot) ||
+            isSubtree(root->left, subRoot) ||
+            isSubtree(root->right, subRoot)
+        );
     }
 };
