@@ -5,6 +5,7 @@
 ## Hash Table
 | Problem Name | Difficulty |
 | ------- | ------- |
+| [0001-two-sum](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0001-two-sum/) | Easy |
 | [0138-copy-list-with-random-pointer](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0138-copy-list-with-random-pointer/) | Medium |
 | [0451-sort-characters-by-frequency](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0451-sort-characters-by-frequency/) | Medium |
 ## String
@@ -51,4 +52,8 @@
 | Problem Name | Difficulty |
 | ------- | ------- |
 | [0572-subtree-of-another-tree](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0572-subtree-of-another-tree/) | Easy |
+## Array
+| Problem Name | Difficulty |
+| ------- | ------- |
+| [0001-two-sum](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0001-two-sum/) | Easy |
 <!---LeetCode Topics End-->
