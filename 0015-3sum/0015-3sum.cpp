@@ -1,33 +1,38 @@
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
-        int length = nums.size();
-        if (length <= 2) return {};
+        int n = nums.size();
+        if (n < 3) return {};
         
+        vector<vector<int>> ans;
         sort(nums.begin(), nums.end());
 
-        vector<vector<int>> results;
-        for (int i = 0; i < length; i++) {
-            if (i > 0 && nums[i] == nums[i - 1]) continue;
+        for (int i = 0; i <= n - 3; i++) {
+            // the fixed value is the same as the previous one, we ignore it for deduplication
+            if (i != 0 && nums[i] == nums[i - 1]) continue;
 
+            // solve the two sum problem with two pointers
             int left = i + 1;
-            int right = length - 1;
-            int target = 0 - nums[i];
-            while (left < right) {    
-                int current_sum = nums[left] + nums[right];
-                if (current_sum > target) {
+            int right = n - 1;
+            int target = -nums[i];
+
+            while (left < right) {
+                int s = nums[left] + nums[right];
+                if (s > target) {
                     right--;
-                } else if (current_sum < target) {
+                } else if (s < target) {
                     left++;
                 } else {
-                    results.push_back({ nums[i], nums[left], nums[right] });
+                    ans.push_back({ nums[i], nums[left], nums[right] });
                     left++;
                     right--;
+                    // avoid the duplicates
                     while (left < right && nums[left - 1] == nums[left]) left++;
                     while (left < right && nums[right] == nums[right + 1]) right--;
                 }
             }
         }
-        return results;
+
+        return ans;
     }
 };
