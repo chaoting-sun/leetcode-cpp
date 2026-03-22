@@ -18,16 +18,16 @@ public:
         for (int i = 0; i < s_length; i++) {
             string curr = getPalindrome(s, i, i);
             if (curr.size() > max_length) {
-                max_palindrome = curr;
                 max_length = curr.size();
+                max_palindrome = move(curr);
             }
         }
         
         for (int i = 0; i < s_length - 1; i++) {
             string curr = getPalindrome(s, i, i + 1);
             if (curr.size() > max_length) {
-                max_palindrome = curr;
                 max_length = curr.size();
+                max_palindrome = move(curr);
             }
         }
 
