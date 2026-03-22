@@ -6,19 +6,17 @@ class Solution:
                 right += 1
             return left + 1, right
 
-        max_str_left = -1
-        max_str_right = -1
+        best_left = -1
+        best_right = -1
 
         for i in range(len(s)):
             str_left, str_right = expand(i, i)
-            if str_right - str_left > max_str_right - max_str_left:
-                max_str_right = str_right
-                max_str_left = str_left
+            if str_right - str_left > best_right - best_left:
+                best_left, best_right = str_left, str_right
         
         for i in range(len(s) - 1):
             str_left, str_right = expand(i, i + 1)
-            if str_right - str_left > max_str_right - max_str_left:
-                max_str_right = str_right
-                max_str_left = str_left
+            if str_right - str_left > best_right - best_left:
+                best_left, best_right = str_left, str_right
         
-        return s[max_str_left:max_str_right]
+        return s[best_left:best_right]
