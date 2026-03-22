@@ -1,37 +1,32 @@
 class Solution {
-private:
-    string getPalindrome(string& s, int left, int right) {
-        while (left >= 0 && right < s.size() && s[left] == s[right]) {
-            left--;
-            right++;
-        }
-        return s.substr(left + 1, right - left - 1);
-    }
-
 public:
     string longestPalindrome(string s) {
         int s_length = s.size();
         
         int max_length = 0;
-        string max_palindrome = "";
+        int max_length_idx = -1;
+
+        auto expand = [&](int left, int right) {
+            while (left >= 0 && right < s.size() && s[left] == s[right]) {
+                left--;
+                right++;
+            }
+            int curr_length = right - left - 1;
+            if (curr_length > max_length) {
+                max_length = curr_length;
+                max_length_idx = left + 1;
+            }
+        };
 
         for (int i = 0; i < s_length; i++) {
-            string curr = getPalindrome(s, i, i);
-            if (curr.size() > max_length) {
-                max_length = curr.size();
-                max_palindrome = move(curr);
-            }
+            expand(i, i);
         }
         
         for (int i = 0; i < s_length - 1; i++) {
-            string curr = getPalindrome(s, i, i + 1);
-            if (curr.size() > max_length) {
-                max_length = curr.size();
-                max_palindrome = move(curr);
-            }
+            expand(i, i + 1);
         }
 
-        return max_palindrome;
+        return s.substr(max_length_idx, max_length);
     }
 };
 
