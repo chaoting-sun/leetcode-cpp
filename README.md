@@ -11,6 +11,7 @@
 ## String
 | Problem Name | Difficulty |
 | ------- | ------- |
+| [0005-longest-palindromic-substring](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0005-longest-palindromic-substring/) | Medium |
 | [0451-sort-characters-by-frequency](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0451-sort-characters-by-frequency/) | Medium |
 ## Sorting
 | Problem Name | Difficulty |
@@ -64,6 +65,7 @@
 ## Two Pointers
 | Problem Name | Difficulty |
 | ------- | ------- |
+| [0005-longest-palindromic-substring](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0005-longest-palindromic-substring/) | Medium |
 | [0015-3sum](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0015-3sum/) | Medium |
 ## Divide and Conquer
 | Problem Name | Difficulty |
@@ -73,4 +75,8 @@
 | Problem Name | Difficulty |
 | ------- | ------- |
 | [0215-kth-largest-element-in-an-array](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0215-kth-largest-element-in-an-array/) | Medium |
+## Dynamic Programming
+| Problem Name | Difficulty |
+| ------- | ------- |
+| [0005-longest-palindromic-substring](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0005-longest-palindromic-substring/) | Medium |
 <!---LeetCode Topics End-->
