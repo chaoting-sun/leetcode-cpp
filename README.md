@@ -61,12 +61,14 @@
 | ------- | ------- |
 | [0001-two-sum](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0001-two-sum/) | Easy |
 | [0015-3sum](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0015-3sum/) | Medium |
+| [0167-two-sum-ii-input-array-is-sorted](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0167-two-sum-ii-input-array-is-sorted/) | Medium |
 | [0215-kth-largest-element-in-an-array](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0215-kth-largest-element-in-an-array/) | Medium |
 ## Two Pointers
 | Problem Name | Difficulty |
 | ------- | ------- |
 | [0005-longest-palindromic-substring](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0005-longest-palindromic-substring/) | Medium |
 | [0015-3sum](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0015-3sum/) | Medium |
+| [0167-two-sum-ii-input-array-is-sorted](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0167-two-sum-ii-input-array-is-sorted/) | Medium |
 ## Divide and Conquer
 | Problem Name | Difficulty |
 | ------- | ------- |
@@ -79,4 +81,8 @@
 | Problem Name | Difficulty |
 | ------- | ------- |
 | [0005-longest-palindromic-substring](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0005-longest-palindromic-substring/) | Medium |
+## Binary Search
+| Problem Name | Difficulty |
+| ------- | ------- |
+| [0167-two-sum-ii-input-array-is-sorted](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0167-two-sum-ii-input-array-is-sorted/) | Medium |
 <!---LeetCode Topics End-->
