@@ -11,6 +11,7 @@
 | [0138-copy-list-with-random-pointer](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0138-copy-list-with-random-pointer/) | Medium |
 | [0347-top-k-frequent-elements](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0347-top-k-frequent-elements/) | Medium |
 | [0451-sort-characters-by-frequency](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0451-sort-characters-by-frequency/) | Medium |
+| [0560-subarray-sum-equals-k](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0560-subarray-sum-equals-k/) | Medium |
 ## String
 | Problem Name | Difficulty |
 | ------- | ------- |
@@ -87,6 +88,7 @@
 | [0215-kth-largest-element-in-an-array](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0215-kth-largest-element-in-an-array/) | Medium |
 | [0238-product-of-array-except-self](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0238-product-of-array-except-self/) | Medium |
 | [0347-top-k-frequent-elements](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0347-top-k-frequent-elements/) | Medium |
+| [0560-subarray-sum-equals-k](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0560-subarray-sum-equals-k/) | Medium |
 ## Two Pointers
 | Problem Name | Difficulty |
 | ------- | ------- |
@@ -124,6 +126,7 @@
 | Problem Name | Difficulty |
 | ------- | ------- |
 | [0238-product-of-array-except-self](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0238-product-of-array-except-self/) | Medium |
+| [0560-subarray-sum-equals-k](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0560-subarray-sum-equals-k/) | Medium |
 ## Stack
 | Problem Name | Difficulty |
 | ------- | ------- |
