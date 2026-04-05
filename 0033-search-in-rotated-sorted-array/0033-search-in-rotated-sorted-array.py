@@ -1,10 +1,13 @@
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
         left, right = 0, len(nums) - 1
-        while left < right:
+        while left <= right:
             mid = left + (right - left) // 2
+            if nums[mid] == target:
+                return mid            
             # left subarray is increasing
-            if nums[left] <= nums[mid]:
+            # use <= because when the subarray length is 2, left == mid (subarray of length 1 is in order)
+            elif nums[left] <= nums[mid]:
                 if nums[left] <= target and target <= nums[mid]:
                     right = mid
                 else:
@@ -15,8 +18,7 @@ class Solution:
                     left = mid
                 else:
                     right = mid - 1
-        
-        return left if target == nums[left] else -1
+        return -1
 
 # target = 3
 # 4 5 0 1 2 3
