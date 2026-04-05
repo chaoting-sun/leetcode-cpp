@@ -30,7 +30,7 @@ class Solution:
         slow = fast = head
         while fast.next and fast.next.next:
             slow = slow.next
-            fast = fast.next
+            fast = fast.next.next
         
         right_head = slow.next
         slow.next = None
@@ -67,6 +67,14 @@ class Solution:
         return dummy.next
 
 '''
+test case: 3 2 1
+trace:
+3 2 1
+  s
+    f
+right_head = 1
+
+
 test case: 2 1
 trace:
 2 1
