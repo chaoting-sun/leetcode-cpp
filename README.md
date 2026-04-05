@@ -23,6 +23,7 @@
 | ------- | ------- |
 | [0015-3sum](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0015-3sum/) | Medium |
 | [0049-group-anagrams](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0049-group-anagrams/) | Medium |
+| [0056-merge-intervals](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0056-merge-intervals/) | Medium |
 | [0148-sort-list](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0148-sort-list/) | Medium |
 | [0215-kth-largest-element-in-an-array](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0215-kth-largest-element-in-an-array/) | Medium |
 | [0347-top-k-frequent-elements](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0347-top-k-frequent-elements/) | Medium |
@@ -75,6 +76,7 @@
 | [0001-two-sum](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0001-two-sum/) | Easy |
 | [0015-3sum](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0015-3sum/) | Medium |
 | [0049-group-anagrams](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0049-group-anagrams/) | Medium |
+| [0056-merge-intervals](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0056-merge-intervals/) | Medium |
 | [0167-two-sum-ii-input-array-is-sorted](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0167-two-sum-ii-input-array-is-sorted/) | Medium |
 | [0215-kth-largest-element-in-an-array](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0215-kth-largest-element-in-an-array/) | Medium |
 | [0238-product-of-array-except-self](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0238-product-of-array-except-self/) | Medium |
