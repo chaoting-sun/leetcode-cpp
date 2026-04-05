@@ -8,7 +8,7 @@ class Solution:
         """
         Do not return anything, modify head in-place instead.
         """
-        if not head or head.next is None:
+        if not head or not head.next:
             return
 
         # separate the left and right sides
@@ -17,11 +17,10 @@ class Solution:
             slow = slow.next
             fast = fast.next.next
 
-        left_head = head
         right_head = slow.next
         slow.next = None
 
-        # inverse the right linked list
+        # reverse the right linked list
         prev = None
         curr = right_head
         while curr:
@@ -32,7 +31,7 @@ class Solution:
         right_head = prev
 
         # merge
-        left_curr = left_head
+        left_curr = head
         right_curr = right_head
         while right_curr:
             left_next = left_curr.next
@@ -43,13 +42,6 @@ class Solution:
             left_curr = left_next
             right_curr = right_next
 
-# 1 2 3 4 5
-#     s
-#         f
-
-# 1 2 3 4
-#   s
-#     f
 
 # separate
 # 1 2 3
