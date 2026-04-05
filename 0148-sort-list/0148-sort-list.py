@@ -27,8 +27,8 @@ class Solution:
         if not head or not head.next:
             return head
 
-        slow = fast = head
-        while fast.next and fast.next.next:
+        slow, fast = head, head.next
+        while fast and fast.next:
             slow = slow.next
             fast = fast.next.next
         
@@ -47,23 +47,17 @@ class Solution:
         left_curr = left_head
         right_curr = right_head
 
-        while left_curr or right_curr:
-            if not left_curr:
-                curr.next = right_curr
-                right_curr = right_curr.next
-            elif not right_curr:
+        while left_curr and right_curr:
+            if left_curr.val <= right_curr.val:
                 curr.next = left_curr
                 left_curr = left_curr.next
             else:
-                if left_curr.val <= right_curr.val:
-                    curr.next = left_curr
-                    left_curr = left_curr.next
-                else:
-                    curr.next = right_curr
-                    right_curr = right_curr.next
+                curr.next = right_curr
+                right_curr = right_curr.next
 
             curr = curr.next
 
+        curr.next = left_curr if left_curr else right_curr 
         return dummy.next
 
 '''
