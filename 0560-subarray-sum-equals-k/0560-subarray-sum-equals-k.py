@@ -18,16 +18,16 @@ class Solution:
         # prefix[j] - prefix[i] = k -> prefix[i] = prefix[j] - k
 
         ans = 0
-        prefix_sum = 0
+        prefix = 0
         
         prefix_count = defaultdict(int)
         prefix_count[0] = 1
         
         for val in nums:
-            prefix_sum += val
-            key = prefix_sum - k
+            prefix += val
+            key = prefix - k
             if key in prefix_count:
                 ans += prefix_count[key]
-            prefix_count[p] += 1
+            prefix_count[prefix] += 1
 
         return ans
