@@ -19,15 +19,14 @@ class Solution:
 
         ans = 0
         prefix = 0
-        
+        # prefix_count[x]: the count of prefix sum = x before current position
         prefix_count = defaultdict(int)
         prefix_count[0] = 1
         
-        for val in nums:
-            prefix += val
+        for n in nums:
+            prefix += n
             key = prefix - k
-            if key in prefix_count:
-                ans += prefix_count[key]
+            ans += prefix_count[key] # default = 0
             prefix_count[prefix] += 1
 
         return ans
