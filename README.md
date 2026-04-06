@@ -54,6 +54,7 @@
 | [0138-copy-list-with-random-pointer](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0138-copy-list-with-random-pointer/) | Medium |
 | [0143-reorder-list](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0143-reorder-list/) | Medium |
 | [0148-sort-list](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0148-sort-list/) | Medium |
+| [0206-reverse-linked-list](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0206-reverse-linked-list/) | Easy |
 ## Tree
 | Problem Name | Difficulty |
 | ------- | ------- |
@@ -146,6 +147,7 @@
 | ------- | ------- |
 | [0021-merge-two-sorted-lists](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0021-merge-two-sorted-lists/) | Easy |
 | [0143-reorder-list](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0143-reorder-list/) | Medium |
+| [0206-reverse-linked-list](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0206-reverse-linked-list/) | Easy |
 | [0394-decode-string](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0394-decode-string/) | Medium |
 ## Merge Sort
 | Problem Name | Difficulty |
