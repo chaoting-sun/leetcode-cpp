@@ -1,29 +1,26 @@
 class Solution:
-    def decode(self, s, start_idx):
-        decoded_s = ""
+    def decode(self, s, i):
+        parts = []
         n = 0
-        idx = start_idx
-        while idx < len(s):
-            if s[idx].islower():
-                decoded_s += s[idx]
-                idx += 1
-            elif s[idx].isdigit():
-                n = n * 10 + int(s[idx])
-                idx += 1
-            elif s[idx] == '[':
-                new_start_idx, current_decoded_s = self.decode(s, idx + 1)
-                decoded_s += n * current_decoded_s
-                idx = new_start_idx
+        while i < len(s):
+            if s[i].islower():
+                parts.append(s[i])
+                i += 1
+            elif s[i].isdigit():
+                n = n * 10 + int(s[i])
+                i += 1
+            elif s[i] == '[':
+                i, inner = self.decode(s, i + 1)
+                parts.append(inner * n)
                 n = 0
             else:
-                idx += 1
-                break
+                return i + 1, "".join(parts)
 
-        return idx, decoded_s
+        return i, "".join(parts)
     
     def decodeString(self, s: str) -> str:
-        _, decoded_s = self.decode(s, 0)
-        return decoded_s
+        _, decoded = self.decode(s, 0)
+        return decoded
  
 '''
 test case:
