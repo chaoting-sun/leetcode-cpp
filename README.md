@@ -54,6 +54,7 @@
 ## Tree
 | Problem Name | Difficulty |
 | ------- | ------- |
+| [0236-lowest-common-ancestor-of-a-binary-tree](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0236-lowest-common-ancestor-of-a-binary-tree/) | Medium |
 | [0572-subtree-of-another-tree](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0572-subtree-of-another-tree/) | Easy |
 ## Depth-First Search
 | Problem Name | Difficulty |
@@ -61,6 +62,7 @@
 | [0200-number-of-islands](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0200-number-of-islands/) | Medium |
 | [0207-course-schedule](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0207-course-schedule/) | Medium |
 | [0210-course-schedule-ii](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0210-course-schedule-ii/) | Medium |
+| [0236-lowest-common-ancestor-of-a-binary-tree](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0236-lowest-common-ancestor-of-a-binary-tree/) | Medium |
 | [0572-subtree-of-another-tree](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0572-subtree-of-another-tree/) | Easy |
 ## String Matching
 | Problem Name | Difficulty |
@@ -69,6 +71,7 @@
 ## Binary Tree
 | Problem Name | Difficulty |
 | ------- | ------- |
+| [0236-lowest-common-ancestor-of-a-binary-tree](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0236-lowest-common-ancestor-of-a-binary-tree/) | Medium |
 | [0572-subtree-of-another-tree](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0572-subtree-of-another-tree/) | Easy |
 ## Hash Function
 | Problem Name | Difficulty |
