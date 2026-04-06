@@ -6,7 +6,7 @@ class Solution:
         
         for total in range(1, amount + 1):
             for coin in coins:
-                if total >= coin and dp[total - coin] != impossible_number:
+                if coin <= total and dp[total - coin] != impossible_number:
                     dp[total] = min(dp[total], dp[total - coin] + 1)
         
         return dp[amount] if dp[amount] != impossible_number else -1
