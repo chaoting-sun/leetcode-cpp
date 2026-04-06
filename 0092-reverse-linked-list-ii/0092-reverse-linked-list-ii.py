@@ -4,10 +4,10 @@
 #         self.val = val
 #         self.next = next
 class Solution:
-    def reverse(self, head_node, prev_node, stop_node):
-        prev = prev_node
-        curr = head_node
-        while curr != stop_node:
+    def reverse(self, head, n):
+        prev = None
+        curr = head
+        for _ in range(n):
             tmp = curr.next
             curr.next = prev
             prev = curr
@@ -15,33 +15,22 @@ class Solution:
         return prev
 
     def reverseBetween(self, head: Optional[ListNode], left: int, right: int) -> Optional[ListNode]:
-        # add dummy node at the start
-        dummy = ListNode()
-        dummy.next = head
+        dummy = ListNode(0, head)
 
-        # find the left and right boundary (outside)
-        left_node = right_node = dummy
+        prev_left = dummy
         for _ in range(left - 1):
-            left_node = left_node.next
-        for _ in range(right + 1):
-            right_node = right_node.next
-
-        # reverse the linked list between left and right
-        first_node = self.reverse(left_node.next, right_node, right_node)
+            prev_left = prev_left.next
         
-        # reconnect the linked list
-        left_node.next = first_node
+        n_sublist = right - left + 1
+
+        sublist_head = prev_left.next
+        after_right = sublist_head
+        for _ in range(n_sublist):
+            after_right = after_right.next
+
+        sublist_new_head = self.reverse(sublist_head, n_sublist)
+        
+        prev_left.next = sublist_new_head
+        sublist_head.next = after_right
 
         return dummy.next
-
-# head = 1
-# l=1, r=1
-
-# d 1
-# l
-#     r
-# last_node = 1
-
-
-# l=2, r=4
-# 1 2 3 4 5
