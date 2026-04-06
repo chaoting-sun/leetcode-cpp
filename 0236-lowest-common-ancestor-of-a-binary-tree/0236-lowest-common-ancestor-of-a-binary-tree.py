@@ -10,18 +10,17 @@ class Solution:
         # base case
         if not root:
             return None
+        if root == p or root == q:
+            return root
         
         left_node = self.lowestCommonAncestor(root.left, p, q)
         right_node = self.lowestCommonAncestor(root.right, p, q)
 
-        if root == p or root == q:
+        if left_node and right_node:
             return root
+        elif left_node:
+            return left_node
+        elif right_node:
+            return right_node
         else:
-            if left_node and right_node:
-                return root
-            elif left_node:
-                return left_node
-            elif right_node:
-                return right_node
-            else:
-                return None
+            return None
