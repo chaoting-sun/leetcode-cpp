@@ -20,12 +20,3 @@ class Solution:
             seen[rem] += 1
         
         return count
-
-'''
-nums = [4, 5,j ]
-
-
-nums = [6, 2, -1, 3]
-k = 5
-seen = { 0: 1, 1: 1, 2: 1, 3: 1 }
-'''
