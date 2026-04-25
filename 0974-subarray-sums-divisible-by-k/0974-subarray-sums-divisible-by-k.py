@@ -11,11 +11,13 @@ class Solution:
         for i in range(len(nums)):
             prefix += nums[i]
             rem = prefix % k
-            if rem > 0:
-                count += seen[(rem - k) % k]
-            else:
-                count += seen[0]
-            seen[prefix % k] += 1
+            # rem is between 0 to k - 1, so (rem - k) % k == rem
+            # if rem > 0:
+            #     count += seen[(rem - k) % k]
+            # else:
+            #     count += seen[rem]
+            count += seen[rem]
+            seen[rem] += 1
         
         return count
 
