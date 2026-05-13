@@ -10,6 +10,7 @@
 | [0049-group-anagrams](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0049-group-anagrams/) | Medium |
 | [0138-copy-list-with-random-pointer](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0138-copy-list-with-random-pointer/) | Medium |
 | [0347-top-k-frequent-elements](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0347-top-k-frequent-elements/) | Medium |
+| [0438-find-all-anagrams-in-a-string](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0438-find-all-anagrams-in-a-string/) | Medium |
 | [0451-sort-characters-by-frequency](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0451-sort-characters-by-frequency/) | Medium |
 | [0560-subarray-sum-equals-k](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0560-subarray-sum-equals-k/) | Medium |
 | [0974-subarray-sums-divisible-by-k](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0974-subarray-sums-divisible-by-k/) | Medium |
@@ -21,6 +22,7 @@
 | [0022-generate-parentheses](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0022-generate-parentheses/) | Medium |
 | [0049-group-anagrams](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0049-group-anagrams/) | Medium |
 | [0394-decode-string](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0394-decode-string/) | Medium |
+| [0438-find-all-anagrams-in-a-string](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0438-find-all-anagrams-in-a-string/) | Medium |
 | [0451-sort-characters-by-frequency](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0451-sort-characters-by-frequency/) | Medium |
 ## Sorting
 | Problem Name | Difficulty |
@@ -145,6 +147,7 @@
 | Problem Name | Difficulty |
 | ------- | ------- |
 | [0003-longest-substring-without-repeating-characters](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0003-longest-substring-without-repeating-characters/) | Medium |
+| [0438-find-all-anagrams-in-a-string](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0438-find-all-anagrams-in-a-string/) | Medium |
 ## Prefix Sum
 | Problem Name | Difficulty |
 | ------- | ------- |
