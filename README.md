@@ -106,6 +106,7 @@
 | [0048-rotate-image](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0048-rotate-image/) | Medium |
 | [0049-group-anagrams](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0049-group-anagrams/) | Medium |
 | [0054-spiral-matrix](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0054-spiral-matrix/) | Medium |
+| [0055-jump-game](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0055-jump-game/) | Medium |
 | [0056-merge-intervals](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0056-merge-intervals/) | Medium |
 | [0073-set-matrix-zeroes](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0073-set-matrix-zeroes/) | Medium |
 | [0153-find-minimum-in-rotated-sorted-array](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0153-find-minimum-in-rotated-sorted-array/) | Medium |
@@ -147,6 +148,7 @@
 | ------- | ------- |
 | [0005-longest-palindromic-substring](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0005-longest-palindromic-substring/) | Medium |
 | [0022-generate-parentheses](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0022-generate-parentheses/) | Medium |
+| [0055-jump-game](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0055-jump-game/) | Medium |
 | [0322-coin-change](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0322-coin-change/) | Medium |
 | [0509-fibonacci-number](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0509-fibonacci-number/) | Easy |
 ## Binary Search
@@ -238,6 +240,7 @@
 ## Greedy
 | Problem Name | Difficulty |
 | ------- | ------- |
+| [0055-jump-game](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0055-jump-game/) | Medium |
 | [1414-find-the-minimum-number-of-fibonacci-numbers-whose-sum-is-k](https://github.com/chaoting-sun/leetcode-cpp/tree/main/1414-find-the-minimum-number-of-fibonacci-numbers-whose-sum-is-k/) | Medium |
 ## Simulation
 | Problem Name | Difficulty |
