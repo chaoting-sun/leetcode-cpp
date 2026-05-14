@@ -106,6 +106,7 @@
 | [0035-search-insert-position](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0035-search-insert-position/) | Easy |
 | [0048-rotate-image](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0048-rotate-image/) | Medium |
 | [0049-group-anagrams](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0049-group-anagrams/) | Medium |
+| [0053-maximum-subarray](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0053-maximum-subarray/) | Medium |
 | [0054-spiral-matrix](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0054-spiral-matrix/) | Medium |
 | [0055-jump-game](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0055-jump-game/) | Medium |
 | [0056-merge-intervals](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0056-merge-intervals/) | Medium |
@@ -136,6 +137,7 @@
 | Problem Name | Difficulty |
 | ------- | ------- |
 | [0023-merge-k-sorted-lists](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0023-merge-k-sorted-lists/) | Hard |
+| [0053-maximum-subarray](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0053-maximum-subarray/) | Medium |
 | [0148-sort-list](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0148-sort-list/) | Medium |
 | [0215-kth-largest-element-in-an-array](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0215-kth-largest-element-in-an-array/) | Medium |
 | [0347-top-k-frequent-elements](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0347-top-k-frequent-elements/) | Medium |
@@ -149,6 +151,7 @@
 | ------- | ------- |
 | [0005-longest-palindromic-substring](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0005-longest-palindromic-substring/) | Medium |
 | [0022-generate-parentheses](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0022-generate-parentheses/) | Medium |
+| [0053-maximum-subarray](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0053-maximum-subarray/) | Medium |
 | [0055-jump-game](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0055-jump-game/) | Medium |
 | [0322-coin-change](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0322-coin-change/) | Medium |
 | [0509-fibonacci-number](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0509-fibonacci-number/) | Easy |
