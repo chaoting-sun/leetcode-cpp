@@ -111,6 +111,7 @@
 | [0322-coin-change](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0322-coin-change/) | Medium |
 | [0347-top-k-frequent-elements](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0347-top-k-frequent-elements/) | Medium |
 | [0560-subarray-sum-equals-k](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0560-subarray-sum-equals-k/) | Medium |
+| [0704-binary-search](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0704-binary-search/) | Easy |
 | [0733-flood-fill](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0733-flood-fill/) | Easy |
 | [0974-subarray-sums-divisible-by-k](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0974-subarray-sums-divisible-by-k/) | Medium |
 ## Two Pointers
@@ -148,6 +149,7 @@
 | [0035-search-insert-position](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0035-search-insert-position/) | Easy |
 | [0153-find-minimum-in-rotated-sorted-array](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0153-find-minimum-in-rotated-sorted-array/) | Medium |
 | [0167-two-sum-ii-input-array-is-sorted](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0167-two-sum-ii-input-array-is-sorted/) | Medium |
+| [0704-binary-search](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0704-binary-search/) | Easy |
 ## Sliding Window
 | Problem Name | Difficulty |
 | ------- | ------- |
