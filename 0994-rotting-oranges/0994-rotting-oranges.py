@@ -13,29 +13,24 @@ class Solution:
                 elif grid[i][j] == 1:
                     fresh_oranges += 1
 
-        if fresh_oranges == 0:
-            return 0
-
         minutes = 0
-        rotten_oranges = 0
+        directions = ((-1, 0), (1, 0), (0, -1), (0, 1))
 
-        while q:
-            n_rotten = len(q)
-            has_fresh = False
-            for _ in range(n_rotten):
+        while q and fresh_oranges > 0:
+            level_size = len(q)
+            
+            for _ in range(level_size):
                 i, j = q.popleft()
-                for di, dj in ((-1, 0), (1, 0), (0, -1), (0, 1)):
+                for di, dj in directions:
                     newi = i + di
                     newj = j + dj
                     if newi < 0 or newi >= m or newj < 0 or newj >= n or grid[newi][newj] != 1:
                         continue
 
-                    has_fresh = True
-                    rotten_oranges += 1
+                    fresh_oranges -= 1
                     grid[newi][newj] = 2
                     q.append((newi, newj))
 
-            if has_fresh:
-                minutes += 1
+            minutes += 1
 
-        return minutes if fresh_oranges == rotten_oranges else -1
+        return minutes if fresh_oranges == 0 else -1
