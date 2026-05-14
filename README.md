@@ -125,6 +125,7 @@
 | [0560-subarray-sum-equals-k](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0560-subarray-sum-equals-k/) | Medium |
 | [0704-binary-search](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0704-binary-search/) | Easy |
 | [0733-flood-fill](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0733-flood-fill/) | Easy |
+| [0739-daily-temperatures](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0739-daily-temperatures/) | Medium |
 | [0974-subarray-sums-divisible-by-k](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0974-subarray-sums-divisible-by-k/) | Medium |
 | [0994-rotting-oranges](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0994-rotting-oranges/) | Medium |
 ## Two Pointers
@@ -183,6 +184,7 @@
 | [0020-valid-parentheses](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0020-valid-parentheses/) | Easy |
 | [0143-reorder-list](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0143-reorder-list/) | Medium |
 | [0394-decode-string](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0394-decode-string/) | Medium |
+| [0739-daily-temperatures](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0739-daily-temperatures/) | Medium |
 ## Recursion
 | Problem Name | Difficulty |
 | ------- | ------- |
@@ -254,4 +256,8 @@
 | Problem Name | Difficulty |
 | ------- | ------- |
 | [0054-spiral-matrix](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0054-spiral-matrix/) | Medium |
+## Monotonic Stack
+| Problem Name | Difficulty |
+| ------- | ------- |
+| [0739-daily-temperatures](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0739-daily-temperatures/) | Medium |
 <!---LeetCode Topics End-->
