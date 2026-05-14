@@ -12,6 +12,7 @@
 | [0133-clone-graph](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0133-clone-graph/) | Medium |
 | [0138-copy-list-with-random-pointer](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0138-copy-list-with-random-pointer/) | Medium |
 | [0217-contains-duplicate](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0217-contains-duplicate/) | Easy |
+| [0242-valid-anagram](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0242-valid-anagram/) | Easy |
 | [0347-top-k-frequent-elements](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0347-top-k-frequent-elements/) | Medium |
 | [0438-find-all-anagrams-in-a-string](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0438-find-all-anagrams-in-a-string/) | Medium |
 | [0451-sort-characters-by-frequency](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0451-sort-characters-by-frequency/) | Medium |
@@ -25,6 +26,7 @@
 | [0020-valid-parentheses](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0020-valid-parentheses/) | Easy |
 | [0022-generate-parentheses](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0022-generate-parentheses/) | Medium |
 | [0049-group-anagrams](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0049-group-anagrams/) | Medium |
+| [0242-valid-anagram](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0242-valid-anagram/) | Easy |
 | [0394-decode-string](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0394-decode-string/) | Medium |
 | [0438-find-all-anagrams-in-a-string](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0438-find-all-anagrams-in-a-string/) | Medium |
 | [0451-sort-characters-by-frequency](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0451-sort-characters-by-frequency/) | Medium |
@@ -37,6 +39,7 @@
 | [0148-sort-list](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0148-sort-list/) | Medium |
 | [0215-kth-largest-element-in-an-array](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0215-kth-largest-element-in-an-array/) | Medium |
 | [0217-contains-duplicate](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0217-contains-duplicate/) | Easy |
+| [0242-valid-anagram](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0242-valid-anagram/) | Easy |
 | [0347-top-k-frequent-elements](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0347-top-k-frequent-elements/) | Medium |
 | [0451-sort-characters-by-frequency](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0451-sort-characters-by-frequency/) | Medium |
 ## Heap (Priority Queue)
