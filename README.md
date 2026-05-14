@@ -102,6 +102,7 @@
 | [0015-3sum](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0015-3sum/) | Medium |
 | [0033-search-in-rotated-sorted-array](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0033-search-in-rotated-sorted-array/) | Medium |
 | [0035-search-insert-position](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0035-search-insert-position/) | Easy |
+| [0048-rotate-image](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0048-rotate-image/) | Medium |
 | [0049-group-anagrams](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0049-group-anagrams/) | Medium |
 | [0056-merge-intervals](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0056-merge-intervals/) | Medium |
 | [0153-find-minimum-in-rotated-sorted-array](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0153-find-minimum-in-rotated-sorted-array/) | Medium |
@@ -200,6 +201,7 @@
 ## Matrix
 | Problem Name | Difficulty |
 | ------- | ------- |
+| [0048-rotate-image](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0048-rotate-image/) | Medium |
 | [0200-number-of-islands](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0200-number-of-islands/) | Medium |
 | [0733-flood-fill](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0733-flood-fill/) | Easy |
 | [0994-rotting-oranges](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0994-rotting-oranges/) | Medium |
@@ -221,6 +223,7 @@
 ## Math
 | Problem Name | Difficulty |
 | ------- | ------- |
+| [0048-rotate-image](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0048-rotate-image/) | Medium |
 | [0509-fibonacci-number](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0509-fibonacci-number/) | Easy |
 | [1414-find-the-minimum-number-of-fibonacci-numbers-whose-sum-is-k](https://github.com/chaoting-sun/leetcode-cpp/tree/main/1414-find-the-minimum-number-of-fibonacci-numbers-whose-sum-is-k/) | Medium |
 ## Memoization
