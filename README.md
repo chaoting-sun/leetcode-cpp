@@ -104,6 +104,7 @@
 | [0035-search-insert-position](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0035-search-insert-position/) | Easy |
 | [0048-rotate-image](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0048-rotate-image/) | Medium |
 | [0049-group-anagrams](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0049-group-anagrams/) | Medium |
+| [0054-spiral-matrix](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0054-spiral-matrix/) | Medium |
 | [0056-merge-intervals](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0056-merge-intervals/) | Medium |
 | [0153-find-minimum-in-rotated-sorted-array](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0153-find-minimum-in-rotated-sorted-array/) | Medium |
 | [0167-two-sum-ii-input-array-is-sorted](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0167-two-sum-ii-input-array-is-sorted/) | Medium |
@@ -202,6 +203,7 @@
 | Problem Name | Difficulty |
 | ------- | ------- |
 | [0048-rotate-image](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0048-rotate-image/) | Medium |
+| [0054-spiral-matrix](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0054-spiral-matrix/) | Medium |
 | [0200-number-of-islands](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0200-number-of-islands/) | Medium |
 | [0733-flood-fill](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0733-flood-fill/) | Easy |
 | [0994-rotting-oranges](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0994-rotting-oranges/) | Medium |
@@ -234,4 +236,8 @@
 | Problem Name | Difficulty |
 | ------- | ------- |
 | [1414-find-the-minimum-number-of-fibonacci-numbers-whose-sum-is-k](https://github.com/chaoting-sun/leetcode-cpp/tree/main/1414-find-the-minimum-number-of-fibonacci-numbers-whose-sum-is-k/) | Medium |
+## Simulation
+| Problem Name | Difficulty |
+| ------- | ------- |
+| [0054-spiral-matrix](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0054-spiral-matrix/) | Medium |
 <!---LeetCode Topics End-->
