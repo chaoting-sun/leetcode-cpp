@@ -7,24 +7,47 @@ class Node:
 """
 
 class Solution:
+    # create a copy, add the neighbor of the copy, and return the copy
     def dfs(self, curr, visited_node_map):
-        for nei in curr.neighbors:
-            if nei in visited_node_map:
-                visited_node_map[curr].neighbors.append(visited_node_map[nei])
-                continue
+        if curr in visited_node_map:
+            return visited_node_map[curr]
 
-            visited_node_map[nei] = Node(nei.val)
-            visited_node_map[curr].neighbors.append(visited_node_map[nei])            
-            self.dfs(nei, visited_node_map)
+        visited_node_map[curr] = Node(curr.val)
+
+        for nei in curr.neighbors:
+            nei_copy = self.dfs(nei, visited_node_map)
+            visited_node_map[curr].neighbors.append(nei_copy)
+
+        return visited_node_map[curr]
 
     def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
         if not node:
             return None
         
-        visited_node_map = { node: Node(node.val) }
+        visited_node_map = {}
         self.dfs(node, visited_node_map)
-
         return visited_node_map[node]
+
+
+# class Solution:
+#     def dfs(self, curr, visited_node_map):
+#         for nei in curr.neighbors:
+#             if nei in visited_node_map:
+#                 visited_node_map[curr].neighbors.append(visited_node_map[nei])
+#                 continue
+
+#             visited_node_map[nei] = Node(nei.val)
+#             visited_node_map[curr].neighbors.append(visited_node_map[nei])            
+#             self.dfs(nei, visited_node_map)
+
+#     def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
+#         if not node:
+#             return None
+        
+#         visited_node_map = { node: Node(node.val) }
+#         self.dfs(node, visited_node_map)
+
+#         return visited_node_map[node]
 
 
 # from collections import deque
