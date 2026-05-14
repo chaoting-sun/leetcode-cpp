@@ -116,6 +116,7 @@
 | [0704-binary-search](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0704-binary-search/) | Easy |
 | [0733-flood-fill](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0733-flood-fill/) | Easy |
 | [0974-subarray-sums-divisible-by-k](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0974-subarray-sums-divisible-by-k/) | Medium |
+| [0994-rotting-oranges](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0994-rotting-oranges/) | Medium |
 ## Two Pointers
 | Problem Name | Difficulty |
 | ------- | ------- |
@@ -191,6 +192,7 @@
 | [0210-course-schedule-ii](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0210-course-schedule-ii/) | Medium |
 | [0322-coin-change](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0322-coin-change/) | Medium |
 | [0733-flood-fill](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0733-flood-fill/) | Easy |
+| [0994-rotting-oranges](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0994-rotting-oranges/) | Medium |
 ## Union-Find
 | Problem Name | Difficulty |
 | ------- | ------- |
@@ -200,6 +202,7 @@
 | ------- | ------- |
 | [0200-number-of-islands](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0200-number-of-islands/) | Medium |
 | [0733-flood-fill](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0733-flood-fill/) | Easy |
+| [0994-rotting-oranges](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0994-rotting-oranges/) | Medium |
 ## Graph Theory
 | Problem Name | Difficulty |
 | ------- | ------- |
