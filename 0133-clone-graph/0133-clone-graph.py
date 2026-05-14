@@ -6,28 +6,49 @@ class Node:
         self.neighbors = neighbors if neighbors is not None else []
 """
 
-from collections import deque
-from typing import Optional
-class Solution:    
+class Solution:
+    def dfs(self, curr, visited_node_map):
+        for nei in curr.neighbors:
+            if nei in visited_node_map:
+                visited_node_map[curr].neighbors.append(visited_node_map[nei])
+                continue
+
+            visited_node_map[nei] = Node(nei.val)
+            visited_node_map[curr].neighbors.append(visited_node_map[nei])            
+            self.dfs(nei, visited_node_map)
+
     def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
         if not node:
             return None
         
-        q = deque([node])
-        visited_nodes = { node: Node(node.val) }
+        visited_node_map = { node: Node(node.val) }
+        self.dfs(node, visited_node_map)
 
-        while q:
-            curr = q.popleft()
-            for nei in curr.neighbors:
-                if nei in visited_nodes:
-                    visited_nodes[curr].neighbors.append(visited_nodes[nei])
-                    continue
+        return visited_node_map[node]
 
-                visited_nodes[nei] = Node(nei.val)
-                visited_nodes[curr].neighbors.append(visited_nodes[nei])
-                q.append(nei)
 
-        return visited_nodes[node]
+# from collections import deque
+# from typing import Optional
+# class Solution:    
+#     def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
+#         if not node:
+#             return None
+        
+#         q = deque([node])
+#         visited_node_map = { node: Node(node.val) }
+
+#         while q:
+#             curr = q.popleft()
+#             for nei in curr.neighbors:
+#                 if nei in visited_node_map:
+#                     visited_node_map[curr].neighbors.append(visited_node_map[nei])
+#                     continue
+
+#                 visited_node_map[nei] = Node(nei.val)
+#                 visited_node_map[curr].neighbors.append(visited_node_map[nei])
+#                 q.append(nei)
+
+#         return visited_node_map[node]
 
 """
 test case: graph = 1 - 2, 1 - 3, 2 - 3 (node = 1)
