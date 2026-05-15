@@ -1,33 +1,13 @@
-# class Solution:
-#     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-#         groups = {} # sorted str: ids
-
-#         for i in range(len(strs)):
-#             sorted_str = "".join(sorted(strs[i]))
-
-#             if sorted_str not in groups:
-#                 groups[sorted_str] = []
-#             groups[sorted_str].append(i)
-
-#         ans = []
-
-#         for group in groups.values():
-#             ans.append([])
-#             for idx in group:
-#                 ans[-1].append(strs[idx])
-        
-#         return ans
-
+from collections import defaultdict
 
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-        groups = {}
+        groups = defaultdict(list)
         for s in strs:
-            char_count = [0] * 26
-            for ch in s:
-                char_count[ord(ch) - ord('a')] += 1
-            key = tuple(char_count)
-            if key not in groups:
-                groups[key] = []
-            groups[key].append(s)
-        return list(groups.values())
+            sorted_s = ''.join(sorted(s))
+            groups[sorted_s].append(s)
+        
+        ans = []
+        for v in groups.values():
+            ans.append(v)
+        return ans
