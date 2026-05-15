@@ -20,9 +20,7 @@ class Solution:
         if len(s) == 0:
             return 0
         
-        existing_chars = set()
-        for ch in s:
-            existing_chars.add(ch)
+        existing_chars = set(s)
 
         max_length = 1
         for ch in existing_chars:
