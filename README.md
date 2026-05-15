@@ -14,6 +14,7 @@
 | [0217-contains-duplicate](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0217-contains-duplicate/) | Easy |
 | [0242-valid-anagram](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0242-valid-anagram/) | Easy |
 | [0347-top-k-frequent-elements](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0347-top-k-frequent-elements/) | Medium |
+| [0424-longest-repeating-character-replacement](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0424-longest-repeating-character-replacement/) | Medium |
 | [0438-find-all-anagrams-in-a-string](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0438-find-all-anagrams-in-a-string/) | Medium |
 | [0451-sort-characters-by-frequency](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0451-sort-characters-by-frequency/) | Medium |
 | [0560-subarray-sum-equals-k](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0560-subarray-sum-equals-k/) | Medium |
@@ -28,6 +29,7 @@
 | [0049-group-anagrams](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0049-group-anagrams/) | Medium |
 | [0242-valid-anagram](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0242-valid-anagram/) | Easy |
 | [0394-decode-string](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0394-decode-string/) | Medium |
+| [0424-longest-repeating-character-replacement](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0424-longest-repeating-character-replacement/) | Medium |
 | [0438-find-all-anagrams-in-a-string](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0438-find-all-anagrams-in-a-string/) | Medium |
 | [0451-sort-characters-by-frequency](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0451-sort-characters-by-frequency/) | Medium |
 ## Sorting
@@ -180,6 +182,7 @@
 | ------- | ------- |
 | [0003-longest-substring-without-repeating-characters](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0003-longest-substring-without-repeating-characters/) | Medium |
 | [0209-minimum-size-subarray-sum](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0209-minimum-size-subarray-sum/) | Medium |
+| [0424-longest-repeating-character-replacement](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0424-longest-repeating-character-replacement/) | Medium |
 | [0438-find-all-anagrams-in-a-string](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0438-find-all-anagrams-in-a-string/) | Medium |
 ## Prefix Sum
 | Problem Name | Difficulty |
