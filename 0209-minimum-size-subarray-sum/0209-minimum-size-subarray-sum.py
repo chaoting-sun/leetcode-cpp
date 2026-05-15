@@ -14,11 +14,25 @@ class Solution:
         return 0 if min_length == inf else min_length
 
 '''
-test case:
+trap case:
+nums = [1,1,1]
+target = 4
+trace:
+min_length = inf
+left = 0
+right = 0
+    curr_sum = 1
+right = 1
+    curr_sum = 2
+right = 2
+    curr_sum = 3
+< returns 0    
+
+happy case:
 nums = [2,3,1]
 target = 3
-
 trace:
+min_lngth = inf
 left = 0
 right = 0
     curr_sum = 2
