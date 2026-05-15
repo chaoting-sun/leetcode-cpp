@@ -88,6 +88,7 @@
 | [0210-course-schedule-ii](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0210-course-schedule-ii/) | Medium |
 | [0236-lowest-common-ancestor-of-a-binary-tree](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0236-lowest-common-ancestor-of-a-binary-tree/) | Medium |
 | [0572-subtree-of-another-tree](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0572-subtree-of-another-tree/) | Easy |
+| [0695-max-area-of-island](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0695-max-area-of-island/) | Medium |
 | [0733-flood-fill](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0733-flood-fill/) | Easy |
 ## String Matching
 | Problem Name | Difficulty |
@@ -131,6 +132,7 @@
 | [0322-coin-change](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0322-coin-change/) | Medium |
 | [0347-top-k-frequent-elements](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0347-top-k-frequent-elements/) | Medium |
 | [0560-subarray-sum-equals-k](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0560-subarray-sum-equals-k/) | Medium |
+| [0695-max-area-of-island](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0695-max-area-of-island/) | Medium |
 | [0704-binary-search](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0704-binary-search/) | Easy |
 | [0733-flood-fill](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0733-flood-fill/) | Easy |
 | [0739-daily-temperatures](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0739-daily-temperatures/) | Medium |
@@ -224,12 +226,14 @@
 | [0207-course-schedule](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0207-course-schedule/) | Medium |
 | [0210-course-schedule-ii](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0210-course-schedule-ii/) | Medium |
 | [0322-coin-change](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0322-coin-change/) | Medium |
+| [0695-max-area-of-island](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0695-max-area-of-island/) | Medium |
 | [0733-flood-fill](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0733-flood-fill/) | Easy |
 | [0994-rotting-oranges](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0994-rotting-oranges/) | Medium |
 ## Union-Find
 | Problem Name | Difficulty |
 | ------- | ------- |
 | [0200-number-of-islands](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0200-number-of-islands/) | Medium |
+| [0695-max-area-of-island](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0695-max-area-of-island/) | Medium |
 ## Matrix
 | Problem Name | Difficulty |
 | ------- | ------- |
@@ -237,6 +241,7 @@
 | [0054-spiral-matrix](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0054-spiral-matrix/) | Medium |
 | [0073-set-matrix-zeroes](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0073-set-matrix-zeroes/) | Medium |
 | [0200-number-of-islands](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0200-number-of-islands/) | Medium |
+| [0695-max-area-of-island](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0695-max-area-of-island/) | Medium |
 | [0733-flood-fill](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0733-flood-fill/) | Easy |
 | [0994-rotting-oranges](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0994-rotting-oranges/) | Medium |
 ## Graph Theory
