@@ -7,8 +7,7 @@ class Solution:
         elif op == '*':
             return prev * curr
         else:
-            ans = prev / curr
-            return floor(ans) if ans >= 0 else ceil(ans)
+            return int(prev / curr)
 
     def evalRPN(self, tokens: List[str]) -> int:
         stk = []
