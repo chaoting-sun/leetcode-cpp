@@ -116,6 +116,7 @@
 | [0056-merge-intervals](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0056-merge-intervals/) | Medium |
 | [0057-insert-interval](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0057-insert-interval/) | Medium |
 | [0073-set-matrix-zeroes](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0073-set-matrix-zeroes/) | Medium |
+| [0150-evaluate-reverse-polish-notation](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0150-evaluate-reverse-polish-notation/) | Medium |
 | [0153-find-minimum-in-rotated-sorted-array](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0153-find-minimum-in-rotated-sorted-array/) | Medium |
 | [0167-two-sum-ii-input-array-is-sorted](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0167-two-sum-ii-input-array-is-sorted/) | Medium |
 | [0200-number-of-islands](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0200-number-of-islands/) | Medium |
@@ -192,6 +193,7 @@
 | ------- | ------- |
 | [0020-valid-parentheses](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0020-valid-parentheses/) | Easy |
 | [0143-reorder-list](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0143-reorder-list/) | Medium |
+| [0150-evaluate-reverse-polish-notation](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0150-evaluate-reverse-polish-notation/) | Medium |
 | [0394-decode-string](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0394-decode-string/) | Medium |
 | [0739-daily-temperatures](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0739-daily-temperatures/) | Medium |
 | [0853-car-fleet](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0853-car-fleet/) | Medium |
@@ -251,6 +253,7 @@
 | Problem Name | Difficulty |
 | ------- | ------- |
 | [0048-rotate-image](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0048-rotate-image/) | Medium |
+| [0150-evaluate-reverse-polish-notation](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0150-evaluate-reverse-polish-notation/) | Medium |
 | [0509-fibonacci-number](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0509-fibonacci-number/) | Easy |
 | [1414-find-the-minimum-number-of-fibonacci-numbers-whose-sum-is-k](https://github.com/chaoting-sun/leetcode-cpp/tree/main/1414-find-the-minimum-number-of-fibonacci-numbers-whose-sum-is-k/) | Medium |
 ## Memoization
