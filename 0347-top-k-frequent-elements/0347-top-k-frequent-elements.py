@@ -15,9 +15,6 @@ class Solution:
             if cnt in count_bucket:
                 for v in count_bucket[cnt]:
                     ans.append(v)
-                    k -= 1
-                    if k == 0:
-                        break
-            if k == 0:
-                break
+                    if len(ans) == k:
+                        return ans
         return ans
