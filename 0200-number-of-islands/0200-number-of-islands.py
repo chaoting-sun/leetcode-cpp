@@ -1,22 +1,19 @@
 class Solution:
-    def search(self, grid, x, y):
+    def dfs(self, grid: List[List[str]], i: int, j: int):
         m, n = len(grid), len(grid[0])
-
-        grid[x][y] = '#'
-        for dir in ((-1, 0), (1, 0), (0, -1), (0, 1)):
-            nx = x + dir[0]
-            ny = y + dir[1]
-            if nx >= 0 and nx < m and ny >= 0 and ny < n and grid[nx][ny] == '1':
-                self.search(grid, nx, ny)
+        grid[i][j] = '#'
+        for di, dj in ((-1, 0), (1, 0), (0, -1), (0, 1)):
+            newi = i + di
+            newj = j + dj
+            if 0 <= newi < m and 0 <= newj < n and grid[newi][newj] == '1':
+                self.dfs(grid, newi, newj)
     
     def numIslands(self, grid: List[List[str]]) -> int:
-        count = 0
         m, n = len(grid), len(grid[0])
-
-        for x in range(m):
-            for y in range(n):
-                if grid[x][y] == '1':
-                    self.search(grid, x, y)
+        count = 0
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == '1':
+                    self.dfs(grid, i, j)
                     count += 1
-        
         return count
