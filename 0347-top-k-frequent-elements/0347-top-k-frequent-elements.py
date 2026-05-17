@@ -1,22 +1,23 @@
+from collections import defaultdict
+
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        num_count = collections.defaultdict(int)
-        max_freq = 0
-        for num in nums:
-            num_count[num] += 1
-            max_freq = max(max_freq, num_count[num])
-
-        buckets = [[] for _ in range(max_freq + 1)]
-        for num, count in num_count.items():
-            buckets[count].append(num)
-
+        count = defaultdict(int)
+        max_count = 0
+        for n in nums:
+            count[n] += 1
+            max_count = max(max_count, count[n])
+        count_bucket = defaultdict(list)
+        for v, cnt in count.items():
+            count_bucket[cnt].append(v)
         ans = []
-        for i in range(max_freq, 0, -1):
-            for num in buckets[i]:
-                ans.append(num)
-                if len(ans) == k:
-                    return ans
-        
+        for cnt in range(max_count, 0, -1):
+            if cnt in count_bucket:
+                for v in count_bucket[cnt]:
+                    ans.append(v)
+                    k -= 1
+                    if k == 0:
+                        break
+            if k == 0:
+                break
         return ans
-
-        
