@@ -131,6 +131,7 @@
 | [0217-contains-duplicate](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0217-contains-duplicate/) | Easy |
 | [0238-product-of-array-except-self](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0238-product-of-array-except-self/) | Medium |
 | [0283-move-zeroes](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0283-move-zeroes/) | Easy |
+| [0303-range-sum-query-immutable](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0303-range-sum-query-immutable/) | Easy |
 | [0322-coin-change](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0322-coin-change/) | Medium |
 | [0347-top-k-frequent-elements](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0347-top-k-frequent-elements/) | Medium |
 | [0560-subarray-sum-equals-k](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0560-subarray-sum-equals-k/) | Medium |
@@ -197,6 +198,7 @@
 | ------- | ------- |
 | [0209-minimum-size-subarray-sum](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0209-minimum-size-subarray-sum/) | Medium |
 | [0238-product-of-array-except-self](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0238-product-of-array-except-self/) | Medium |
+| [0303-range-sum-query-immutable](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0303-range-sum-query-immutable/) | Easy |
 | [0560-subarray-sum-equals-k](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0560-subarray-sum-equals-k/) | Medium |
 | [0974-subarray-sums-divisible-by-k](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0974-subarray-sums-divisible-by-k/) | Medium |
 ## Stack
@@ -289,4 +291,8 @@
 | ------- | ------- |
 | [0739-daily-temperatures](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0739-daily-temperatures/) | Medium |
 | [0853-car-fleet](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0853-car-fleet/) | Medium |
+## Design
+| Problem Name | Difficulty |
+| ------- | ------- |
+| [0303-range-sum-query-immutable](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0303-range-sum-query-immutable/) | Easy |
 <!---LeetCode Topics End-->
