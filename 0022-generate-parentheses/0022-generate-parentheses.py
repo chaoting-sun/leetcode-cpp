@@ -1,24 +1,27 @@
-# number of '(' >= number of ')'
-
 class Solution:
-    def recursion(self, n, left, right, candidates, ans):
-        # base case
-        if n == left:
-            ans.append("".join(candidates + [')'] * (left - right)))
+    def dfs(self, ans: List[str], curr: List[str], n: int, left: int, right: int) -> None:
+        if len(curr) == 2 * n:
+            ans.append(''.join(curr))
+            return
+        
+        if left == n:
+            ans.append(''.join(curr + [')'] * (left - right)))
             return
 
-        if left > right:
-            candidates.append(')')
-            self.recursion(n, left, right + 1, candidates, ans)
-            candidates.pop()
+        # add (
+        curr.append('(')
+        self.dfs(ans, curr, n, left + 1, right)
+        curr.pop()
 
-        candidates.append('(')
-        self.recursion(n, left + 1, right, candidates, ans)
-        candidates.pop()            
+        # add )
+        if left > right:
+            curr.append(')')
+            self.dfs(ans, curr, n, left, right + 1)
+            curr.pop()
 
 
     def generateParenthesis(self, n: int) -> List[str]:
         ans = []
-        candidates = []
-        self.recursion(n, 0, 0, candidates, ans)
+        curr = []
+        self.dfs(ans, curr, n, 0, 0)
         return ans
