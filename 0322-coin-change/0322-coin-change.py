@@ -3,10 +3,8 @@ class Solution:
         impossible_number = amount + 1
         dp = [impossible_number] * (amount + 1)
         dp[0] = 0
-        
-        for total in range(1, amount + 1):
-            for coin in coins:
-                if coin <= total and dp[total - coin] != impossible_number:
-                    dp[total] = min(dp[total], dp[total - coin] + 1)
-        
+        for i in range(1, amount + 1):
+            for c in coins:
+                if i >= c and dp[i - c] != impossible_number:
+                    dp[i] = min(dp[i], dp[i - c] + 1)
         return dp[amount] if dp[amount] != impossible_number else -1
