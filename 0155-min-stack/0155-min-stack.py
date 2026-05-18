@@ -10,13 +10,19 @@ class MinStack:
         self.min_stk.append(min(last_min, val))
 
     def pop(self) -> None:
+        if (self.stk) == 0:
+            return -1
         self.stk.pop()
         self.min_stk.pop()
 
     def top(self) -> int:
+        if len(self.stk) == 0:
+            return -1
         return self.stk[-1]
 
     def getMin(self) -> int:
+        if len(self.stk) == 0:
+            return -1
         return self.min_stk[-1]
 
 
