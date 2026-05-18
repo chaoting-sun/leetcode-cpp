@@ -115,6 +115,7 @@
 | [0033-search-in-rotated-sorted-array](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0033-search-in-rotated-sorted-array/) | Medium |
 | [0035-search-insert-position](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0035-search-insert-position/) | Easy |
 | [0041-first-missing-positive](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0041-first-missing-positive/) | Hard |
+| [0042-trapping-rain-water](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0042-trapping-rain-water/) | Hard |
 | [0048-rotate-image](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0048-rotate-image/) | Medium |
 | [0049-group-anagrams](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0049-group-anagrams/) | Medium |
 | [0053-maximum-subarray](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0053-maximum-subarray/) | Medium |
@@ -154,6 +155,7 @@
 | [0011-container-with-most-water](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0011-container-with-most-water/) | Medium |
 | [0015-3sum](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0015-3sum/) | Medium |
 | [0019-remove-nth-node-from-end-of-list](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0019-remove-nth-node-from-end-of-list/) | Medium |
+| [0042-trapping-rain-water](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0042-trapping-rain-water/) | Hard |
 | [0143-reorder-list](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0143-reorder-list/) | Medium |
 | [0148-sort-list](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0148-sort-list/) | Medium |
 | [0167-two-sum-ii-input-array-is-sorted](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0167-two-sum-ii-input-array-is-sorted/) | Medium |
@@ -176,6 +178,7 @@
 | ------- | ------- |
 | [0005-longest-palindromic-substring](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0005-longest-palindromic-substring/) | Medium |
 | [0022-generate-parentheses](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0022-generate-parentheses/) | Medium |
+| [0042-trapping-rain-water](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0042-trapping-rain-water/) | Hard |
 | [0053-maximum-subarray](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0053-maximum-subarray/) | Medium |
 | [0055-jump-game](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0055-jump-game/) | Medium |
 | [0121-best-time-to-buy-and-sell-stock](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0121-best-time-to-buy-and-sell-stock/) | Easy |
@@ -210,6 +213,7 @@
 | Problem Name | Difficulty |
 | ------- | ------- |
 | [0020-valid-parentheses](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0020-valid-parentheses/) | Easy |
+| [0042-trapping-rain-water](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0042-trapping-rain-water/) | Hard |
 | [0143-reorder-list](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0143-reorder-list/) | Medium |
 | [0150-evaluate-reverse-polish-notation](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0150-evaluate-reverse-polish-notation/) | Medium |
 | [0155-min-stack](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0155-min-stack/) | Medium |
@@ -297,6 +301,7 @@
 ## Monotonic Stack
 | Problem Name | Difficulty |
 | ------- | ------- |
+| [0042-trapping-rain-water](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0042-trapping-rain-water/) | Hard |
 | [0739-daily-temperatures](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0739-daily-temperatures/) | Medium |
 | [0853-car-fleet](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0853-car-fleet/) | Medium |
 ## Design
