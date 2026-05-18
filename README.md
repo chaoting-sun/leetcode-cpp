@@ -209,6 +209,7 @@
 | [0020-valid-parentheses](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0020-valid-parentheses/) | Easy |
 | [0143-reorder-list](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0143-reorder-list/) | Medium |
 | [0150-evaluate-reverse-polish-notation](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0150-evaluate-reverse-polish-notation/) | Medium |
+| [0155-min-stack](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0155-min-stack/) | Medium |
 | [0394-decode-string](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0394-decode-string/) | Medium |
 | [0739-daily-temperatures](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0739-daily-temperatures/) | Medium |
 | [0853-car-fleet](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0853-car-fleet/) | Medium |
@@ -297,5 +298,6 @@
 ## Design
 | Problem Name | Difficulty |
 | ------- | ------- |
+| [0155-min-stack](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0155-min-stack/) | Medium |
 | [0303-range-sum-query-immutable](https://github.com/chaoting-sun/leetcode-cpp/tree/main/0303-range-sum-query-immutable/) | Easy |
 <!---LeetCode Topics End-->
