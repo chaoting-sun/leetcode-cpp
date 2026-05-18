@@ -1,24 +1,33 @@
+from collections import deque
+
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        # build DAG and indegree
-        graph = [[] for _ in range(numCourses)]
-        indegree = [0] * numCourses
-        for course, pre in prerequisites:
-            graph[pre].append(course)
-            indegree[course] += 1
+        if numCourses == 0:
+            return True
+        
+        in_degree = [0] * numCourses
+        course_orders = [[] for _ in range(numCourses)]
 
-        # gather those with indegree 0
-        q = deque(i for i, v in enumerate(indegree) if v == 0)
+        for pre in prerequisites:
+            curr_class = pre[1]
+            next_class = pre[0]
+            if curr_class == next_class:
+                return False
+            course_orders[curr_class].append(next_class)
+            in_degree[next_class] += 1
 
-        # multi-source bfs
-        completed = 0
-
+        q = deque()
+        for i in range(numCourses):
+            if in_degree[i] == 0:
+                q.append(i)
+        
+        taken_courses = 0
         while q:
-            curr_course = q.popleft()
-            completed += 1
-            for next_course in graph[curr_course]:
-                indegree[next_course] -= 1
-                if indegree[next_course] == 0:
-                    q.append(next_course)
-
-        return completed == numCourses
+            curr_class = q.popleft()
+            taken_courses += 1
+            for next_class in course_orders[curr_class]:
+                in_degree[next_class] -= 1
+                if in_degree[next_class] == 0:
+                    q.append(next_class)
+        
+        return taken_courses == numCourses
