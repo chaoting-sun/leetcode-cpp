@@ -17,4 +17,4 @@ class Solution:
             if curr_gas < 0:
                 curr_gas = 0
                 start_idx = i + 1
-        return start_idx if start_idx < n else -1
+        return start_idx
